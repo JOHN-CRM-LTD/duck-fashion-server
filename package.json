@@ -1,0 +1,19 @@
+{
+  "name": "duck-fashion-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Duck Fashion demo stock API (SQLite, Node.js). Serves product, inventory and stock-adjustment endpoints plus whitelisted product photos.",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node --import tsx server/capsule-api.ts",
+    "seed": "node --import tsx server/seed-capsule.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "tsx": "^4.21.0",
+    "zod": "^3.25.76"
+  }
+}

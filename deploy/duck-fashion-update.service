@@ -1,0 +1,12 @@
+[Unit]
+Description=Duck Fashion pull deploy from GitHub (run by duck-fashion-update.timer)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=plushii4854
+WorkingDirectory=/home/plushii4854/Documents/duck-fashion-server
+ExecStart=/home/plushii4854/Documents/duck-fashion-server/deploy/pull-update.sh
+# The timer retries every 5 minutes anyway; a failed fetch shouldn't spiral.
+Nice=10

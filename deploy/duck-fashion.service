@@ -1,0 +1,15 @@
+[Unit]
+Description=Duck Fashion demo stock service
+After=network.target
+
+[Service]
+Type=simple
+# Replace 'pi' with your Pi username, and check the bundle path below.
+User=pi
+WorkingDirectory=/home/pi/duck-fashion-server
+ExecStart=/usr/bin/node --import tsx server/capsule-api.ts
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

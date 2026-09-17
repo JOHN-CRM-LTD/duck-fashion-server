@@ -1,0 +1,1445 @@
+{
+  "basis": "Demo source snapshot before CRM holds and completed sales",
+  "rows": [
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 0
+        },
+        {
+          "id": "PCL",
+          "quantity": 0
+        },
+        {
+          "id": "SH015",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Sweatshirt",
+      "sku": "DF01-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Outline Graphic T-Shirt",
+      "sku": "DF02-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Duck Utility Cargo Trousers",
+      "sku": "DF03-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Signature Duck Baseball Cap",
+      "sku": "DF04-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Everyday Duck Hoodie",
+      "sku": "DF05-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Duck Label Rib-Knit Beanie",
+      "sku": "DF06-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 4
+        },
+        {
+          "id": "PCL",
+          "quantity": 3
+        },
+        {
+          "id": "SH015",
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Twill Overshirt",
+      "sku": "DF07-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BUR-S",
+      "size": "S",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 5
+        },
+        {
+          "id": "PCL",
+          "quantity": 4
+        },
+        {
+          "id": "SH015",
+          "quantity": 6
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BUR-M",
+      "size": "M",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BUR-L",
+      "size": "L",
+      "color": "Duck Burgundy",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-CRM-S",
+      "size": "S",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 6
+        },
+        {
+          "id": "PCL",
+          "quantity": 5
+        },
+        {
+          "id": "SH015",
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-CRM-M",
+      "size": "M",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-CRM-L",
+      "size": "L",
+      "color": "Chalk Cream",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BLK-S",
+      "size": "S",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 7
+        },
+        {
+          "id": "PCL",
+          "quantity": 6
+        },
+        {
+          "id": "SH015",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BLK-M",
+      "size": "M",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 8
+        },
+        {
+          "id": "PCL",
+          "quantity": 7
+        },
+        {
+          "id": "SH015",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "item": "Weekend Duck Jersey Shorts",
+      "sku": "DF08-BLK-L",
+      "size": "L",
+      "color": "Ink Black",
+      "shops": [
+        {
+          "id": "PCB",
+          "quantity": 3
+        },
+        {
+          "id": "PCL",
+          "quantity": 8
+        },
+        {
+          "id": "SH015",
+          "quantity": 4
+        }
+      ]
+    }
+  ]
+}

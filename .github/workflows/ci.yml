@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    name: Install, seed, boot and smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Seed the demo database
+        run: npm run seed
+
+      - name: Generate throwaway connection keys
+        run: bash deploy/create-config.sh https://duck-fashion-ci.invalid
+
+      - name: Boot the API and run endpoint checks
+        run: bash deploy/smoke-test.sh

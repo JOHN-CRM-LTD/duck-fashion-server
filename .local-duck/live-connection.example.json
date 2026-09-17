@@ -1,0 +1,8 @@
+{
+  "mode": "capsule",
+  "port": 4997,
+  "apiKey": "PASTE_64_LOWERCASE_HEX_CHARS_HERE_SEE_SERVER-SETUP.md",
+  "writeApiKey": "OPTIONAL_64_HEX_CHARS_FOR_STAFF_STOCK_ADJUSTMENTS_OR_REMOVE_THIS_LINE",
+  "dataDirectory": "C:/duck-fashion-server/data",
+  "url": "https://your-public-hostname.example.com"
+}

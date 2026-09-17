@@ -1,0 +1,4177 @@
+{
+  "demo": true,
+  "currency": "HKD",
+  "colors": [
+    {
+      "code": "BUR",
+      "name": "Duck Burgundy",
+      "hex": "#781b30",
+      "aliases": "burgundy maroon wine red 酒紅色 酒红色 紅色 红色"
+    },
+    {
+      "code": "CRM",
+      "name": "Chalk Cream",
+      "hex": "#f2eee5",
+      "aliases": "cream chalk white ivory off white 米白色 奶油色 白色"
+    },
+    {
+      "code": "BLK",
+      "name": "Ink Black",
+      "hex": "#232323",
+      "aliases": "ink black charcoal 黑色"
+    }
+  ],
+  "sizes": [
+    "S",
+    "M",
+    "L"
+  ],
+  "products": [
+    {
+      "code": "DF01",
+      "slug": "signature-sweatshirt",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "price": 329,
+      "photoColor": "Duck Burgundy",
+      "aliases": "sweatshirt crewneck sweater jumper 衛衣 卫衣 圓領 圆领",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit."
+    },
+    {
+      "code": "DF02",
+      "slug": "back-print-tee",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "price": 189,
+      "photoColor": "Chalk Cream",
+      "aliases": "tshirt t shirt tee graphic back print short sleeve T恤 短袖 上衣",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit."
+    },
+    {
+      "code": "DF03",
+      "slug": "utility-cargo-trousers",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "price": 399,
+      "photoColor": "Ink Black",
+      "aliases": "cargo trousers pants utility long pants 工裝褲 工装裤 長褲 长裤 褲子 裤子",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit."
+    },
+    {
+      "code": "DF04",
+      "slug": "embroidered-cap",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "price": 149,
+      "photoColor": "Duck Burgundy",
+      "aliases": "cap baseball hat dad cap 棒球帽 鴨舌帽 鸭舌帽 帽",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap."
+    },
+    {
+      "code": "DF05",
+      "slug": "everyday-hoodie",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "price": 429,
+      "photoColor": "Ink Black",
+      "aliases": "hoodie hooded pullover hooded sweatshirt 連帽衫 连帽衫 連帽衛衣 连帽卫衣",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit."
+    },
+    {
+      "code": "DF06",
+      "slug": "rib-knit-beanie",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "price": 129,
+      "photoColor": "Chalk Cream",
+      "aliases": "beanie knit knitted rib winter hat woolly hat 冷帽 毛帽 針織帽 针织帽",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit."
+    },
+    {
+      "code": "DF07",
+      "slug": "weekend-overshirt",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "price": 459,
+      "photoColor": "Chalk Cream",
+      "aliases": "overshirt shirt jacket shacket button collar long sleeve 襯衫 衬衫 外套 夾克 夹克",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit."
+    },
+    {
+      "code": "DF08",
+      "slug": "weekend-shorts",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "price": 249,
+      "photoColor": "Ink Black",
+      "aliases": "shorts jersey casual lounge drawstring 短褲 短裤 休閒褲 休闲裤",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit."
+    }
+  ],
+  "variants": [
+    {
+      "sku": "DF01-BUR-S",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_sweatshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-BUR-M",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_sweatshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-BUR-L",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_sweatshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-CRM-S",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_sweatshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-CRM-M",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_sweatshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-CRM-L",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_sweatshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-BLK-S",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_sweatshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-BLK-M",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_sweatshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF01-BLK-L",
+      "styleCode": "DF01",
+      "name": "Signature Duck Sweatshirt",
+      "nameZh": "經典小鴨衛衣",
+      "category": "Sweatshirts",
+      "description": "Relaxed crewneck with dropped shoulders, ribbed cuffs and a small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 329,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 104 cm / length 64 cm; M: 112 / 68 cm; L: 120 / 72 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_sweatshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_sweatshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_sweatshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_sweatshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Sweatshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BUR-S",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_graphic_t_shirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BUR-M",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_graphic_t_shirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BUR-L",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_graphic_t_shirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-CRM-S",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_graphic_t_shirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-CRM-M",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_graphic_t_shirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-CRM-L",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_graphic_t_shirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BLK-S",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_graphic_t_shirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BLK-M",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_graphic_t_shirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF02-BLK-L",
+      "styleCode": "DF02",
+      "name": "Duck Outline Graphic T-Shirt",
+      "nameZh": "小鴨背印圖案T恤",
+      "category": "T-Shirts",
+      "description": "Relaxed short-sleeve tee with a large duck outline and DUCK FASHION back print. Demo specification: 100% cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 189,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 100 cm / length 66 cm; M: 108 / 70 cm; L: 116 / 74 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_graphic_t_shirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_graphic_t_shirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_graphic_t_shirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_graphic_t_shirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Outline Graphic T-Shirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BUR-S",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_trousers.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BUR-M",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_trousers.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BUR-L",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_trousers.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-CRM-S",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_trousers.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-CRM-M",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_trousers.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-CRM-L",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_trousers.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BLK-S",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_trousers.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BLK-M",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_trousers.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF03-BLK-L",
+      "styleCode": "DF03",
+      "name": "Duck Utility Cargo Trousers",
+      "nameZh": "小鴨工裝長褲",
+      "category": "Trousers",
+      "description": "Wide-leg cargo trousers with roomy flap pockets and a subtle duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 399,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 72 cm; M: 78–86 / 74 cm; L: 86–94 / 76 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_trousers.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_trousers.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_trousers.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_trousers.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Utility Cargo Trousers in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BUR-S",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "burgundy_cap.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BUR-M",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "burgundy_cap.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BUR-L",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "burgundy_cap.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-CRM-S",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "cream_cap.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-CRM-M",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "cream_cap.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-CRM-L",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "cream_cap.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BLK-S",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "black_cap.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BLK-M",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "black_cap.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF04-BLK-L",
+      "styleCode": "DF04",
+      "name": "Signature Duck Baseball Cap",
+      "nameZh": "小鴨刺繡棒球帽",
+      "category": "Caps",
+      "description": "Curved-brim six-panel cap with a small embroidered duck and adjustable back strap. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 149,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 52–55 cm; M: 55–58 cm; L: 58–61 cm. Each size has an adjustable strap.",
+      "imageFile": "black_cap.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_cap.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_cap.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_cap.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Signature Duck Baseball Cap in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BUR-S",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_hoodie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BUR-M",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_hoodie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BUR-L",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_hoodie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-CRM-S",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_hoodie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-CRM-M",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_hoodie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-CRM-L",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_hoodie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BLK-S",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_hoodie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BLK-M",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_hoodie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF05-BLK-L",
+      "styleCode": "DF05",
+      "name": "Everyday Duck Hoodie",
+      "nameZh": "日常小鴨連帽衛衣",
+      "category": "Hoodies",
+      "description": "Relaxed pullover hoodie with a kangaroo pocket and small embroidered duck. Demo specification: cotton-rich brushed fleece.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 429,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 65 cm; M: 116 / 69 cm; L: 124 / 73 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_hoodie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_hoodie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_hoodie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_hoodie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Everyday Duck Hoodie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BUR-S",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "burgundy_beanie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BUR-M",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "burgundy_beanie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BUR-L",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "burgundy_beanie.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-CRM-S",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "cream_beanie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-CRM-M",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "cream_beanie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-CRM-L",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "cream_beanie.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BLK-S",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "black_beanie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BLK-M",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "black_beanie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF06-BLK-L",
+      "styleCode": "DF06",
+      "name": "Duck Label Rib-Knit Beanie",
+      "nameZh": "小鴨標籤針織冷帽",
+      "category": "Beanies",
+      "description": "Cuffed rib-knit beanie with a burgundy duck-logo label. Demo specification: soft acrylic knit.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 129,
+      "currency": "HKD",
+      "sizeGuide": "S: head circumference 50–54 cm; M: 54–58 cm; L: 58–62 cm. Stretch-knit fit.",
+      "imageFile": "black_beanie.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_beanie.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_beanie.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_beanie.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Duck Label Rib-Knit Beanie in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BUR-S",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_overshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BUR-M",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_overshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BUR-L",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "burgundy_overshirt.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-CRM-S",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_overshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-CRM-M",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_overshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-CRM-L",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "cream_overshirt.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BLK-S",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_overshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BLK-M",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_overshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF07-BLK-L",
+      "styleCode": "DF07",
+      "name": "Weekend Duck Twill Overshirt",
+      "nameZh": "週末小鴨斜紋襯衫外套",
+      "category": "Overshirts",
+      "description": "Relaxed button-front overshirt with a pointed collar, a chest pocket with a small duck emblem. Demo specification: cotton twill.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 459,
+      "currency": "HKD",
+      "sizeGuide": "S: chest 108 cm / length 69 cm; M: 116 / 73 cm; L: 124 / 77 cm. Garment measurements, relaxed unisex fit.",
+      "imageFile": "black_overshirt.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_overshirt.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_overshirt.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_overshirt.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Twill Overshirt in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BUR-S",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Duck Burgundy / S",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_shorts.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BUR-M",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Duck Burgundy / M",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_shorts.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BUR-L",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Duck Burgundy",
+      "colorCode": "BUR",
+      "colorHex": "#781b30",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Duck Burgundy / L",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "burgundy_shorts.png",
+      "photoColor": "Duck Burgundy",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Duck Burgundy.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-CRM-S",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Chalk Cream / S",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_shorts.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-CRM-M",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Chalk Cream / M",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_shorts.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-CRM-L",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Chalk Cream",
+      "colorCode": "CRM",
+      "colorHex": "#f2eee5",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Chalk Cream / L",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "cream_shorts.png",
+      "photoColor": "Chalk Cream",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Chalk Cream.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BLK-S",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "S",
+      "sizeCode": "S",
+      "variant": "Ink Black / S",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_shorts.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BLK-M",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "M",
+      "sizeCode": "M",
+      "variant": "Ink Black / M",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_shorts.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Ink Black.",
+      "demo": true
+    },
+    {
+      "sku": "DF08-BLK-L",
+      "styleCode": "DF08",
+      "name": "Weekend Duck Jersey Shorts",
+      "nameZh": "週末小鴨休閒短褲",
+      "category": "Shorts",
+      "description": "Easy jersey shorts with a drawstring waist, side pockets and a small embroidered duck near the hem. Demo specification: cotton jersey.",
+      "color": "Ink Black",
+      "colorCode": "BLK",
+      "colorHex": "#232323",
+      "size": "L",
+      "sizeCode": "L",
+      "variant": "Ink Black / L",
+      "price": 249,
+      "currency": "HKD",
+      "sizeGuide": "S: waist 70–78 cm / inseam 18 cm; M: 78–86 / 19 cm; L: 86–94 / 20 cm. Suggested body waist, relaxed unisex fit.",
+      "imageFile": "black_shorts.png",
+      "photoColor": "Ink Black",
+      "images": [
+        {
+          "color": "Duck Burgundy",
+          "colorCode": "BUR",
+          "imageFile": "burgundy_shorts.png"
+        },
+        {
+          "color": "Chalk Cream",
+          "colorCode": "CRM",
+          "imageFile": "cream_shorts.png"
+        },
+        {
+          "color": "Ink Black",
+          "colorCode": "BLK",
+          "imageFile": "black_shorts.png"
+        }
+      ],
+      "imageNote": "Owner-supplied photograph of Weekend Duck Jersey Shorts in Ink Black.",
+      "demo": true
+    }
+  ],
+  "shops": [
+    {
+      "id": "PCL",
+      "name": "Central Store · SE_TEST"
+    },
+    {
+      "id": "PCB",
+      "name": "Causeway Bay Store · SE_TEST"
+    },
+    {
+      "id": "SH015",
+      "name": "Jumbo Sogo · SE_TEST"
+    }
+  ],
+  "initialStock": [
+    {
+      "sku": "DF01-BLK-L",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-L",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-L",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-M",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-M",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-M",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-S",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-S",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BLK-S",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-L",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-L",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-L",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-M",
+      "locationId": "PCB",
+      "quantity": 0,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-M",
+      "locationId": "PCL",
+      "quantity": 0,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-M",
+      "locationId": "SH015",
+      "quantity": 1,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-S",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-S",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-BUR-S",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-L",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-L",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-L",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-M",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-M",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-M",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-S",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-S",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF01-CRM-S",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-L",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-L",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-L",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-M",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-M",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-M",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-S",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-S",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BLK-S",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-L",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-L",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-L",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-M",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-M",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-M",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-S",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-S",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-BUR-S",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-L",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-L",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-L",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-M",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-M",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-M",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-S",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-S",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF02-CRM-S",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-L",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-L",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-L",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-M",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-M",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-M",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-S",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-S",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BLK-S",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-L",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-L",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-L",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-M",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-M",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-M",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-S",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-S",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-BUR-S",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-L",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-L",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-L",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-M",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-M",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-M",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-S",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-S",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF03-CRM-S",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-L",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-L",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-L",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-M",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-M",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-M",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-S",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-S",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BLK-S",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-L",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-L",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-L",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-M",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-M",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-M",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-S",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-S",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-BUR-S",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-L",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-L",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-L",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-M",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-M",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-M",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-S",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-S",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF04-CRM-S",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-L",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-L",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-L",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-M",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-M",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-M",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-S",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-S",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BLK-S",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-L",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-L",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-L",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-M",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-M",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-M",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-S",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-S",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-BUR-S",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-L",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-L",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-L",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-M",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-M",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-M",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-S",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-S",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF05-CRM-S",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-L",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-L",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-L",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-M",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-M",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-M",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-S",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-S",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BLK-S",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-L",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-L",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-L",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-M",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-M",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-M",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-S",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-S",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-BUR-S",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-L",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-L",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-L",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-M",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-M",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-M",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-S",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-S",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF06-CRM-S",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-L",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-L",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-L",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-M",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-M",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-M",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-S",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-S",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BLK-S",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-L",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-L",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-L",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-M",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-M",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-M",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-S",
+      "locationId": "PCB",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-S",
+      "locationId": "PCL",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-BUR-S",
+      "locationId": "SH015",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-L",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-L",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-L",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-M",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-M",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-M",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-S",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-S",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF07-CRM-S",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-L",
+      "locationId": "PCB",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-L",
+      "locationId": "PCL",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-L",
+      "locationId": "SH015",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-M",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-M",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-M",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-S",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-S",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BLK-S",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-L",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-L",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-L",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-M",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-M",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-M",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-S",
+      "locationId": "PCB",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-S",
+      "locationId": "PCL",
+      "quantity": 4,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-BUR-S",
+      "locationId": "SH015",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-L",
+      "locationId": "PCB",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-L",
+      "locationId": "PCL",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-L",
+      "locationId": "SH015",
+      "quantity": 3,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-M",
+      "locationId": "PCB",
+      "quantity": 7,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-M",
+      "locationId": "PCL",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-M",
+      "locationId": "SH015",
+      "quantity": 8,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-S",
+      "locationId": "PCB",
+      "quantity": 6,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-S",
+      "locationId": "PCL",
+      "quantity": 5,
+      "revision": 1
+    },
+    {
+      "sku": "DF08-CRM-S",
+      "locationId": "SH015",
+      "quantity": 7,
+      "revision": 1
+    }
+  ]
+}

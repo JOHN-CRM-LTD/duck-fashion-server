@@ -1,0 +1,17 @@
+# Dependencies (reinstalled with npm install / npm ci)
+node_modules/
+
+# Live secrets — generated on each machine by deploy/create-config.sh
+.local-duck/live-connection.json
+
+# Live database — stock adjustments happen on the Pi and must never be
+# overwritten by a deploy. A fresh clone recreates it with: npm run seed
+data/duck-fashion.sqlite
+data/*.sqlite-journal
+data/*.sqlite-wal
+data/*.sqlite-shm
+
+# Logs and editor noise
+*.log
+*.swp
+.DS_Store

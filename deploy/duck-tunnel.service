@@ -1,0 +1,14 @@
+[Unit]
+Description=Duck Fashion Cloudflare quick tunnel (public URL changes on restart)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/cloudflared tunnel --url http://127.0.0.1:4997 --no-autoupdate
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
