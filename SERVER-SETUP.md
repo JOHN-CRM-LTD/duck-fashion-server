@@ -114,8 +114,9 @@ All endpoints except the whitelisted images require
 | `GET /inventory?query=...` | Live stock rows per SKU and shop, with optimistic-concurrency `stockVersion`. |
 | `GET /shops` | The three demo shops (PCL, PCB, SH015). |
 | `POST /stock/adjust` | Staff stock adjustment. Requires the **write** key. Idempotent by `requestId`; rejects stale `expectedVersion` with `409 STOCK_CONFLICT`. |
-| `GET /bonus/balance?member=...` | One member's bonus points (member by code, mobile or exact name): tier, available balance, per-period breakdown and expiry warnings. `404 UNKNOWN_MEMBER` when the reference matches nobody, `422 AMBIGUOUS_MEMBER` with candidates when it matches several. |
-| `GET /bonus/redeemables?member=...` | Items redeemable with bonus points; with a member, each item gets an `affordable` flag against their balance. |
+| `GET /bonus/balance?member=...&phone=...` | Points for an exact member ID and matching registered full international phone. Missing or mismatched identity returns 403 without candidate information. |
+| `GET /bonus/redeemables?member=...&phone=...` | Rewards catalog; personal affordability requires the same member ID/phone pair. Omit both for the generic catalog. |
+| `GET /managers` | Staff-only shop manager directory, using the write key. Demo defaults send all three shops to +85296540199; a private managers.json can override them. |
 | `GET /bonus/cash-scheme` | The Bonus-as-Cash conversion scheme: base ratio and tier table. |
 | `GET /customers/lookup?phone=...` / `POST /customers/import` | Existing-customer matching against the shared member table — see [CUSTOMER-MATCHING.md](CUSTOMER-MATCHING.md). |
 | `GET /images/<file>.png` | Only the whitelisted product photos (30 files, all three colours) are served; everything else 404s. |
