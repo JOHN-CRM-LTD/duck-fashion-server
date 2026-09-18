@@ -65,13 +65,14 @@ app.post("/customers/import", (req, res) => {
 // Member bonus points: balance, redeemable items and the Bonus-as-Cash scheme.
 // The read key is enough; these are customer-service lookups, never writes.
 app.get("/bonus/balance", (req, res) => {
-  if (typeof req.query.member !== "string" || !req.query.member.trim()) return void res.status(400).json({ error: "Provide a member code, registered mobile number or member name" });
-  res.json(store.bonusBalance(req.query.member));
+  res.json(store.verifiedBonusBalance(req.query.member, req.query.phone));
 });
-app.get("/bonus/redeemables", (req, res) => res.json(store.bonusRedeemables(typeof req.query.member === "string" ? req.query.member : undefined)));
+app.get("/bonus/redeemables", (req, res) => res.json(req.query.member === undefined
+  ? store.bonusRedeemables() : store.verifiedBonusRedeemables(req.query.member, req.query.phone)));
 app.get("/bonus/cash-scheme", (_req, res) => res.json(store.bonusCashScheme()));
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const message = error instanceof Error ? error.message : "";
+  if (message === "MEMBER_VERIFICATION_FAILED") return void res.status(403).json({ error: "The member ID and registered phone number could not be verified" });
   const candidates = (error as { candidates?: unknown })?.candidates;
   const status = error instanceof ZodError || message === "INVALID_QUERY" || message === "INVALID_MEMBER" || (error as { type?: string })?.type === "entity.parse.failed" ? 400 : message === "UNKNOWN_STOCK" || message === "UNKNOWN_MEMBER" ? 404 : message === "AMBIGUOUS_MEMBER" ? 422 : ["STOCK_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_STOCK"].includes(message) ? 409 : 503;
   res.status(status).json({ error: status === 503 ? "Demo stock is temporarily unavailable" : status === 400 ? "Provide valid product search or stock adjustment fields" : message, ...(Array.isArray(candidates) ? { candidates } : {}) });
