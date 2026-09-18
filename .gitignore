@@ -5,6 +5,7 @@ node_modules/
 .local-duck/live-connection.json
 .local-duck/*customers*.json
 .local-duck/pi-connection.json
+.local-duck/managers.json
 
 # Live database — stock adjustments happen on the Pi and must never be
 # overwritten by a deploy. A fresh clone recreates it with: npm run seed
