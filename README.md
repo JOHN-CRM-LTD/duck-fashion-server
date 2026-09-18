@@ -1,8 +1,9 @@
 # Duck Fashion stock API
 
 Fictional eight-style Duck Fashion demo collection served as a stock API for
-John CRM: product search, per-shop inventory and staff stock adjustments over
-HTTPS, backed by a single portable SQLite file. Node.js 22 only — no SQL
+John CRM: product search, per-shop inventory, staff stock adjustments and
+member bonus points (balance, redeemables, Bonus-as-Cash) over HTTPS, backed
+by a single portable SQLite file. Node.js 22 only — no SQL
 Server, no Docker, nothing compiled; runs happily on a Raspberry Pi.
 
 ```
@@ -22,6 +23,8 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
 npm install          # pure-JS dependencies (ARM-friendly)
 npm run seed         # rebuild data/duck-fashion.sqlite from data/catalog.json
 npm start            # listens on 127.0.0.1:4997 (needs deploy/create-config.sh first)
+npm run seed:bonus   # optional — the member-bonus tables are also (re)seeded
+                     # idempotently on every boot; this just runs the same seed
 ```
 
 `data/duck-fashion.sqlite` and `.local-duck/live-connection.json` are

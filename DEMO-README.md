@@ -103,3 +103,31 @@ availability-matrix.json is a source-stock snapshot. Customer-facing matrices us
 live CRM inventory results after confirmed holds and completed sales are deducted.
 
 The source code is in D:\johncrm\scripts\duck-fashion\capsule-*.ts.
+
+## Member bonus points
+
+The same SQLite database carries a small loyalty section (tables
+`bonus_members`, `bonus_periods`, `bonus_ledger`, `bonus_redeemables`,
+`bonus_cash_tiers`) seeded by `npm run seed:bonus` — and also re-seeded
+idempotently on every service boot, so a code-only deploy on the Pi brings
+the endpoints up with no manual step. Three read-only endpoints sit behind
+the normal bearer read key:
+
+| Endpoint | Answers | Notes |
+| --- | --- | --- |
+| `GET /bonus/balance?member=…` | "How much bonus points do I have?" | Member by code, full or local-form mobile (`61234505` matches `+852 6123 4505` via last-8 digits), or exact name. Returns tier, available points, per-period breakdown and an `expiringSoon` warning. |
+| `GET /bonus/redeemables?member=…` | "What items can I redeem with bonus?" | All items with code, unit price and points needed; with a member, affordability flags. |
+| `GET /bonus/cash-scheme` | "What's the scheme of Bonus-as-Cash?" | Base ratio 100 PTS = $1.00 and tiers 500 PTS = $5 / 1000 PTS = $12. |
+
+Balances always derive from `bonus_ledger`, so the demo never disagrees with
+itself. Real customer records never enter Git: each machine's member roster
+lives in its own `data/duck-fashion.sqlite` (imported through the staff
+write endpoint, see CUSTOMER-MATCHING.md), while the seed carries only a
+synthetic roster (fictional +852 6123 45xx numbers) so fresh clones and CI
+have working members. The demo ledger is written for the member codes that
+exist on that machine — on the live Pi that means the real imported members
+and the two chat-demo customers (DF-DEMO-AU, 260 PTS — not yet enough for
+the cheapest redeemable; DF-DEMO-HK, 150 PTS in the expiring-soon 2026A
+period). The fictional +852 9123 000X series (DF1001–DF1004) stays retired
+and does not resolve. Redemptions and conversions are completed in shop —
+these endpoints are read-only.

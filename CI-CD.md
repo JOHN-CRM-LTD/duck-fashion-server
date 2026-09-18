@@ -25,7 +25,12 @@ Pi timer (every 5 min) ── git fetch ── new commit? ─yes─> pull + npm
 
 - `data/duck-fashion.sqlite` — the **live** database (gitignored). Deploys
   swap code, not stock. A fresh clone rebuilds a pristine database with
-  `npm run seed`.
+  `npm run seed`. One deliberate exception: on every boot the service runs the
+  idempotent `seedBonus`, which only INSERTs missing member-bonus demo rows
+  (members, periods, redeemables, tiers) — it never resets the ledger, so
+  recorded redemptions survive restarts and deploys.
+- The deploy health check covers `/shops`, `/customers/lookup` and
+  `/bonus/cash-scheme`; an unhealthy service rolls the commit back.
 - `.local-duck/live-connection.json` — the read/write keys (gitignored),
   generated per machine by `deploy/create-config.sh`.
 

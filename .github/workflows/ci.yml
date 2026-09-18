@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify customer matching and migration
-        run: node --import tsx --test server/customer-directory.test.ts
+      - name: Verify customer matching, migration and bonus seeding
+        run: node --import tsx --test server/customer-directory.test.ts server/bonus-seed.test.ts
 
       - name: Seed the demo database
         run: npm run seed

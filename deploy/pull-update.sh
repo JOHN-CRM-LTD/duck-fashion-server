@@ -69,7 +69,8 @@ log "health-checking http://127.0.0.1:4997/shops ..."
 for _ in $(seq 1 20); do
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/shops || true)
   customer_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" 'http://127.0.0.1:4997/customers/lookup?phone=85261234568' || true)
-  [ "$code" = "200" ] && [ "$customer_code" = "200" ] && { log "deployed $(git rev-parse --short HEAD) and healthy (stock and customer lookup)."; exit 0; }
+  bonus_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/bonus/cash-scheme || true)
+  [ "$code" = "200" ] && [ "$customer_code" = "200" ] && [ "$bonus_code" = "200" ] && { log "deployed $(git rev-parse --short HEAD) and healthy (stock, customer lookup and bonus scheme)."; exit 0; }
   sleep 1
 done
 rollback

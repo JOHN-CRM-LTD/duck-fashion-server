@@ -5,6 +5,7 @@ import { join, resolve } from "node:path";
 import { ZodError } from "zod";
 import { capsuleItems, capsulePhotoNames } from "./capsule-catalog.js";
 import { openCapsule } from "./capsule-store.js";
+import { readDuckManagers } from "./manager-directory.js";
 
 const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
 if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory) throw new Error("Invalid capsule connection configuration");
@@ -26,12 +27,17 @@ app.use((req, res, next) => {
   const read = supplied.length === expected.length && timingSafeEqual(supplied, expected);
   const write = expectedWrite && supplied.length === expectedWrite.length && timingSafeEqual(supplied, expectedWrite);
   if (!read && !write) return void res.status(401).json({ error: "Unauthorized" });
-  if (req.method === "POST" && ["/stock/adjust", "/customers/import"].includes(req.path)) {
+  if (req.method === "GET" && req.path === "/managers") {
+    if (!write) return void res.status(403).json({ error: "A staff credential is required" });
+  } else if (req.method === "POST" && ["/stock/adjust", "/customers/import"].includes(req.path)) {
     if (!write) return void res.status(403).json({ error: "A staff write credential is required" });
-  } else if (req.method !== "GET" || !["/inventory", "/products", "/shops", "/customers/lookup"].includes(req.path)) return void res.sendStatus(404);
+  } else if (req.method !== "GET" || !["/inventory", "/products", "/shops", "/bonus/balance", "/bonus/redeemables", "/bonus/cash-scheme", "/customers/lookup"].includes(req.path)) return void res.sendStatus(404);
   next();
 });
 app.use(express.json({ limit: "8kb", strict: true }));
+app.get("/managers", (_req, res) => {
+  try { res.json(readDuckManagers(config.managerDirectoryPath)); } catch { res.status(503).json({ error: "Manager directory is not configured or is invalid" }); }
+});
 app.get("/inventory", (req, res) => {
   const inventory = store.inventory(req.query.query as string);
   if (inventory.hasMore) return void res.status(422).json({ error: "Narrow the inventory search by item name, colour or size. Use product details to browse the complete collection." });
@@ -56,10 +62,19 @@ app.post("/customers/import", (req, res) => {
     throw error;
   }
 });
+// Member bonus points: balance, redeemable items and the Bonus-as-Cash scheme.
+// The read key is enough; these are customer-service lookups, never writes.
+app.get("/bonus/balance", (req, res) => {
+  if (typeof req.query.member !== "string" || !req.query.member.trim()) return void res.status(400).json({ error: "Provide a member code, registered mobile number or member name" });
+  res.json(store.bonusBalance(req.query.member));
+});
+app.get("/bonus/redeemables", (req, res) => res.json(store.bonusRedeemables(typeof req.query.member === "string" ? req.query.member : undefined)));
+app.get("/bonus/cash-scheme", (_req, res) => res.json(store.bonusCashScheme()));
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const message = error instanceof Error ? error.message : "";
-  const status = error instanceof ZodError || message === "INVALID_QUERY" || (error as { type?: string })?.type === "entity.parse.failed" ? 400 : message === "UNKNOWN_STOCK" ? 404 : ["STOCK_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_STOCK"].includes(message) ? 409 : 503;
-  res.status(status).json({ error: status === 503 ? "Demo stock is temporarily unavailable" : status === 400 ? "Provide valid product search or stock adjustment fields" : message });
+  const candidates = (error as { candidates?: unknown })?.candidates;
+  const status = error instanceof ZodError || message === "INVALID_QUERY" || message === "INVALID_MEMBER" || (error as { type?: string })?.type === "entity.parse.failed" ? 400 : message === "UNKNOWN_STOCK" || message === "UNKNOWN_MEMBER" ? 404 : message === "AMBIGUOUS_MEMBER" ? 422 : ["STOCK_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_STOCK"].includes(message) ? 409 : 503;
+  res.status(status).json({ error: status === 503 ? "Demo stock is temporarily unavailable" : status === 400 ? "Provide valid product search or stock adjustment fields" : message, ...(Array.isArray(candidates) ? { candidates } : {}) });
 });
 const server = app.listen(config.port, "127.0.0.1", () => console.log(`Duck Fashion eight-item demo ready on 127.0.0.1:${config.port}; database ${config.dataDirectory}`));
 for (const signal of ["SIGTERM", "SIGINT"] as const) process.on(signal, () => server.close(() => { store.close(); process.exit(0); }));
