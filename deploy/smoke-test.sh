@@ -62,14 +62,17 @@ adj=$(curl -sf -X POST -H "Authorization: Bearer $WRITE_KEY" -H 'Content-Type: a
 [ "$adj" = "5" ] && echo "ok   stock adjustment applied (4 -> 5)" || { echo "FAIL adjustment quantityAfter=$adj"; fail=1; }
 
 # Member bonus points (tables are boot-seeded by capsule-api via seedBonus).
-check "bonus balance requires a member" 400 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance"
-check "unknown bonus member answers 404" 404 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=NOBODY99"
+check "bonus balance requires identity" 403 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance"
+check "unknown bonus member reveals no candidates" 403 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=NOBODY99&phone=85261234505"
+check "wrong member phone is rejected" 403 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=DF1005&phone=85261234591"
+check "manager directory is private" 403 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/managers"
+check "staff can read managers" 200 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $WRITE_KEY" "$BASE/managers"
 check "bonus cash-scheme answers 200"    200 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/cash-scheme"
-balance=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=%2B852%206123%204505" | node -p 'const b=JSON.parse(require("fs").readFileSync(0,"utf8")); b.member.memberCode==="DF1005" && Number.isInteger(b.availablePoints) && b.availablePoints>=0 ? "ok" : JSON.stringify(b.member)')
+balance=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=DF1005&phone=%2B852%206123%204505" | node -p 'const b=JSON.parse(require("fs").readFileSync(0,"utf8")); b.member.memberCode==="DF1005" && Number.isInteger(b.availablePoints) && b.availablePoints>=0 ? "ok" : JSON.stringify(b.member)')
 [ "$balance" = "ok" ] && echo "ok   bonus balance by mobile resolves DF1005" || { echo "FAIL bonus balance by mobile: $balance"; fail=1; }
-demo=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=DF-DEMO-AU" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).member.memberCode')
+demo=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=DF-DEMO-AU&phone=85261234591" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).member.memberCode')
 [ "$demo" = "DF-DEMO-AU" ] && echo "ok   chat-demo member resolves with a balance" || { echo "FAIL chat-demo member lookup: $demo"; fail=1; }
-redeemables=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/redeemables?member=DF1005" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).items.length')
+redeemables=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/redeemables?member=DF1005&phone=85261234505" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).items.length')
 [ "$redeemables" = "9" ] && echo "ok   nine bonus redeemables listed" || { echo "FAIL bonus redeemables: $redeemables"; fail=1; }
 
 if [ $fail -eq 0 ]; then echo "ALL CHECKS PASSED"; else echo "SMOKE TEST FAILED"; exit 1; fi

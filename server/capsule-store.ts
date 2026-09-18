@@ -7,6 +7,7 @@ import { capsuleTokens } from "./capsule-catalog.js";
 import { importCustomers, lookupCustomer, migrateCustomerDirectory } from "./customer-directory.js";
 import { bonusBalance, bonusRedeemables, bonusCashScheme } from "./bonus-store.js";
 import { seedBonus } from "./bonus-seed.js";
+import { verifiedMemberCode } from "./member-verification.js";
 
 export const capsuleAdjustment = z.object({ sku: z.string().regex(/^DF0[1-8]-(BUR|CRM|BLK)-(S|M|L)$/), locationId: z.enum(["PCL", "PCB", "SH015"]), delta: z.number().int().min(-1000).max(1000).refine(n => n !== 0), expectedVersion: z.number().int().min(1).max(2147483646), reason: z.string().trim().min(3).max(300), requestId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,99}$/) }).strict();
 
@@ -39,6 +40,8 @@ export function openCapsule(directory: string, publicUrl: string) {
     importCustomers: (rows: unknown) => importCustomers(db, rows),
     // Member bonus points (seeded by bonus-seed.ts into the same database).
     bonusBalance: (reference: string) => bonusBalance(db, reference),
+    verifiedBonusBalance: (member: unknown, phone: unknown) => bonusBalance(db, verifiedMemberCode(db, member, phone)),
+    verifiedBonusRedeemables: (member: unknown, phone: unknown) => bonusRedeemables(db, verifiedMemberCode(db, member, phone)),
     bonusRedeemables: (reference?: string) => bonusRedeemables(db, reference),
     bonusCashScheme: () => bonusCashScheme(db),
     products(query: string, offset = 0) {
