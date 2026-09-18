@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { capsuleTokens } from "./capsule-catalog.js";
+import { importCustomers, lookupCustomer, migrateCustomerDirectory } from "./customer-directory.js";
 
 export const capsuleAdjustment = z.object({ sku: z.string().regex(/^DF0[1-8]-(BUR|CRM|BLK)-(S|M|L)$/), locationId: z.enum(["PCL", "PCB", "SH015"]), delta: z.number().int().min(-1000).max(1000).refine(n => n !== 0), expectedVersion: z.number().int().min(1).max(2147483646), reason: z.string().trim().min(3).max(300), requestId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,99}$/) }).strict();
 
@@ -12,6 +13,7 @@ export function openCapsule(directory: string, publicUrl: string) {
   if (!existsSync(path)) throw new Error("Seed the capsule database first");
   const db = new DatabaseSync(path);
   db.exec("PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;");
+  migrateCustomerDirectory(db);
   const origin = new URL(publicUrl).origin;
   const decorate = (document: string) => {
     const p = JSON.parse(document);
@@ -26,6 +28,8 @@ export function openCapsule(directory: string, publicUrl: string) {
   };
   return {
     close: () => db.close(),
+    customerLookup: (phone: unknown) => lookupCustomer(db, phone),
+    importCustomers: (rows: unknown) => importCustomers(db, rows),
     products(query: string, offset = 0) {
       // Product browsing is style-based so the complete eight-item range fits in
       // one customer response. Inventory stays variant-based for reservations.
