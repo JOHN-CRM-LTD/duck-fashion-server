@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Duck Fashion demo stock API (SQLite, Node.js). Serves product, inventory and stock-adjustment endpoints plus whitelisted product photos.",
+  "description": "Duck Fashion demo stock API (SQLite, Node.js). Serves product, inventory, stock-adjustment, member bonus (balance, redeemables, Bonus-as-Cash) endpoints plus whitelisted product photos.",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
     "start": "node --import tsx server/capsule-api.ts",
-    "seed": "node --import tsx server/seed-capsule.ts"
+    "seed": "node --import tsx server/seed-capsule.ts",
+    "seed:bonus": "node --import tsx server/bonus-seed.ts"
   },
   "dependencies": {
     "express": "^4.21.2",
