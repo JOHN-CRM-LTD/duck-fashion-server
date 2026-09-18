@@ -40,6 +40,14 @@ check "GET /products?query=hoodie answers"  200 curl -s -o /dev/null -w '%{http_
 check "GET /inventory?query=hoodie answers" 200 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/inventory?query=hoodie"
 check "product photo is served"             200 curl -s -o /dev/null -w '%{http_code}' "$BASE/images/black_hoodie.png"
 check "unknown route answers 404"           404 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/nope"
+check "customer lookup requires authentication" 401 curl -s -o /dev/null -w '%{http_code}' "$BASE/customers/lookup?phone=85261234567"
+check "customer lookup requires a phone" 400 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/customers/lookup"
+check "read key cannot import customers" 403 curl -s -o /dev/null -w '%{http_code}' -X POST -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' -d '{"customers":[]}' "$BASE/customers/import"
+curl -sf -X POST -H "Authorization: Bearer $WRITE_KEY" -H 'Content-Type: application/json' -d '{"customers":[{"id":"TEST-HK","name":"Example customer","phone":"+85261234567"}]}' "$BASE/customers/import" >/dev/null
+customer=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/customers/lookup?phone=85261234567" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).customers[0].id')
+[ "$customer" = "TEST-HK" ] && echo "ok   existing demo customer matched" || { echo "FAIL customer lookup"; fail=1; }
+unknown=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/customers/lookup?phone=85261234568" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).customers.length')
+[ "$unknown" = "0" ] && echo "ok   unknown customer stays unregistered" || { echo "FAIL unknown customer lookup"; fail=1; }
 
 shops=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/shops" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).shops.length')
 [ "$shops" = "3" ] && echo "ok   three shops returned" || { echo "FAIL expected 3 shops, got $shops"; fail=1; }

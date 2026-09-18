@@ -26,9 +26,9 @@ app.use((req, res, next) => {
   const read = supplied.length === expected.length && timingSafeEqual(supplied, expected);
   const write = expectedWrite && supplied.length === expectedWrite.length && timingSafeEqual(supplied, expectedWrite);
   if (!read && !write) return void res.status(401).json({ error: "Unauthorized" });
-  if (req.method === "POST" && req.path === "/stock/adjust") {
+  if (req.method === "POST" && ["/stock/adjust", "/customers/import"].includes(req.path)) {
     if (!write) return void res.status(403).json({ error: "A staff write credential is required" });
-  } else if (req.method !== "GET" || !["/inventory", "/products", "/shops"].includes(req.path)) return void res.sendStatus(404);
+  } else if (req.method !== "GET" || !["/inventory", "/products", "/shops", "/customers/lookup"].includes(req.path)) return void res.sendStatus(404);
   next();
 });
 app.use(express.json({ limit: "8kb", strict: true }));
@@ -39,7 +39,23 @@ app.get("/inventory", (req, res) => {
 });
 app.get("/products", (req, res) => res.json(store.products(req.query.query as string, req.query.offset === undefined ? 0 : Number(req.query.offset))));
 app.get("/shops", (_req, res) => res.json(store.shops()));
+app.get("/customers/lookup", (req, res) => {
+  if (typeof req.query.phone !== "string") return void res.status(400).json({ error: "Provide one international phone number" });
+  try { res.json(store.customerLookup(req.query.phone)); }
+  catch (error) {
+    if (error instanceof Error && error.message === "INVALID_CUSTOMER_PHONE") return void res.status(400).json({ error: "Provide a full international phone number" });
+    throw error;
+  }
+});
 app.post("/stock/adjust", (req, res) => res.json(store.adjust(req.body)));
+app.post("/customers/import", (req, res) => {
+  try { res.json(store.importCustomers(req.body?.customers)); }
+  catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message === "INVALID_CUSTOMERS" || message === "CUSTOMER_PHONE_CONFLICT") return void res.status(message === "CUSTOMER_PHONE_CONFLICT" ? 409 : 400).json({ error: message });
+    throw error;
+  }
+});
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const message = error instanceof Error ? error.message : "";
   const status = error instanceof ZodError || message === "INVALID_QUERY" || (error as { type?: string })?.type === "entity.parse.failed" ? 400 : message === "UNKNOWN_STOCK" ? 404 : ["STOCK_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_STOCK"].includes(message) ? 409 : 503;
