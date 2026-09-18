@@ -20,7 +20,7 @@ Keep real customer records and credentials in private runtime files, never Git.
 
 In JOHN CRM, add the GET endpoint in a staff-only Knowledge Base folder and
 enable Configurations → Integrations → Company channels → Existing customer matching.
-Map phone parameter `phone`, array `customers`, ID `id`, phone `phone`, name `name`.
+Map phone parameter `phone`, ID `id`, phone `phone`, name `name`. For an API Integration operation the array path is `result.customers`; a direct connector uses `customers`. Use a restricted space with no user types, regardless of its name.
 The company API remains authoritative. CRM stores a minimal routing reference
 and rechecks the source for each inbound message; it does not write back or onboard.
 
