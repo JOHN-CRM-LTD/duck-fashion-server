@@ -74,7 +74,7 @@ HTTPS on your own reverse proxy and forward to `127.0.0.1:4997`.
    | `apiKey` | Read credential John CRM sends as `Authorization: Bearer <key>`. |
    | `writeApiKey` | Optional second key required for `POST /stock/adjust`. Omit or remove the line to disable stock writes. |
    | `dataDirectory` | Absolute path to the `data` folder, e.g. `C:/duck-fashion-server/data` (forward slashes are fine). |
-   | `url` | The **public HTTPS origin** customers' image URLs are built from, e.g. `https://duck.example.com`. Must match what the reverse proxy serves. |
+   | `url` | The **public HTTPS base URL** customers' image URLs are built from, e.g. `https://duck.example.com` or `https://duckserver.johncrm.com/stock-api`. A proxy path prefix is preserved; a trailing slash is optional. Must match what the reverse proxy serves. No embedded credentials, query or fragment. |
 
 5. Start it and confirm it is listening on loopback only:
 
@@ -149,6 +149,14 @@ We update the John CRM integration (Knowledge Base → Duck Fashion inventory
 credential, run its adapter checks and activate. Reservation flows,
 shop master data and manager approvals stay in CRM and need no changes on
 your side.
+
+For a Duck Console deployment with its stock proxy enabled, use
+`https://duckserver.johncrm.com/stock-api` as both the CRM Base URL and this
+service's runtime `url`. The proxy must strip `/stock-api` when forwarding
+to `127.0.0.1:4997`, including image requests, and preserve the caller's
+Bearer credential. The console's root URL and login password are not the
+stock API URL or credential. Verify the proxy is deployed before switching
+CRM, then restart the stock service after changing its runtime `url`.
 
 ## Folder map
 
