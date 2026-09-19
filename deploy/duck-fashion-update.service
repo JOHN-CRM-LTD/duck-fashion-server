@@ -8,5 +8,5 @@ Type=oneshot
 User=plushii4854
 WorkingDirectory=/home/plushii4854/Documents/duck-fashion-server
 ExecStart=/home/plushii4854/Documents/duck-fashion-server/deploy/pull-update.sh
-# The timer retries every 5 minutes anyway; a failed fetch shouldn't spiral.
+# The timer retries every minute anyway; a failed fetch shouldn't spiral.
 Nice=10

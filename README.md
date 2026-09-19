@@ -11,7 +11,7 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
 ```
 
 - [CI-CD.md](CI-CD.md) — how GitHub Actions tests every push and how the Pi
-  auto-deploys every 5 minutes (with rollback)
+  auto-deploys every minute (with rollback)
 - [PI-SETUP.md](PI-SETUP.md) — full Pi walkthrough: Node 22, systemd,
   Cloudflare tunnel, wiring the CRM
 - [SERVER-SETUP.md](SERVER-SETUP.md) — API contract, auth model, endpoints

@@ -24,5 +24,5 @@ Map phone parameter `phone`, ID `id`, phone `phone`, name `name`. For an API Int
 The company API remains authoritative. CRM stores a minimal routing reference
 and rechecks the source for each inbound message; it does not write back or onboard.
 
-The Pi pulls `main` every five minutes. Deployment health checks cover stock
+The Pi pulls `main` every minute. Deployment health checks cover stock
 and customer lookup. CI uses synthetic members only and never contacts an AI provider.
