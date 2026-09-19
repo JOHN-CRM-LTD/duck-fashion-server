@@ -9,7 +9,7 @@ travel in two steps:
    endpoint checks in `deploy/smoke-test.sh`. A commit that breaks boot,
    auth, search, photos or stock adjustments never passes CI.
 2. **CD (the Pi pulls)** — `duck-fashion-update.timer` on the Pi runs
-   `deploy/pull-update.sh` every 5 minutes. If `main` has moved, the script
+   `deploy/pull-update.sh` every minute. If `main` has moved, the script
    fast-forwards, reinstalls dependencies when `package-lock.json` changed,
    restarts `duck-fashion.service`, health-checks `/shops` and **rolls the
    commit back automatically** if the service does not come up healthy.
@@ -17,7 +17,7 @@ travel in two steps:
 ```
 git push to main ──> GitHub Actions smoke test ──> main is green
                                                         │
-Pi timer (every 5 min) ── git fetch ── new commit? ─yes─> pull + npm ci + restart + health check
+Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm ci + restart + health check
                                                         └─ unhealthy? git reset back, restart, log
 ```
 

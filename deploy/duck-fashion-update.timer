@@ -1,10 +1,10 @@
 [Unit]
-Description=Check GitHub for Duck Fashion updates every 5 minutes
+Description=Check GitHub for Duck Fashion updates every 1 minute
 
 [Timer]
 OnBootSec=3min
-OnUnitActiveSec=5min
-AccuracySec=30s
+OnUnitActiveSec=1min
+AccuracySec=5s
 Persistent=true
 
 [Install]
