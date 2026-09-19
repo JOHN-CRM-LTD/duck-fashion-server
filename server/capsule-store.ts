@@ -12,6 +12,12 @@ import { verifiedMemberCode } from "./member-verification.js";
 export const capsuleAdjustment = z.object({ sku: z.string().regex(/^DF0[1-8]-(BUR|CRM|BLK)-(S|M|L)$/), locationId: z.enum(["PCL", "PCB", "SH015"]), delta: z.number().int().min(-1000).max(1000).refine(n => n !== 0), expectedVersion: z.number().int().min(1).max(2147483646), reason: z.string().trim().min(3).max(300), requestId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,99}$/) }).strict();
 
 export function openCapsule(directory: string, publicUrl: string) {
+  const baseUrl = new URL(publicUrl);
+  if (!["https:", "http:"].includes(baseUrl.protocol) || baseUrl.username || baseUrl.password || baseUrl.search || baseUrl.hash) {
+    throw new Error("Public API URL must be an HTTP(S) base URL without credentials, query or fragment");
+  }
+  // Keep a reverse proxy's path prefix when constructing public photo links.
+  const publicBase = `${baseUrl.origin}${baseUrl.pathname.replace(/\/+$/, "")}`;
   const path = join(directory, "duck-fashion.sqlite");
   if (!existsSync(path)) throw new Error("Seed the capsule database first");
   const db = new DatabaseSync(path);
@@ -22,10 +28,9 @@ export function openCapsule(directory: string, publicUrl: string) {
   // idempotent and transactional: it only inserts missing demo rows and never
   // resets an existing ledger, so live redemptions survive restarts.
   seedBonus(db);
-  const origin = new URL(publicUrl).origin;
   const decorate = (document: string) => {
     const p = JSON.parse(document);
-    return { ...p, images: (p.images ?? []).map((photo: any)=>({...photo,imageUrl:`${origin}/images/${photo.imageFile}`})), imageUrl: p.imageFile ? `${origin}/images/${p.imageFile}` : null, productUrl: p.imageFile ? `${origin}/images/${p.imageFile}` : null };
+    return { ...p, images: (p.images ?? []).map((photo: any)=>({...photo,imageUrl:`${publicBase}/images/${photo.imageFile}`})), imageUrl: p.imageFile ? `${publicBase}/images/${p.imageFile}` : null, productUrl: p.imageFile ? `${publicBase}/images/${p.imageFile}` : null };
   };
   const search = (query: string, limit = 30, offset = 0) => {
     if (!Number.isSafeInteger(offset) || offset < 0 || offset > 1000) throw new Error("INVALID_QUERY");
