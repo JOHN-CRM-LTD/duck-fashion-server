@@ -48,11 +48,27 @@ test("Pi HTTP API authenticates bounded browsing and keeps exact lookup separate
     const second = await (await read("?mode=browse&offset=2&limit=2")).json();
     assert.equal(new Set([...first.customers, ...second.customers].map(c => c.id)).size, 4);
     const all = await (await read("?mode=browse&limit=50")).json();
-    assert.equal(all.customers.length, 8);
+    assert.equal(all.customers.length, 6);
+    assert.ok(all.customers.every((row: any) => typeof row.membershipPoints === "number" && !row.id.startsWith("DF-DEMO-")));
     assert.equal(all.hasMore, false);
     const lookup = await (await read(`?phone=${encodeURIComponent(first.customers[0].phone)}`)).json();
     assert.equal(lookup.customers[0].id, first.customers[0].id);
     assert.equal(lookup.complete, true);
+    const personalRead = (path: string, member: string, phone?: string) => fetch(`http://127.0.0.1:4997/bonus/${path}?${new URLSearchParams({ member, ...(phone === undefined ? {} : { phone }) })}`, { headers: { Authorization: `Bearer ${apiKey}` } });
+    const matched = all.customers[0];
+    const balanceResponse = await personalRead("balance", matched.id, matched.phone);
+    assert.equal(balanceResponse.status, 200);
+    const balance = await balanceResponse.json();
+    assert.equal(balance.member.memberCode, matched.id);
+    assert.equal(balance.availablePoints, matched.membershipPoints);
+    for (const path of ["balance", "redeemables"]) {
+      for (const phone of [undefined, all.customers[1].phone, matched.phone.slice(-8)]) {
+        const denied = await personalRead(path, matched.id, phone);
+        assert.equal(denied.status, 403);
+        assert.deepEqual(await denied.json(), { error: "The member ID and registered phone number could not be verified" });
+      }
+      assert.equal((await personalRead(path, "DF-DEMO-AU", "+85261234591")).status, 403);
+    }
     const searched = await (await read(`?mode=browse&query=${encodeURIComponent(first.customers[0].id)}`)).json();
     assert.equal(searched.customers[0].id, first.customers[0].id);
     const empty = await (await read("?mode=browse&query=nonexistent-test-member")).json();

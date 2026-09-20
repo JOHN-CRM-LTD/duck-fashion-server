@@ -26,9 +26,14 @@ Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm
 - `data/duck-fashion.sqlite` — the **live** database (gitignored). Deploys
   swap code, not stock. A fresh clone rebuilds a pristine database with
   `npm run seed`. One deliberate exception: on every boot the service runs the
-  idempotent `seedBonus`, which only INSERTs missing member-bonus demo rows
-  (members, periods, redeemables, tiers) — it never resets the ledger, so
-  recorded redemptions survive restarts and deploys.
+  idempotent `seedBonus`. It creates missing bonus tables/periods, seeds the
+  fictional roster only for an empty database, adds missing fixture ledger entries
+  for existing demo member IDs and refreshes the demo rewards catalogue. Recorded
+  redemptions survive. It also preserves archive markers for DF-DEMO-AU/HK and
+  retains those accounts' history. The older DF1001–DF1004 fixture cleanup still
+  deletes those four retired demo IDs and their history. This is a demo-specific
+  initializer, not a migration for arbitrary enterprise data. Back up before a
+  first upgrade; never run `npm run seed` against the live database.
 - The deploy health check covers `/shops`, `/customers/lookup` and
   `/bonus/cash-scheme`; an unhealthy service rolls the commit back.
 - `.local-duck/live-connection.json` — the read/write keys (gitignored),
@@ -61,6 +66,9 @@ exactly one command without a password: `systemctl restart duck-fashion.service`
   reinstalls automatically — no manual steps.
 - If the working tree on the Pi is dirty, the updater refuses to deploy and
   logs the reason. Keep the Pi checkout clean: make changes via GitHub.
+- Pulling code does not import location records, provision the staff read key or
+  select Knowledge Base sources. Follow [finalize-johncrm.md](docs/finalize-johncrm.md)
+  once for the current Duck deployment. The timer does not wait for GitHub CI.
 
 ## First setup on a new Pi (summary)
 

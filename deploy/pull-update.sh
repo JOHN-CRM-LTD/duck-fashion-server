@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # CI/CD pull deploy for the Duck Fashion Pi.
 #
-# Runs every few minutes from duck-fashion-update.timer (and can be run by
+# Runs every minute from duck-fashion-update.timer (and can be run by
 # hand). It checks GitHub for new commits on main and, when one arrives:
 # fast-forward pulls it, reinstalls dependencies if the lockfile changed,
 # restarts the duck-fashion service, health-checks it, and rolls the commit

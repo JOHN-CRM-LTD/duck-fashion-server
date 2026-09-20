@@ -14,6 +14,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { bonusRedeemableSeed } from "./bonus-store.js";
+import { migrateCustomerDirectory } from "./customer-directory.js";
 
 // Synthetic roster (fictional +852 6123 45xx numbers, matching the examples
 // in CUSTOMER-MATCHING.md). On a live machine these rows already exist with
@@ -25,8 +26,6 @@ const members = [
   { member_code: "DF1008", name: "Example member eight", name_zh: null, grade: "Bronze Feather", mobile: "+852 6123 4508", joined_on: "2025-10-02" },
   { member_code: "DF1009", name: "Example member nine", name_zh: null, grade: "Gold Feather", mobile: "+852 6123 4509", joined_on: "2023-07-30" },
   { member_code: "DF1010", name: "Example member ten", name_zh: null, grade: "Silver Feather", mobile: "+852 6123 4510", joined_on: "2025-03-15" },
-  { member_code: "DF-DEMO-AU", name: "Chat demo customer AU", name_zh: null, grade: "Duckling", mobile: "+852 6123 4591", joined_on: "2026-09-18" },
-  { member_code: "DF-DEMO-HK", name: "Chat demo customer HK", name_zh: null, grade: "Duckling", mobile: "+852 6123 4592", joined_on: "2026-09-18" },
 ];
 // The fictional +852 9123 000X series is retired; the seed removes those
 // members and their history wherever they were imported earlier.
@@ -48,10 +47,6 @@ const ledger = [
   { member_code: "DF1009", period: "2026A", entry_type: "redeem_cash", points: -500, trx_date: "2026-06-30", note: "Converted to $5 store cash" },
   { member_code: "DF1009", period: "2026B", entry_type: "earn", points: 540, trx_date: "2026-09-06", note: "Hoodie" },
   { member_code: "DF1010", period: "2026B", entry_type: "earn", points: 720, trx_date: "2026-07-19", note: "Visit pickup: hoodie + tee" },
-  // The two chat-demo customers: AU stays short of the cheapest redeemable,
-  // HK lands in the expiring-soon window.
-  { member_code: "DF-DEMO-AU", period: "2026B", entry_type: "earn", points: 260, trx_date: "2026-09-17", note: "Demo purchase: cap + tee" },
-  { member_code: "DF-DEMO-HK", period: "2026A", entry_type: "earn", points: 150, trx_date: "2026-05-12", note: "First demo purchase" },
 ];
 const tiers = [
   { min_points: 100, cash_value: 1 },
@@ -65,6 +60,7 @@ const extraRedeemables = [
 ];
 
 export function seedBonus(db: DatabaseSync) {
+  migrateCustomerDirectory(db);
   db.exec(`
 CREATE TABLE IF NOT EXISTS bonus_members(member_code TEXT PRIMARY KEY,name TEXT NOT NULL,name_zh TEXT,grade TEXT NOT NULL CHECK(grade IN ('Duckling','Bronze Feather','Silver Feather','Gold Feather')),mobile TEXT,joined_on TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS bonus_periods(period TEXT PRIMARY KEY,earn_from TEXT NOT NULL,earn_to TEXT NOT NULL,expires_on TEXT NOT NULL);
@@ -74,6 +70,9 @@ CREATE TABLE IF NOT EXISTS bonus_cash_tiers(min_points INTEGER PRIMARY KEY,cash_
 `);
   db.exec("BEGIN IMMEDIATE");
   try {
+    // Retire the two requested demo accounts without erasing their stored history.
+    // The marker is persistent and ordinary imports/seeding cannot reactivate it.
+    for (const code of ["DF-DEMO-AU", "DF-DEMO-HK"]) db.prepare("INSERT INTO bonus_archived_members(member_code,archived_at) VALUES(?,?) ON CONFLICT(member_code) DO NOTHING").run(code, new Date().toISOString());
     for (const code of retiredMembers) {
       db.prepare("DELETE FROM bonus_ledger WHERE member_code = ?").run(code);
       db.prepare("DELETE FROM bonus_members WHERE member_code = ?").run(code);
@@ -86,7 +85,7 @@ CREATE TABLE IF NOT EXISTS bonus_cash_tiers(min_points INTEGER PRIMARY KEY,cash_
     // Demo history is only written for member codes that exist in this
     // database, so a live machine's imported roster drives what resolves and
     // the foreign keys on bonus_ledger always hold.
-    const present = new Set((db.prepare("SELECT member_code code FROM bonus_members").all() as unknown as { code: string }[]).map(row => row.code));
+    const present = new Set((db.prepare("SELECT member_code code FROM active_bonus_members").all() as unknown as { code: string }[]).map(row => row.code));
     // Per-entry idempotency: re-running on an already-seeded database adds
     // only new demo rows and never duplicates or resets existing history.
     const insertLedger = db.prepare("INSERT INTO bonus_ledger(member_code,period,entry_type,points,trx_date,note) SELECT ?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM bonus_ledger WHERE member_code=? AND trx_date=? AND entry_type=? AND points=? AND note IS ?)");

@@ -9,8 +9,8 @@ test("seeds members, periods, ledger, redeemables and tiers idempotently", () =>
   const db = new DatabaseSync(":memory:");
   try {
     const first = seedBonus(db);
-    assert.equal(first.members, 8);
-    assert.equal(first.ledger, 13);
+    assert.equal(first.members, 6);
+    assert.equal(first.ledger, 11);
     assert.equal(first.redeemables, 9);
     assert.equal(first.tiers, 3);
     const second = seedBonus(db);
@@ -18,7 +18,7 @@ test("seeds members, periods, ledger, redeemables and tiers idempotently", () =>
   } finally { db.close(); }
 });
 
-test("balances resolve by code, mobile form and the chat-demo members", () => {
+test("staff balances resolve active members while retired demo accounts stay unavailable", () => {
   const db = new DatabaseSync(":memory:");
   try {
     seedBonus(db);
@@ -31,15 +31,10 @@ test("balances resolve by code, mobile form and the chat-demo members", () => {
     assert.equal(byCode.availablePoints, 1360);
     const byLocalMobile = bonusBalance(db, "61234505", now);
     assert.equal(byLocalMobile.member.memberCode, "DF1005");
-    // The chat-demo members carry working balances: AU short of the cheapest
-    // redeemable, HK inside the expiring-soon window.
-    const demoAu = bonusBalance(db, "+852 6123 4591", now);
-    assert.equal(demoAu.member.memberCode, "DF-DEMO-AU");
-    assert.equal(demoAu.availablePoints, 260);
-    const demoHk = bonusBalance(db, "+85261234592", now);
-    assert.equal(demoHk.member.memberCode, "DF-DEMO-HK");
-    assert.equal(demoHk.availablePoints, 150);
-    assert.equal(demoHk.expiringSoon.date, "2026-10-31");
+    assert.equal(byCode.expiringSoon.date, "2026-10-31");
+    for (const retired of ["DF-DEMO-AU", "DF-DEMO-HK", "+85261234591", "+85261234592"]) {
+      assert.throws(() => bonusBalance(db, retired, now), /UNKNOWN_MEMBER/);
+    }
     assert.throws(() => bonusBalance(db, "DF1001", now), /UNKNOWN_MEMBER/);
     assert.throws(() => bonusBalance(db, "NOBODY99", now), /UNKNOWN_MEMBER/);
   } finally { db.close(); }
@@ -71,9 +66,9 @@ test("redeemables personalise affordability and the cash scheme keeps its tiers"
     assert.equal(forGold.items.length, 9);
     assert.equal(forGold.items[0].affordable, true);
     assert.equal(forGold.items.find(item => item.itemCode === "GIFT-DF01")?.affordable, false);
-    // The AU chat-demo member cannot yet afford the cheapest redeemable (320 PTS).
-    const forDemoAu = bonusRedeemables(db, "+85261234591", now);
-    assert.equal(forDemoAu.items.every(item => !item.affordable), true);
+    // This active member cannot yet afford the cheapest redeemable (320 PTS).
+    const forDuckling = bonusRedeemables(db, "DF1007", now);
+    assert.equal(forDuckling.items.every(item => !item.affordable), true);
     const anonymous = bonusRedeemables(db, undefined, now);
     assert.equal(anonymous.availablePoints, null);
     const scheme = bonusCashScheme(db, now);

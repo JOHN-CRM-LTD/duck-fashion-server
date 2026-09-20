@@ -16,13 +16,13 @@ export function findBonusMember(db: DatabaseSync, reference: string) {
   const ref = reference.trim();
   if (!ref || ref.length > 120) throw new Error("INVALID_MEMBER");
   type Member = { code: string; name: string; nameZh: string | null; grade: string; mobile: string | null };
-  const byCode = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM bonus_members WHERE member_code = ? COLLATE NOCASE").get(ref);
+  const byCode = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM active_bonus_members WHERE member_code = ? COLLATE NOCASE").get(ref);
   if (byCode) return { match: byCode as Member };
   // Mobile matching in JS: digit-stripped equality, then the last 8 digits so
   // "+852 6123 4505", "85261234505" and "61234505" all find the same member.
   const refDigits = digits(ref);
   if (refDigits.length >= 8) {
-    const everyone = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM bonus_members").all() as unknown as Member[];
+    const everyone = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM active_bonus_members").all() as unknown as Member[];
     const normalized = everyone.filter(m => m.mobile && digits(m.mobile).length >= 8).map(m => ({ member: m, digits: digits(m.mobile!) }));
     const exact = normalized.find(m => m.digits === refDigits);
     if (exact) return { match: exact.member };
@@ -30,16 +30,16 @@ export function findBonusMember(db: DatabaseSync, reference: string) {
     if (tail.length === 1) return { match: tail[0].member };
     if (tail.length > 1) throw Object.assign(new Error("AMBIGUOUS_MEMBER"), { candidates: tail.map(t => t.member) });
   }
-  const byName = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM bonus_members WHERE name = ? COLLATE NOCASE OR name_zh = ? COLLATE NOCASE").all(ref, ref) as unknown as Member[];
+  const byName = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM active_bonus_members WHERE name = ? COLLATE NOCASE OR name_zh = ? COLLATE NOCASE").all(ref, ref) as unknown as Member[];
   if (byName.length === 1) return { match: byName[0] };
-  const partial = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM bonus_members WHERE name LIKE ? COLLATE NOCASE OR name_zh LIKE ? COLLATE NOCASE").all(`%${ref}%`, `%${ref}%`) as unknown as Member[];
+  const partial = db.prepare("SELECT member_code code, name, name_zh nameZh, grade, mobile FROM active_bonus_members WHERE name LIKE ? COLLATE NOCASE OR name_zh LIKE ? COLLATE NOCASE").all(`%${ref}%`, `%${ref}%`) as unknown as Member[];
   const candidates = [...new Map([...byName, ...partial].map(m => [m.code, m])).values()];
   if (candidates.length > 1) throw Object.assign(new Error("AMBIGUOUS_MEMBER"), { candidates });
   if (candidates.length === 1) return { match: candidates[0] };
   return { match: null };
 }
 
-function memberBalance(db: DatabaseSync, code: string, now: Date) {
+export function memberBalance(db: DatabaseSync, code: string, now: Date) {
   const rows = db.prepare("SELECT l.period, SUM(l.points) points, p.expires_on FROM bonus_ledger l JOIN bonus_periods p ON p.period = l.period WHERE l.member_code = ? GROUP BY l.period, p.expires_on ORDER BY p.expires_on").all(code) as LedgerRow[];
   let availablePoints = 0;
   const periods = rows.map(row => {

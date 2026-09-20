@@ -10,4 +10,4 @@ if (!config.staffReadApiKey) {
   renameSync(path + ".tmp", path);
   chmodSync(path, 0o600);
 }
-console.log("Staff read key is configured. Enter it only in the private CRM's encrypted endpoint credential field. No write permission is granted.");
+console.log("Staff read key is configured. Enter it only in the CRM's encrypted staff-only endpoint credential field. No write permission is granted.");

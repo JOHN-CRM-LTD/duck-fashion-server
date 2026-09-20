@@ -105,8 +105,10 @@ HTTPS on your own reverse proxy and forward to `127.0.0.1:4997`.
 
 ## API summary
 
-All endpoints except the whitelisted images require
-`Authorization: Bearer <apiKey>` (or the write key).
+All endpoints except the whitelisted images require a Bearer credential.
+Use `apiKey` for ordinary reads and `staffReadApiKey` for private manager/location
+reads. `writeApiKey` is reserved for Pi-side staff administration; never give it
+to John CRM.
 
 | Method & path | Purpose |
 | --- | --- |
@@ -116,27 +118,33 @@ All endpoints except the whitelisted images require
 | `POST /stock/adjust` | Staff stock adjustment. Requires the **write** key. Idempotent by `requestId`; rejects stale `expectedVersion` with `409 STOCK_CONFLICT`. |
 | `GET /bonus/balance?member=...&phone=...` | Points for an exact member ID and matching registered full international phone. Missing or mismatched identity returns 403 without candidate information. |
 | `GET /bonus/redeemables?member=...&phone=...` | Rewards catalog; personal affordability requires the same member ID/phone pair. Omit both for the generic catalog. |
-| `GET /managers` | Staff-only shop manager directory, using the write key. Demo defaults send all three shops to +85296540199; a private managers.json can override them. |
+| `GET /managers` | Staff-only shop manager directory, using the separate read-only `staffReadApiKey`. A private managers.json provides the Pi-owned assignments. Never give CRM the write key. |
+| `GET /shops?mode=locations&offset=0&limit=50` | Staff-only location directory, using `staffReadApiKey`; returns `locations`, `hasMore`, `revision`. Includes Pi-owned address/manager details. See [finalization](docs/finalize-johncrm.md). |
 | `GET /bonus/cash-scheme` | The Bonus-as-Cash conversion scheme: base ratio and tier table. |
 | `GET /customers/lookup?phone=...` / `POST /customers/import` | Existing-customer matching against the shared member table — see [CUSTOMER-MATCHING.md](CUSTOMER-MATCHING.md). |
+| `GET /customers/lookup?mode=browse&offset=0&limit=50` | Authenticated staff Users source: bounded customer pages with current ledger-derived `membershipPoints`, excluding archived accounts. CRM's Knowledge Base directory must stay staff-only. |
 | `GET /images/<file>.png` | Only the whitelisted product photos (30 files, all three colours) are served; everything else 404s. |
 
 ## Backup and restore
 
-- **Backup**: stop the service (or accept a tiny crash-consistency risk) and
-  copy `data\duck-fashion.sqlite`. Optionally also keep `catalog.json` and
-  `availability-matrix.json` (readable exports; editing them does not change
-  the database).
-- **Restore**: stop the service, put the saved `.sqlite` file back, start.
+- **Backup**: use SQLite's backup API for a consistent snapshot of the running
+  database, or stop every writer and checkpoint before copying it. Never copy
+  only the live main file while ignoring its WAL. Store backups and private
+  configuration/manager files in a restricted directory outside Git.
+- **Restore**: stop all writers and the updater, preserve the current database and
+  sidecars, then restore the consistent snapshot without reusing stale WAL/SHM
+  files. Verify integrity, counts and permissions before restarting and resuming
+  the updater. Editing catalogue JSON does not edit the live database.
 - The service keeps its own audit trail of adjustments in the `stock_changes`
   table inside the same file.
 
 ## Security notes
 
-- The read and write keys are the only credentials. Keep
-  `.local-duck\live-connection.json` out of backups you share and out of
-  source control. Rotating a key = edit the file, restart the service, update
-  the credential in John CRM.
+- Keep the ordinary read, staff read and staff write keys distinct. Keep
+  `.local-duck\live-connection.json` out of shared backups and source control.
+  Coordinate read-key rotations with CRM's encrypted endpoint credentials and
+  restart the service. A write-key rotation affects Pi-side staff tools only;
+  it must never add write access to CRM.
 - The service binds `127.0.0.1` only, sets `no-store` on API responses, and
   never exposes the database, JSON exports or config over HTTP.
 - Nothing in this bundle phones home; the only outbound dependency is none —
@@ -144,15 +152,18 @@ All endpoints except the whitelisted images require
 
 ## After the server is running (CRM side — we do this)
 
-We update the John CRM integration (Knowledge Base → Duck Fashion inventory
-→ Duck Fashion local stock) with the new public Base URL and the new read
-credential, run its adapter checks and activate. Reservation flows,
-shop master data and manager approvals stay in CRM and need no changes on
-your side.
+Connect and activate the existing inventory, customer and loyalty endpoints, plus
+the staff-only location source, using [the finalization guide](docs/finalize-johncrm.md).
+Shop master data and manager details live on the Pi. Duck's chats stay on
+DigitalOcean with the last 20 messages per chat. Existing reservations and other
+historical business data need their own migration/cleanup; do not bypass residency
+guards or claim that changing an endpoint has moved those records.
 
 For a Duck Console deployment with its stock proxy enabled, use
-`https://duckserver.johncrm.com/stock-api` as both the CRM Base URL and this
-service's runtime `url`. The proxy must strip `/stock-api` when forwarding
+`https://duckserver.johncrm.com/stock-api` as this service's runtime `url` and the
+prefix for standalone CRM endpoints. Integration bundles require origin-only
+`baseUrl` (`https://duckserver.johncrm.com`) and `/stock-api/...` request paths.
+The proxy must strip `/stock-api` when forwarding
 to `127.0.0.1:4997`, including image requests, and preserve the caller's
 Bearer credential. The console's root URL and login password are not the
 stock API URL or credential. Verify the proxy is deployed before switching
