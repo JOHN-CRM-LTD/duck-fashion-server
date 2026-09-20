@@ -16,6 +16,8 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
   Cloudflare tunnel, wiring the CRM
 - [SERVER-SETUP.md](SERVER-SETUP.md) — API contract, auth model, endpoints
 - [DEMO-README.md](DEMO-README.md) — the demo collection itself
+- [docs/private-crm.md](docs/private-crm.md) — source-owned locations and the
+  separate enterprise CRM deployment and cutover
 
 ## Quick start
 

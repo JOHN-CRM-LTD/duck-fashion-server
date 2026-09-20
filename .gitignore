@@ -3,9 +3,13 @@ node_modules/
 
 # Live secrets — generated on each machine by deploy/create-config.sh
 .local-duck/live-connection.json
+.local-duck/live-connection.json.tmp
 .local-duck/*customers*.json
 .local-duck/pi-connection.json
 .local-duck/managers.json
+.local-duck/*locations*.json
+deploy/private-crm.env
+deploy/.env
 
 # Live database — stock adjustments happen on the Pi and must never be
 # overwritten by a deploy. A fresh clone recreates it with: npm run seed

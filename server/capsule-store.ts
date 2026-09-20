@@ -8,6 +8,7 @@ import { browseCustomers, importCustomers, lookupCustomer, migrateCustomerDirect
 import { bonusBalance, bonusRedeemables, bonusCashScheme } from "./bonus-store.js";
 import { seedBonus } from "./bonus-seed.js";
 import { verifiedMemberCode } from "./member-verification.js";
+import { migrateLocationDirectory, browseLocationDirectory } from "./location-directory.js";
 
 export const capsuleAdjustment = z.object({ sku: z.string().regex(/^DF0[1-8]-(BUR|CRM|BLK)-(S|M|L)$/), locationId: z.enum(["PCL", "PCB", "SH015"]), delta: z.number().int().min(-1000).max(1000).refine(n => n !== 0), expectedVersion: z.number().int().min(1).max(2147483646), reason: z.string().trim().min(3).max(300), requestId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,99}$/) }).strict();
 
@@ -23,6 +24,7 @@ export function openCapsule(directory: string, publicUrl: string) {
   const db = new DatabaseSync(path);
   db.exec("PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;");
   migrateCustomerDirectory(db);
+  migrateLocationDirectory(db);
   // Seed the member-bonus demo tables on boot so a code-only deploy on the Pi
   // brings the loyalty endpoints up without a manual step. seedBonus is
   // idempotent and transactional: it only inserts missing demo rows and never
@@ -76,7 +78,8 @@ export function openCapsule(directory: string, publicUrl: string) {
       return { items: found.products.flatMap(p => stock.all(p.sku).map(s => ({ id: p.sku, name: p.name, variant: p.variant, quantity: s.quantity, locationId: s.locationId, stockVersion: s.stockVersion, imageUrl: found.total <= 9 ? p.imageUrl : null }))), totalProducts: found.total, hasMore: found.hasMore, stockMode: "snapshot", demo: true,
         guidance: "Fictional eight-style Duck Fashion demo; prices, materials, size guides and stock are demo values. Photos show the stated photoColor only, not every colour. Use native search_shop_inventory and reservation tools to deduct CRM holds/completed sales. Confirm exact size, colour, shop and future arrival time before requesting manager approval." + (found.hasMore ? " Narrow the search by item, size and colour to see all matching stock." : "") };
     },
-    shops() { return { shops: db.prepare("SELECT id,name FROM shops ORDER BY id").all(), guidance: "Use John CRM shop settings for current hours, address, manager and pickup rules." }; },
+    locations: (offset?: unknown, limit?: unknown) => browseLocationDirectory(db, offset, limit),
+    shops() { return { shops: db.prepare("SELECT id,name FROM shops ORDER BY id").all(), guidance: "Use the authenticated locations directory for current hours, address, manager and pickup rules." }; },
     adjust(value: unknown) {
       const data = capsuleAdjustment.parse(value);
       const hash = createHash("sha256").update(JSON.stringify(data)).digest("hex");
