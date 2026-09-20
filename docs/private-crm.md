@@ -1,10 +1,17 @@
-# Private Duck CRM and the business API
+# Duck hosting choices and the business API
 
-The stock service in this repository is the **business data source**. It does not
-store CRM conversations, messages, reservations, attachments or sessions. To keep
-all company data on the enterprise server, run the John CRM application and its
-own PostgreSQL database alongside this service. The application reads this API;
-it does not receive a credential that can edit the business database.
+The stock service in this repository is the **business data source**. Duck's
+approved setup keeps shops, managers, addresses, customer identities and bonus
+ledgers on the Pi. John CRM reads them through Knowledge Base API endpoints.
+Duck's customer chats stay on John CRM / DigitalOcean, retaining the last 20
+sent/received messages per chat. Do not deploy a private CRM or move Duck's chat
+webhooks as part of this setup. See [finalize-johncrm.md](finalize-johncrm.md).
+
+The stock service does not store CRM messages, reservations, attachments or
+sessions. Enterprises choosing private operational storage can separately run
+John CRM and its PostgreSQL database on their own infrastructure, as described
+below. In either model CRM receives no credential that can edit the business
+database. Business API selection and chat hosting are independent settings.
 
 ## Locations on the Pi
 
@@ -22,7 +29,8 @@ customers or different existing location records. For an enterprise with 300
 shops, pass a private JSON array file instead. Their API can implement the same
 contract directly without any manual entry in CRM. Never commit a real directory.
 
-Configure a staff-only Knowledge Base endpoint in the **private CRM**:
+Configure a staff-only Knowledge Base endpoint in the selected CRM deployment
+(the shared DigitalOcean deployment for Duck):
 
 - GET `https://duckserver.johncrm.com/stock-api/shops?mode=locations`.
 - Bearer credential: `staffReadApiKey` from the private configuration file.
@@ -40,7 +48,7 @@ a stable positive numeric `id`, stable `inventoryLocationId`, and
 `acceptsReservations`. Reservation acceptance defaults to false. Private manager
 phones are operational details and must not be published in a customer endpoint.
 
-## Private application deployment
+## Optional private application deployment for other hosting policies
 
 Use the John CRM repository's `deploy/enterprise/compose.yml`, Dockerfile,
 `private.env.example` and `scripts/enterprise-bind.ts`. The application is a

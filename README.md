@@ -16,7 +16,9 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
   Cloudflare tunnel, wiring the CRM
 - [SERVER-SETUP.md](SERVER-SETUP.md) — API contract, auth model, endpoints
 - [DEMO-README.md](DEMO-README.md) — the demo collection itself
-- [docs/private-crm.md](docs/private-crm.md) — source-owned locations and the
+- [docs/finalize-johncrm.md](docs/finalize-johncrm.md) — finalize Duck's Pi business
+  APIs, CRM location/points display and WhatsApp matching; chats remain on DigitalOcean
+- [docs/private-crm.md](docs/private-crm.md) — hosting choices and the optional
   separate enterprise CRM deployment and cutover
 
 ## Quick start
@@ -30,5 +32,7 @@ npm run seed:bonus   # optional — the member-bonus tables are also (re)seeded
 ```
 
 `data/duck-fashion.sqlite` and `.local-duck/live-connection.json` are
-gitignored on purpose: the first is live stock, the second holds the
-read/write keys. Neither ever leaves the machine they live on.
+gitignored on purpose: the first is the live business database, the second holds
+the ordinary read, staff read and write keys. Keep the database and write key on
+the Pi; enter only the appropriate read credentials into CRM's encrypted endpoint
+settings. Keep backups private.

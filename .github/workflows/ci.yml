@@ -29,7 +29,10 @@ jobs:
         run: npm run seed
 
       - name: Generate throwaway connection keys
-        run: bash deploy/create-config.sh https://duck-fashion-ci.invalid
+        run: |
+          bash deploy/create-config.sh https://duck-fashion-ci.invalid
+          node deploy/create-staff-read-key.mjs
+          node --import tsx server/import-locations.ts --demo
 
       - name: Boot the API and run endpoint checks
         run: bash deploy/smoke-test.sh

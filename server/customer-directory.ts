@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { memberBalance } from "./bonus-store.js";
 
 const normalizedMobile = "replace(replace(replace(replace(replace(replace(mobile,' ',''),'+',''),'-',''),'(',''),')',''),'.','')";
 /** The bonus system's member table is the single source of customer identity. */
@@ -6,6 +7,8 @@ export function migrateCustomerDirectory(db: DatabaseSync) {
   db.exec("BEGIN IMMEDIATE");
   try {
     db.exec("CREATE TABLE IF NOT EXISTS bonus_members(member_code TEXT PRIMARY KEY,name TEXT NOT NULL,name_zh TEXT,grade TEXT NOT NULL CHECK(grade IN ('Duckling','Bronze Feather','Silver Feather','Gold Feather')),mobile TEXT,joined_on TEXT NOT NULL)");
+    db.exec("CREATE TABLE IF NOT EXISTS bonus_archived_members(member_code TEXT PRIMARY KEY,archived_at TEXT NOT NULL)");
+    db.exec("CREATE VIEW IF NOT EXISTS active_bonus_members AS SELECT m.* FROM bonus_members m WHERE NOT EXISTS (SELECT 1 FROM bonus_archived_members a WHERE a.member_code=m.member_code)");
     // Do not silently merge people or change existing balances if source data is ambiguous.
     db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS bonus_members_unique_mobile ON bonus_members(${normalizedMobile}) WHERE mobile IS NOT NULL AND ${normalizedMobile} <> ''`);
     db.exec("COMMIT");
@@ -29,8 +32,10 @@ export function importCustomers(db: DatabaseSync, value: unknown) {
   try {
     // Existing member metadata and all bonus ledger entries are preserved.
     const put = db.prepare("INSERT INTO bonus_members(member_code,name,mobile,name_zh,grade,joined_on) VALUES(?,?,?,?,?,?) ON CONFLICT(member_code) DO UPDATE SET name=excluded.name,mobile=excluded.mobile");
+    // Archived members still own their stored phone numbers under the unique index.
+    const ownerQuery = db.prepare(`SELECT member_code id FROM bonus_members WHERE ${normalizedMobile}=? LIMIT 2`);
     for (const row of rows) {
-      const owners = lookupCustomer(db, row.phone).customers;
+      const owners = ownerQuery.all(row.phone.slice(1)) as { id: string }[];
       if (owners.some(owner => owner.id !== row.id)) throw new Error("CUSTOMER_PHONE_CONFLICT");
       put.run(row.id, row.name, row.phone, row.nameZh, row.grade, row.joinedOn);
     }
@@ -47,14 +52,14 @@ function internationalPhone(value: unknown): string | null {
 export function lookupCustomer(db: DatabaseSync, rawPhone: unknown) {
   const phone = internationalPhone(rawPhone);
   if (!phone) throw new Error("INVALID_CUSTOMER_PHONE");
-  const rows = db.prepare(`SELECT member_code id,name,mobile phone FROM bonus_members WHERE ${normalizedMobile}=? LIMIT 2`)
+  const rows = db.prepare(`SELECT member_code id,name,mobile phone FROM active_bonus_members WHERE ${normalizedMobile}=? LIMIT 2`)
     .all(phone.slice(1)) as { id: string; name: string; phone: string }[];
   // Return both on ambiguity so CRM refuses to assign either identity.
   return { customers: rows.map(row => ({ ...row, phone: internationalPhone(row.phone) })), complete: true };
 }
 
 /** Staff Users view. Independent of the exact-phone identity lookup; never writes. */
-export function browseCustomers(db: DatabaseSync, input: { query?: unknown; offset?: unknown; limit?: unknown }) {
+export function browseCustomers(db: DatabaseSync, input: { query?: unknown; offset?: unknown; limit?: unknown }, now = new Date()) {
   const integer = (value: unknown, fallback: number, min: number, max: number) => {
     if (value === undefined) return fallback;
     if (!(typeof value === "number" || typeof value === "string" && /^\d+$/.test(value))) throw new Error("INVALID_CUSTOMER_SEARCH");
@@ -68,12 +73,12 @@ export function browseCustomers(db: DatabaseSync, input: { query?: unknown; offs
   // instr treats wildcard characters literally; bound parameters keep SQL separate.
   const phoneQuery = /^[+\d\s().-]+$/.test(query) ? query.replace(/[+\s().-]/g, "") : "";
   const rows = db.prepare(`SELECT member_code id,name,name_zh nameZh,grade,mobile phone,joined_on joinedOn
-    FROM bonus_members WHERE ? = '' OR instr(lower(member_code),lower(?)) > 0
+    FROM active_bonus_members WHERE ? = '' OR instr(lower(member_code),lower(?)) > 0
       OR instr(lower(name),lower(?)) > 0 OR instr(coalesce(name_zh,''),?) > 0
       OR (? <> '' AND instr(${normalizedMobile},?) > 0)
     ORDER BY member_code LIMIT ? OFFSET ?`)
     .all(query, query, query, query, phoneQuery, phoneQuery, limit + 1, offset) as {
       id: string; name: string; nameZh: string | null; grade: string; phone: string | null; joinedOn: string;
     }[];
-  return { customers: rows.slice(0, limit).map(row => ({ ...row, phone: internationalPhone(row.phone) })), offset, hasMore: rows.length > limit };
+  return { customers: rows.slice(0, limit).map(row => ({ ...row, phone: internationalPhone(row.phone), membershipPoints: memberBalance(db, row.id, now).availablePoints })), offset, hasMore: rows.length > limit };
 }
