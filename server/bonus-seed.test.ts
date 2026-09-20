@@ -63,7 +63,7 @@ test("redeemables personalise affordability and the cash scheme keeps its tiers"
     seedBonus(db);
     const now = new Date("2026-09-18T12:00:00Z");
     const forGold = bonusRedeemables(db, "DF1005", now);
-    assert.equal(forGold.items.length, 9);
+    assert.equal(forGold.items.length, 11);
     assert.equal(forGold.items[0].affordable, true);
     assert.equal(forGold.items.find(item => item.itemCode === "GIFT-DF01")?.affordable, false);
     // This active member cannot yet afford the cheapest redeemable (320 PTS).

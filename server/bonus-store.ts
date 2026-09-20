@@ -82,13 +82,17 @@ export function bonusRedeemables(db: DatabaseSync, reference: string | undefined
     availablePoints = memberBalance(db, match.code, now).availablePoints;
   }
   const items = (db.prepare("SELECT item_code, item_name, unit_price, points_needed FROM bonus_redeemables WHERE active = 1 ORDER BY points_needed, item_code").all() as { item_code: string; item_name: string; unit_price: number; points_needed: number }[])
-    .map(row => ({ itemCode: row.item_code, itemName: row.item_name, unitPrice: Number(row.unit_price), pointsNeeded: Number(row.points_needed), affordable: availablePoints == null ? null : availablePoints >= Number(row.points_needed) }));
+    .map(row => ({ itemCode: row.item_code, itemName: row.item_name, unitPrice: Number(row.unit_price), pointsNeeded: Number(row.points_needed), couponAmount: Number(row.unit_price), rewardType: "item_voucher", affordable: availablePoints == null ? null : availablePoints >= Number(row.points_needed) }));
+  const coupons = db.prepare("SELECT reward_id,description,points,amount FROM bonus_coupon_rewards WHERE active=1 ORDER BY points").all() as { reward_id: string; description: string; points: number; amount: number }[];
+  items.push(...coupons.map(row => ({ itemCode: row.reward_id, itemName: row.description, unitPrice: row.amount, couponAmount: row.amount,
+    pointsNeeded: row.points, rewardType: "cash_coupon", affordable: availablePoints == null ? null : availablePoints >= row.points })));
   return {
     member,
     availablePoints,
     items,
+    currency: "HKD",
     checkedAt: now.toISOString(),
-    guidance: "List each item with its name, code and the bonus points needed. When a member balance is present, say clearly which items they can already afford and how many more points the others need. Points-needed values are exact; do not invent items or prices.",
+    guidance: "List names, codes and exact point costs. Members can exchange points for an item voucher or one of the listed cash coupons after confirming the exact reward and deduction in chat. Coupons expire 30 days after issue. Item vouchers do not reserve stock. Only show personal affordability when a verified member balance is present. Never invent prices, points or a coupon code.",
   };
 }
 

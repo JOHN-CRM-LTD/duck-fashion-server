@@ -15,6 +15,7 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { bonusRedeemableSeed } from "./bonus-store.js";
 import { migrateCustomerDirectory } from "./customer-directory.js";
+import { migrateBonusCoupons } from "./bonus-coupons.js";
 
 // Synthetic roster (fictional +852 6123 45xx numbers, matching the examples
 // in CUSTOMER-MATCHING.md). On a live machine these rows already exist with
@@ -68,6 +69,7 @@ CREATE TABLE IF NOT EXISTS bonus_ledger(id INTEGER PRIMARY KEY AUTOINCREMENT,mem
 CREATE TABLE IF NOT EXISTS bonus_redeemables(item_code TEXT PRIMARY KEY,item_name TEXT NOT NULL,unit_price REAL NOT NULL,points_needed INTEGER NOT NULL CHECK(points_needed > 0),active INTEGER NOT NULL DEFAULT 1);
 CREATE TABLE IF NOT EXISTS bonus_cash_tiers(min_points INTEGER PRIMARY KEY,cash_value REAL NOT NULL CHECK(cash_value > 0));
 `);
+  migrateBonusCoupons(db);
   db.exec("BEGIN IMMEDIATE");
   try {
     // Retire the two requested demo accounts without erasing their stored history.
