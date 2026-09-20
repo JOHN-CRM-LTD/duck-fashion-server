@@ -10,12 +10,14 @@ import { randomBytes } from "node:crypto";
 test("Pi HTTP API authenticates bounded browsing and keeps exact lookup separate", { timeout: 15000 }, async () => {
   const directory = mkdtempSync(join(tmpdir(), "duck-customer-api-test-"));
   const apiKey = randomBytes(32).toString("hex");
+  const staffReadApiKey = randomBytes(32).toString("hex");
   const tsx = import.meta.resolve("tsx");
   let child: ReturnType<typeof spawn> | undefined;
   try {
     execFileSync(process.execPath, ["--import", tsx, resolve("server/seed-capsule.ts"), "--data", directory], { stdio: "pipe" });
     mkdirSync(join(directory, ".local-duck"));
-    writeFileSync(join(directory, ".local-duck/live-connection.json"), JSON.stringify({ mode: "capsule", apiKey, port: 4997, dataDirectory: directory, url: "http://127.0.0.1:4997" }));
+    writeFileSync(join(directory, ".local-duck/live-connection.json"), JSON.stringify({ mode: "capsule", apiKey, staffReadApiKey, port: 4997, dataDirectory: directory, url: "http://127.0.0.1:4997" }));
+    execFileSync(process.execPath, ["--import", tsx, resolve("server/import-locations.ts"), "--demo"], { cwd: directory, stdio: "pipe" });
     child = spawn(process.execPath, ["--import", tsx, resolve("server/capsule-api.ts")], { cwd: directory, stdio: ["ignore", "pipe", "pipe"] });
     await new Promise<void>((ok, fail) => {
       const timer = setTimeout(() => fail(new Error("Test API did not start")), 7000);
@@ -23,6 +25,15 @@ test("Pi HTTP API authenticates bounded browsing and keeps exact lookup separate
       child!.stdout!.on("data", data => { if (String(data).includes("demo ready")) { clearTimeout(timer); ok(); } });
     });
     const read = (query: string, authorized = true) => fetch(`http://127.0.0.1:4997/customers/lookup${query}`, { headers: authorized ? { Authorization: `Bearer ${apiKey}` } : {} });
+    const directoryRead = (key: string, query = "") => fetch(`http://127.0.0.1:4997/shops?mode=locations${query}`, { headers: { Authorization: `Bearer ${key}` } });
+    assert.equal((await directoryRead(apiKey)).status, 403);
+    const locationsResponse = await directoryRead(staffReadApiKey);
+    assert.equal(locationsResponse.headers.get("cache-control"), "no-store");
+    const locations = await locationsResponse.json();
+    assert.equal(locations.locations.length, 3); assert.equal(locations.hasMore, false);
+    assert.equal(locations.locations[0].inventoryLocationId, "PCB");
+    assert.equal((await directoryRead(staffReadApiKey, "&limit=51")).status, 400);
+    assert.equal((await fetch("http://127.0.0.1:4997/stock/adjust", { method: "POST", headers: { Authorization: `Bearer ${staffReadApiKey}`, "Content-Type": "application/json" }, body: "{}" })).status, 403);
     assert.equal((await read("?mode=browse", false)).status, 401);
     assert.equal((await read("")).status, 400);
     assert.equal((await read("?mode=other")).status, 400);

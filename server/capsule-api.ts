@@ -9,8 +9,10 @@ import { readDuckManagers } from "./manager-directory.js";
 
 const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
 if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory) throw new Error("Invalid capsule connection configuration");
+if (config.staffReadApiKey !== undefined && (!/^[a-f0-9]{64}$/.test(config.staffReadApiKey) || [config.apiKey, config.writeApiKey].includes(config.staffReadApiKey))) throw new Error("Staff read credential must be valid and distinct from other keys");
 const expected = Buffer.from(`Bearer ${config.apiKey}`);
 const expectedWrite = typeof config.writeApiKey === "string" && /^[a-f0-9]{64}$/.test(config.writeApiKey) ? Buffer.from(`Bearer ${config.writeApiKey}`) : null;
+const expectedStaffRead = typeof config.staffReadApiKey === "string" && /^[a-f0-9]{64}$/.test(config.staffReadApiKey) ? Buffer.from(`Bearer ${config.staffReadApiKey}`) : null;
 const store = openCapsule(config.dataDirectory, config.url);
 const app = express();
 app.disable("x-powered-by");
@@ -26,9 +28,10 @@ app.use((req, res, next) => {
   const supplied = Buffer.from(req.headers.authorization ?? "");
   const read = supplied.length === expected.length && timingSafeEqual(supplied, expected);
   const write = expectedWrite && supplied.length === expectedWrite.length && timingSafeEqual(supplied, expectedWrite);
-  if (!read && !write) return void res.status(401).json({ error: "Unauthorized" });
-  if (req.method === "GET" && req.path === "/managers") {
-    if (!write) return void res.status(403).json({ error: "A staff credential is required" });
+  const staffRead = expectedStaffRead && supplied.length === expectedStaffRead.length && timingSafeEqual(supplied, expectedStaffRead);
+  if (!read && !write && !staffRead) return void res.status(401).json({ error: "Unauthorized" });
+  if (req.method === "GET" && (req.path === "/managers" || req.path === "/shops" && req.query.mode === "locations")) {
+    if (!write && !staffRead) return void res.status(403).json({ error: "A staff read credential is required" });
   } else if (req.method === "POST" && ["/stock/adjust", "/customers/import"].includes(req.path)) {
     if (!write) return void res.status(403).json({ error: "A staff write credential is required" });
   } else if (req.method !== "GET" || !["/inventory", "/products", "/shops", "/bonus/balance", "/bonus/redeemables", "/bonus/cash-scheme", "/customers/lookup"].includes(req.path)) return void res.sendStatus(404);
@@ -44,7 +47,12 @@ app.get("/inventory", (req, res) => {
   res.json({ ...inventory, source: "Duck Fashion eight-item SQLite demo", checkedAt: new Date().toISOString() });
 });
 app.get("/products", (req, res) => res.json(store.products(req.query.query as string, req.query.offset === undefined ? 0 : Number(req.query.offset))));
-app.get("/shops", (_req, res) => res.json(store.shops()));
+app.get("/shops", (req, res) => {
+  if (req.query.mode === undefined) return void res.json(store.shops());
+  if (req.query.mode !== "locations") return void res.status(400).json({ error: "Invalid shop directory mode" });
+  try { res.json(store.locations(req.query.offset, req.query.limit)); }
+  catch (error) { res.status(error instanceof Error && error.message === "INVALID_LOCATION_PAGE" ? 400 : 503).json({ error: "Location directory is unavailable or the page is invalid" }); }
+});
 app.get("/customers/lookup", (req, res) => {
   // Explicit browse mode fits the deployed proxy's customer-route allowlist.
   // A missing phone alone must never turn an identity lookup into a directory read.
