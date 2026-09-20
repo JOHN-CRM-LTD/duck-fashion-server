@@ -4,6 +4,7 @@ node_modules/
 # Live secrets — generated on each machine by deploy/create-config.sh
 .local-duck/live-connection.json
 .local-duck/live-connection.json.tmp
+.local-duck/live-connection.*.json
 .local-duck/*customers*.json
 .local-duck/pi-connection.json
 .local-duck/managers.json
