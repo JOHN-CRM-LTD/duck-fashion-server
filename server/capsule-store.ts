@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { capsuleTokens } from "./capsule-catalog.js";
-import { importCustomers, lookupCustomer, migrateCustomerDirectory } from "./customer-directory.js";
+import { browseCustomers, importCustomers, lookupCustomer, migrateCustomerDirectory } from "./customer-directory.js";
 import { bonusBalance, bonusRedeemables, bonusCashScheme } from "./bonus-store.js";
 import { seedBonus } from "./bonus-seed.js";
 import { verifiedMemberCode } from "./member-verification.js";
@@ -42,6 +42,7 @@ export function openCapsule(directory: string, publicUrl: string) {
   return {
     close: () => db.close(),
     customerLookup: (phone: unknown) => lookupCustomer(db, phone),
+    customerBrowse: (input: Parameters<typeof browseCustomers>[1]) => browseCustomers(db, input),
     importCustomers: (rows: unknown) => importCustomers(db, rows),
     // Member bonus points (seeded by bonus-seed.ts into the same database).
     bonusBalance: (reference: string) => bonusBalance(db, reference),

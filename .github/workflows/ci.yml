@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Verify customer matching, migration, bonus seeding and public photo URLs
-        run: node --import tsx --test server/customer-directory.test.ts server/bonus-seed.test.ts server/member-verification.test.ts server/manager-directory.test.ts server/capsule-store.test.ts
+        run: node --import tsx --test server/customer-directory.test.ts server/customer-browse.test.ts server/customer-api.test.ts server/bonus-seed.test.ts server/member-verification.test.ts server/manager-directory.test.ts server/capsule-store.test.ts
 
       - name: Seed the demo database
         run: npm run seed

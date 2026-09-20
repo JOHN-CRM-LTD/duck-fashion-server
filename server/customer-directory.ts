@@ -52,3 +52,28 @@ export function lookupCustomer(db: DatabaseSync, rawPhone: unknown) {
   // Return both on ambiguity so CRM refuses to assign either identity.
   return { customers: rows.map(row => ({ ...row, phone: internationalPhone(row.phone) })), complete: true };
 }
+
+/** Staff Users view. Independent of the exact-phone identity lookup; never writes. */
+export function browseCustomers(db: DatabaseSync, input: { query?: unknown; offset?: unknown; limit?: unknown }) {
+  const integer = (value: unknown, fallback: number, min: number, max: number) => {
+    if (value === undefined) return fallback;
+    if (!(typeof value === "number" || typeof value === "string" && /^\d+$/.test(value))) throw new Error("INVALID_CUSTOMER_SEARCH");
+    const number = Number(value);
+    if (!Number.isSafeInteger(number) || number < min || number > max) throw new Error("INVALID_CUSTOMER_SEARCH");
+    return number;
+  };
+  const offset = integer(input.offset, 0, 0, 1_000_000), limit = integer(input.limit, 50, 1, 50);
+  if (input.query !== undefined && (typeof input.query !== "string" || input.query.length > 200)) throw new Error("INVALID_CUSTOMER_SEARCH");
+  const query = ((input.query ?? "") as string).trim();
+  // instr treats wildcard characters literally; bound parameters keep SQL separate.
+  const phoneQuery = /^[+\d\s().-]+$/.test(query) ? query.replace(/[+\s().-]/g, "") : "";
+  const rows = db.prepare(`SELECT member_code id,name,name_zh nameZh,grade,mobile phone,joined_on joinedOn
+    FROM bonus_members WHERE ? = '' OR instr(lower(member_code),lower(?)) > 0
+      OR instr(lower(name),lower(?)) > 0 OR instr(coalesce(name_zh,''),?) > 0
+      OR (? <> '' AND instr(${normalizedMobile},?) > 0)
+    ORDER BY member_code LIMIT ? OFFSET ?`)
+    .all(query, query, query, query, phoneQuery, phoneQuery, limit + 1, offset) as {
+      id: string; name: string; nameZh: string | null; grade: string; phone: string | null; joinedOn: string;
+    }[];
+  return { customers: rows.slice(0, limit).map(row => ({ ...row, phone: internationalPhone(row.phone) })), offset, hasMore: rows.length > limit };
+}

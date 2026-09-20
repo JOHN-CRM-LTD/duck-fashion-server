@@ -46,6 +46,16 @@ app.get("/inventory", (req, res) => {
 app.get("/products", (req, res) => res.json(store.products(req.query.query as string, req.query.offset === undefined ? 0 : Number(req.query.offset))));
 app.get("/shops", (_req, res) => res.json(store.shops()));
 app.get("/customers/lookup", (req, res) => {
+  // Explicit browse mode fits the deployed proxy's customer-route allowlist.
+  // A missing phone alone must never turn an identity lookup into a directory read.
+  if (req.query.mode === "browse" && req.query.phone === undefined) {
+    try { return void res.json(store.customerBrowse(req.query)); }
+    catch (error) {
+      if (error instanceof Error && error.message === "INVALID_CUSTOMER_SEARCH") return void res.status(400).json({ error: "Provide a search up to 200 characters, a nonnegative offset and a page size from 1 to 50" });
+      throw error;
+    }
+  }
+  if (req.query.mode !== undefined) return void res.status(400).json({ error: "Use either exact phone lookup or explicit browse mode" });
   if (typeof req.query.phone !== "string") return void res.status(400).json({ error: "Provide one international phone number" });
   try { res.json(store.customerLookup(req.query.phone)); }
   catch (error) {
