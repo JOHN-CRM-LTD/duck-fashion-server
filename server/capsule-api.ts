@@ -6,6 +6,7 @@ import { ZodError } from "zod";
 import { capsuleItems, capsulePhotoNames } from "./capsule-catalog.js";
 import { openCapsule } from "./capsule-store.js";
 import { readDuckManagers } from "./manager-directory.js";
+import { couponRouter } from "./coupon-api.js";
 
 const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
 if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory) throw new Error("Invalid capsule connection configuration");
@@ -16,6 +17,7 @@ const expectedStaffRead = typeof config.staffReadApiKey === "string" && /^[a-f0-
 const store = openCapsule(config.dataDirectory, config.url);
 const app = express();
 app.disable("x-powered-by");
+app.use("/coupons", couponRouter(config.writeApiKey, phone => store.memberCoupons(phone)));
 // Only the eight explicitly named product photographs are public. No directory listing,
 // database, JSON export, configuration file or staff write credential is exposed.
 const imageFiles = capsuleItems.flatMap(item=>[`${item.slug}.png`,...['burgundy','cream','black'].map(c=>`${c}_${capsulePhotoNames[item.code]}.png`)]);
@@ -32,7 +34,7 @@ app.use((req, res, next) => {
   if (!read && !write && !staffRead) return void res.status(401).json({ error: "Unauthorized" });
   if (req.method === "GET" && (req.path === "/managers" || req.path === "/shops" && req.query.mode === "locations")) {
     if (!write && !staffRead) return void res.status(403).json({ error: "A staff read credential is required" });
-  } else if (req.method === "POST" && ["/stock/adjust", "/customers/import"].includes(req.path)) {
+  } else if (req.method === "POST" && ["/stock/adjust", "/customers/import", "/bonus/redeem"].includes(req.path)) {
     if (!write) return void res.status(403).json({ error: "A staff write credential is required" });
   } else if (req.method !== "GET" || !["/inventory", "/products", "/shops", "/bonus/balance", "/bonus/redeemables", "/bonus/cash-scheme", "/customers/lookup"].includes(req.path)) return void res.sendStatus(404);
   next();
@@ -72,6 +74,7 @@ app.get("/customers/lookup", (req, res) => {
   }
 });
 app.post("/stock/adjust", (req, res) => res.json(store.adjust(req.body)));
+app.post("/bonus/redeem", (req, res) => res.json(store.redeemBonusCoupon(req.body)));
 app.post("/customers/import", (req, res) => {
   try { res.json(store.importCustomers(req.body?.customers)); }
   catch (error) {
@@ -91,6 +94,7 @@ app.get("/bonus/cash-scheme", (_req, res) => res.json(store.bonusCashScheme()));
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const message = error instanceof Error ? error.message : "";
   if (message === "MEMBER_VERIFICATION_FAILED") return void res.status(403).json({ error: "The member ID and registered phone number could not be verified" });
+  if (["INSUFFICIENT_POINTS", "REWARD_CHANGED", "IDEMPOTENCY_CONFLICT"].includes(message)) return void res.status(409).json({ error: message });
   const candidates = (error as { candidates?: unknown })?.candidates;
   const status = error instanceof ZodError || message === "INVALID_QUERY" || message === "INVALID_MEMBER" || (error as { type?: string })?.type === "entity.parse.failed" ? 400 : message === "UNKNOWN_STOCK" || message === "UNKNOWN_MEMBER" ? 404 : message === "AMBIGUOUS_MEMBER" ? 422 : ["STOCK_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_STOCK"].includes(message) ? 409 : 503;
   res.status(status).json({ error: status === 503 ? "Demo stock is temporarily unavailable" : status === 400 ? "Provide valid product search or stock adjustment fields" : message, ...(Array.isArray(candidates) ? { candidates } : {}) });
