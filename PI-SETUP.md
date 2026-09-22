@@ -138,8 +138,9 @@ sudo systemctl restart duck-fashion
 curl -s http://127.0.0.1:4997/glacier/health
 ```
 
-Then point the CRM's Glacier integration base URL at
-`https://duckserver.johncrm.com/glacier` with the printed key. Until enabled,
+Then wire the CRM with `johncrm/glacier-api/docs/johncrm-manifest-duckserver.json`
+(baseUrl `https://duckserver.johncrm.com`, origin only) and the printed key
+(see GLACIER.md). Until enabled,
 the glacier code sits inert: no routes, no key, no change to the stock API.
 
 ## Things to know

@@ -29,4 +29,7 @@ if (!/^[a-f0-9]{64}$/.test(String(config.glacierApiKey ?? ""))) {
 }
 EOF
 echo "Now restart the service: sudo systemctl restart duck-fashion"
-echo "The CRM-side base URL is the tunnel origin with /glacier, e.g. https://duckserver.johncrm.com/glacier"
+echo "CRM wiring: baseUrl https://duckserver.johncrm.com (origin only), the manifest at"
+echo "johncrm/glacier-api/docs/johncrm-manifest-duckserver.json (paths carry /stock-api/glacier),"
+echo "and this key as its api_token. The public proxy must forward /stock-api/glacier/* to this"
+echo "service's /glacier/* (same prefix rewrite as the stock routes)."
