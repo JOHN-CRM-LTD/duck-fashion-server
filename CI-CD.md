@@ -34,8 +34,15 @@ Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm
   deletes those four retired demo IDs and their history. This is a demo-specific
   initializer, not a migration for arbitrary enterprise data. Back up before a
   first upgrade; never run `npm run seed` against the live database.
+- `data/glacier-icerink.sqlite` — the Glacier IceRink snapshot database
+  (gitignored, **derived**): unlike the stock database it holds no live edits
+  and is rebuilt from the committed `data/glacier-icerink.tsv.gz` by
+  `npm run seed:glacier`. When a `glacierApiKey` is configured and the
+  database is missing, `pull-update.sh` re-seeds it before restarting the
+  service, so the snapshot travels as code. See [GLACIER.md](GLACIER.md).
 - The deploy health check covers `/shops`, `/customers/lookup` and
-  `/bonus/cash-scheme`; an unhealthy service rolls the commit back.
+  `/bonus/cash-scheme`, plus `/glacier/health` when a glacierApiKey is
+  configured; an unhealthy service rolls the commit back.
 - `.local-duck/live-connection.json` — the read/write keys (gitignored),
   generated per machine by `deploy/create-config.sh`.
 

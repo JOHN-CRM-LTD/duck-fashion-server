@@ -20,7 +20,11 @@ check() { # name expected command...
 KEY=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).apiKey')
 WRITE_KEY=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).writeApiKey')
 STAFF_READ_KEY=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).staffReadApiKey')
+GLACIER_KEY=$(node -e 'const c=JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")); process.stdout.write(/^[a-f0-9]{64}$/.test(c.glacierApiKey||"") ? c.glacierApiKey : "")' || true)
 [ -f data/duck-fashion.sqlite ] || { echo "data/duck-fashion.sqlite missing — run: npm run seed"; exit 1; }
+if [ -n "$GLACIER_KEY" ] && [ ! -f data/glacier-icerink.sqlite ]; then
+  echo "glacierApiKey configured but data/glacier-icerink.sqlite missing — run: npm run seed:glacier"; exit 1
+fi
 
 # Never boot a second copy against the live service's port: the adjustment
 # test below would hit production stock.
@@ -79,6 +83,20 @@ balance=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=D
 [ "$balance" = "ok" ] && echo "ok   bonus balance by mobile resolves DF1005" || { echo "FAIL bonus balance by mobile: $balance"; fail=1; }
 check "archived demo account stays unavailable" 403 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $KEY" "$BASE/bonus/balance?member=DF-DEMO-AU&phone=85261234591"
 redeemables=$(curl -sf -H "Authorization: Bearer $KEY" "$BASE/bonus/redeemables?member=DF1005&phone=85261234505" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).items.length')
-[ "$redeemables" = "9" ] && echo "ok   nine bonus redeemables listed" || { echo "FAIL bonus redeemables: $redeemables"; fail=1; }
+[ "$redeemables" = "11" ] && echo "ok   eleven bonus redeemables listed (items, gift box and cash coupons)" || { echo "FAIL bonus redeemables: $redeemables"; fail=1; }
 
 if [ $fail -eq 0 ]; then echo "ALL CHECKS PASSED"; else echo "SMOKE TEST FAILED"; exit 1; fi
+
+# Glacier read API (only checked when a glacierApiKey is configured and the snapshot is seeded).
+if [ -n "$GLACIER_KEY" ]; then
+  fail=0
+  check "glacier health is open"          200 curl -s -o /dev/null -w '%{http_code}' "$BASE/glacier/health"
+  check "glacier requires authentication" 401 curl -s -o /dev/null -w '%{http_code}' "$BASE/glacier/v1/lessons?date=2026-07-31"
+  check "glacier lessons page answers"    200 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GLACIER_KEY" "$BASE/glacier/v1/lessons?date=2026-07-31&status=scheduled"
+  check "glacier rejects unknown params"  400 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GLACIER_KEY" "$BASE/glacier/v1/students?what=no"
+  check "glacier rejects writes"          405 curl -s -o /dev/null -w '%{http_code}' -X POST -H "Authorization: Bearer $GLACIER_KEY" "$BASE/glacier/v1/students"
+  check "glacier unknown operation 404s"  404 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GLACIER_KEY" "$BASE/glacier/v1/nope"
+  mode=$(curl -sf -H "Authorization: Bearer $GLACIER_KEY" "$BASE/glacier/v1/students?limit=1" | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).source.mode' 2>/dev/null || true)
+  [ "$mode" = "sql" ] && echo "ok   glacier source mode is sql" || { echo "FAIL glacier source mode: ${mode:-none}"; fail=1; }
+  if [ $fail -eq 0 ]; then echo "GLACIER CHECKS PASSED"; else echo "GLACIER SMOKE TEST FAILED"; exit 1; fi
+fi

@@ -28,6 +28,9 @@ jobs:
       - name: Seed the demo database
         run: npm run seed
 
+      - name: Seed the glacier snapshot database
+        run: npm run seed:glacier
+
       - name: Generate throwaway connection keys
         run: |
           bash deploy/create-config.sh https://duck-fashion-ci.invalid

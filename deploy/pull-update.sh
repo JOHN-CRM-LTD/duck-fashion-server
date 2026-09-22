@@ -60,17 +60,30 @@ if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$OLD_LOCK_HASH" ]; the
   if ! npm ci --no-audit --no-fund; then rollback; die "npm ci failed after pull."; fi
 fi
 
+# The Glacier snapshot database is derived data (rebuilt from data/glacier-icerink.tsv.gz),
+# never edited in place. Rebuild it when a glacierApiKey is configured but the database is
+# missing (first deploy of the snapshot, or a deliberately removed database), so the service
+# can boot with /glacier mounted.
+if [ -f data/glacier-icerink.tsv.gz ] && [ ! -f data/glacier-icerink.sqlite ] \
+  && node -e 'process.exit(/^[a-f0-9]{64}$/.test(JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).glacierApiKey || "") ? 0 : 1)' 2>/dev/null; then
+  log "glacier snapshot database missing — seeding from data/glacier-icerink.tsv.gz (a minute or two)."
+  npm run seed:glacier || { rollback; die "glacier seed failed."; }
+fi
+
 log "restarting duck-fashion.service."
 sudo -n /usr/bin/systemctl restart duck-fashion.service || { rollback; die "systemctl restart failed."; }
 
 read_key=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).apiKey') \
   || { rollback; die "could not read the read key for the health check."; }
+glacier_key=$(node -e 'const c=JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")); process.stdout.write(/^[a-f0-9]{64}$/.test(c.glacierApiKey||"") ? c.glacierApiKey : "")' || true)
 log "health-checking http://127.0.0.1:4997/shops ..."
 for _ in $(seq 1 20); do
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/shops || true)
   customer_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" 'http://127.0.0.1:4997/customers/lookup?phone=85261234568' || true)
   bonus_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/bonus/cash-scheme || true)
-  [ "$code" = "200" ] && [ "$customer_code" = "200" ] && [ "$bonus_code" = "200" ] && { log "deployed $(git rev-parse --short HEAD) and healthy (stock, customer lookup and bonus scheme)."; exit 0; }
+  glacier_code=200
+  [ -n "$glacier_key" ] && glacier_code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4997/glacier/health || true)
+  [ "$code" = "200" ] && [ "$customer_code" = "200" ] && [ "$bonus_code" = "200" ] && [ "$glacier_code" = "200" ] && { log "deployed $(git rev-parse --short HEAD) and healthy (stock, customer lookup, bonus scheme, glacier ${glacier_key:+on})."; exit 0; }
   sleep 1
 done
 rollback
