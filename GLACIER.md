@@ -3,17 +3,19 @@
 The Glacier Skating booking system's SQL Server database, restored from the
 rink's backup (`IceRink_2026.07.30.bak`), served read-only from this same
 service so the John CRM Glacier workspace automations can run against the
-Pi endpoint `https://duckserver.johncrm.com/glacier` instead of a laptop
-SQL Server tunnel.
+Pi endpoint `https://duckserver.johncrm.com/stock-api/glacier` instead of a
+laptop SQL Server tunnel.
 
 ```
 John CRM (glacier workspace automations)
    │  Bearer glacierApiKey
    ▼
-Cloudflare edge ── duckserver.johncrm.com ── cloudflared (Pi) ── 127.0.0.1:4997
-   /glacier/v1/students · /v1/packages · /v1/lessons · /v1/tuition-payments
-   /glacier/v1/customer-context · /glacier/v1/students/{id}/automation-context
-   /glacier/health (open)
+https://duckserver.johncrm.com/stock-api/glacier/v1/...  (the public nginx proxy,
+   │                                                      /stock-api stripped like the stock routes)
+   ▼
+127.0.0.1:4997/glacier/v1/students · /v1/packages · /v1/lessons · /v1/tuition-payments
+               /glacier/v1/customer-context · /glacier/v1/students/{id}/automation-context
+               /glacier/health (open, unauthenticated)
    ▼
 data/glacier-icerink.sqlite  (seeded from data/glacier-icerink.tsv.gz)
 ```
@@ -58,10 +60,19 @@ sudo systemctl restart duck-fashion
 curl -s http://127.0.0.1:4997/glacier/health
 ```
 
-Then in John CRM, point the Glacier integration's base URL at
-`https://duckserver.johncrm.com/glacier` and set its `api_token` credential to
-the printed key (the manifest in `johncrm/glacier-api/docs/johncrm-manifest.json`
-already describes these operations; set its `baseUrl` to the same value).
+Then in John CRM, use the generated manifest
+`johncrm/glacier-api/docs/johncrm-manifest-duckserver.json` (its request paths
+carry the `/stock-api/glacier` prefix, because JohnCRM forbids a path inside
+`baseUrl`): set the integration's base URL to the origin only
+(`https://duckserver.johncrm.com`) and its `api_token` credential to the
+printed key. The public nginx proxy in front of duckserver.johncrm.com must
+forward `/stock-api/glacier/*` to this service's `/glacier/*` — the same
+prefix rewrite the stock routes already use — for example:
+
+```nginx
+location /stock-api/glacier/ { proxy_pass http://<pi-upstream>/glacier/; }
+```
+
 Until `glacierApiKey` exists in `.local-duck/live-connection.json`, the
 service boots exactly as before — deploying this code with the glacier API
 disabled changes nothing for the stock endpoints.
