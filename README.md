@@ -20,6 +20,8 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
   APIs, CRM location/points display and WhatsApp matching; chats remain on DigitalOcean
 - [docs/private-crm.md](docs/private-crm.md) — hosting choices and the optional
   separate enterprise CRM deployment and cutover
+- [GLACIER.md](GLACIER.md) — the Glacier IceRink read API served from
+  `/glacier` (SQL Server snapshot on SQLite)
 
 ## Quick start
 
@@ -29,6 +31,9 @@ npm run seed         # rebuild data/duck-fashion.sqlite from data/catalog.json
 npm start            # listens on 127.0.0.1:4997 (needs deploy/create-config.sh first)
 npm run seed:bonus   # optional — the member-bonus tables are also (re)seeded
                      # idempotently on every boot; this just runs the same seed
+npm run seed:glacier # optional — rebuild data/glacier-icerink.sqlite from the
+                     # committed IceRink snapshot; /glacier stays off until a
+                     # glacierApiKey is configured (deploy/enable-glacier.sh)
 ```
 
 `data/duck-fashion.sqlite` and `.local-duck/live-connection.json` are

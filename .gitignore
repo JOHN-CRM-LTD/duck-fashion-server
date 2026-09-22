@@ -23,3 +23,6 @@ data/*.sqlite-shm
 *.log
 *.swp
 .DS_Store
+
+# Glacier snapshot database — derived, rebuilt by npm run seed:glacier
+data/glacier-icerink.sqlite

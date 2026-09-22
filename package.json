@@ -10,11 +10,14 @@
   "scripts": {
     "start": "node --import tsx server/capsule-api.ts",
     "seed": "node --import tsx server/seed-capsule.ts",
-    "seed:bonus": "node --import tsx server/bonus-seed.ts"
+    "seed:bonus": "node --import tsx server/bonus-seed.ts",
+    "seed:glacier": "node --import tsx server/glacier-seed.ts",
+    "test": "node --import tsx --test --test-concurrency=1 server/*.test.ts"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "tsx": "^4.21.0",
+    "libphonenumber-js": "^1.11.20",
+    "tsx": "^4.19.0",
     "zod": "^3.25.76"
   }
 }

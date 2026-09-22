@@ -7,9 +7,11 @@ import { capsuleItems, capsulePhotoNames } from "./capsule-catalog.js";
 import { openCapsule } from "./capsule-store.js";
 import { readDuckManagers } from "./manager-directory.js";
 import { couponRouter } from "./coupon-api.js";
+import { mountGlacier } from "./glacier/mount.js";
 
 const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
-if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory) throw new Error("Invalid capsule connection configuration");
+if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory
+  || (config.glacierApiKey != null && (typeof config.glacierApiKey !== "string" || !/^[a-f0-9]{64}$/.test(config.glacierApiKey)))) throw new Error("Invalid capsule connection configuration");
 if (config.staffReadApiKey !== undefined && (!/^[a-f0-9]{64}$/.test(config.staffReadApiKey) || [config.apiKey, config.writeApiKey].includes(config.staffReadApiKey))) throw new Error("Staff read credential must be valid and distinct from other keys");
 const expected = Buffer.from(`Bearer ${config.apiKey}`);
 const expectedWrite = typeof config.writeApiKey === "string" && /^[a-f0-9]{64}$/.test(config.writeApiKey) ? Buffer.from(`Bearer ${config.writeApiKey}`) : null;
@@ -25,6 +27,9 @@ for (const imageFile of imageFiles) app.get(`/images/${imageFile}`, (_req, res) 
   res.set({ "X-Content-Type-Options": "nosniff", "Cache-Control": "public, max-age=300" });
   res.sendFile(join(config.dataDirectory, "images", imageFile), error => { if (error && !res.headersSent) res.sendStatus(404); });
 });
+// Glacier read API (IceRink snapshot). Mounted before the stock auth middleware because it
+// carries its own separate bearer key; absent key or dataset leaves the service unchanged.
+const glacier = mountGlacier(app, { dataDirectory: config.dataDirectory, glacierApiKey: config.glacierApiKey });
 app.use((req, res, next) => {
   res.set({ "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" });
   const supplied = Buffer.from(req.headers.authorization ?? "");
@@ -100,4 +105,4 @@ app.use((error: unknown, _req: express.Request, res: express.Response, _next: ex
   res.status(status).json({ error: status === 503 ? "Demo stock is temporarily unavailable" : status === 400 ? "Provide valid product search or stock adjustment fields" : message, ...(Array.isArray(candidates) ? { candidates } : {}) });
 });
 const server = app.listen(config.port, "127.0.0.1", () => console.log(`Duck Fashion eight-item demo ready on 127.0.0.1:${config.port}; database ${config.dataDirectory}`));
-for (const signal of ["SIGTERM", "SIGINT"] as const) process.on(signal, () => server.close(() => { store.close(); process.exit(0); }));
+for (const signal of ["SIGTERM", "SIGINT"] as const) process.on(signal, () => server.close(() => { store.close(); glacier?.close(); process.exit(0); }));

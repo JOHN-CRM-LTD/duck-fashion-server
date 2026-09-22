@@ -127,6 +127,21 @@ as the rollback copy. (If you do this later than the day the zip was made,
 first re-copy `data/duck-fashion.sqlite` from the laptop so any stock
 adjustments made in between come along.)
 
+## 6b. Turn on the Glacier IceRink read API (optional)
+
+The same service can also serve the Glacier booking snapshot to the CRM's
+glacier workspace automations — one command, see [GLACIER.md](GLACIER.md):
+
+```bash
+bash deploy/enable-glacier.sh     # seeds the snapshot DB + prints the glacier key
+sudo systemctl restart duck-fashion
+curl -s http://127.0.0.1:4997/glacier/health
+```
+
+Then point the CRM's Glacier integration base URL at
+`https://duckserver.johncrm.com/glacier` with the printed key. Until enabled,
+the glacier code sits inert: no routes, no key, no change to the stock API.
+
 ## Things to know
 
 - **The quick-tunnel URL changes whenever the tunnel restarts** (reboots,
