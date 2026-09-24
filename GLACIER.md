@@ -20,9 +20,9 @@ not an error.
 John CRM (glacier workspace automations)
    │  Bearer glacierApiKey
    ▼
-https://glacier.johncrm.com/glacier/v1/...   (Cloudflare edge → cloudflared
-   │                                          tunnel running ON the Pi)
-   ▼
+https://duckserver.johncrm.com/stock-api/glacier/v1/...   (the home nginx that
+   │                                                      already fronts the Pi; /stock-api/glacier/*
+   ▼                                                      → the service's /glacier/*)
 127.0.0.1:4997/glacier/v1/students · /v1/packages · /v1/lessons · /v1/tuition-payments
                /glacier/v1/customer-context · /glacier/v1/students/{id}/automation-context
                /glacier/health (open, unauthenticated)
@@ -30,10 +30,10 @@ https://glacier.johncrm.com/glacier/v1/...   (Cloudflare edge → cloudflared
 data/glacier-icerink.sqlite  (seeded from data/glacier-icerink.tsv.gz)
 ```
 
-The endpoint is reached through the Pi's own Cloudflare tunnel — no
-DigitalOcean involvement: nothing is stored there and no proxy there is in
-the path. (The shared `/stock-api` nginx proxy stays for the stock API and
-is deliberately not used for glacier.)
+duckserver.johncrm.com resolves to your home IP and its nginx runs on the
+Pi, so this path stays entirely on the Pi — nothing is stored on or routed
+through DigitalOcean. (A dedicated hostname or a named Cloudflare tunnel on
+the Pi works too; see the note at the end.)
 
 - **Read-only.** Booking writes (top-up, refund, booking create/cancel/settle)
   are not part of this snapshot; they stay on the disposable SQL Server clone
@@ -73,43 +73,55 @@ holds live stock. `deploy/pull-update.sh` re-seeds it automatically when a
 cd ~/Documents/duck-fashion-server   # or wherever the checkout lives
 bash deploy/enable-glacier.sh        # seeds if needed, generates + prints the glacier key
 sudo systemctl restart duck-fashion
-curl -s http://127.0.0.1:4997/glacier/health
+curl -s http://127.0.0.1:4997/glacier/health   # {"status":"ok",...}
 ```
 
-Give the Pi its own stable public address with a **named** Cloudflare tunnel
-(the quick tunnel's URL changes on every restart). On the Pi:
+Then let the existing duckserver nginx carry it. The `/stock-api` proxy
+allowlist does not include glacier, so add one location next to the stock
+routes — find the file with `sudo grep -rl "stock-api" /etc/nginx/`, and
+inside the `server { … }` block that serves duckserver.johncrm.com add:
 
-```bash
-cloudflared tunnel login                    # authorise the johncrm.com zone
-cloudflared tunnel create glacier
-sudo cloudflared tunnel route dns glacier glacier.johncrm.com
-sudo tee /etc/cloudflared/config.yml >/dev/null <<'EOF'
-tunnel: <tunnel-uuid-from-create>
-credentials-file: /home/pi/.cloudflared/<tunnel-uuid-from-create>.json
-ingress:
-  - hostname: glacier.johncrm.com
-    service: http://127.0.0.1:4997
-  - service: http_status:404
-EOF
-sudo cloudflared service install && sudo systemctl restart cloudflared
-curl -s https://glacier.johncrm.com/glacier/health
+```nginx
+location /stock-api/glacier/ {
+    proxy_pass http://127.0.0.1:4997/glacier/;
+    proxy_set_header Authorization $http_authorization;
+    proxy_read_timeout 30s;
+}
 ```
 
-(Any hostname in the zone works; `glacier.johncrm.com` is just the example.
-If the Pi already runs a named tunnel for another purpose, add the ingress
-rule to it instead of creating a second one.)
+then `sudo nginx -t && sudo systemctl reload nginx` and confirm from
+outside: `curl -s https://duckserver.johncrm.com/stock-api/glacier/health`.
 
 Then in John CRM, use the generated manifest
 `johncrm/glacier-api/docs/johncrm-manifest-duckserver.json` — its request
-paths carry the `/glacier` prefix, because JohnCRM forbids a path inside
-`baseUrl`: set the integration's base URL to the origin only
-(`https://glacier.johncrm.com`) and its `api_token` credential to the printed
-key. Renewal / payment / lesson reminder / lesson change templates are fully
-served; booking templates need the write-clone adapter and stay local.
+paths carry the `/stock-api/glacier` prefix, because JohnCRM forbids a path
+inside `baseUrl`: set the integration's base URL to the origin only
+(`https://duckserver.johncrm.com`) and its `api_token` credential to the
+printed key. Renewal / payment / lesson reminder / lesson change templates
+are fully served; booking templates need the write-clone adapter and stay
+local.
 
 Until `glacierApiKey` exists in `.local-duck/live-connection.json`, the
 service boots exactly as before — deploying this code with the glacier API
 disabled changes nothing for the stock endpoints.
+
+<details><summary>Alternative: a dedicated hostname instead of the duckserver path</summary>
+
+If glacier should not share the duckserver hostname, give the Pi a stable
+address of its own — either another `server { }` block in the same nginx
+with its own certificate for e.g. `glacier.johncrm.com`, or a **named**
+Cloudflare tunnel (the quick tunnel's URL changes on every restart):
+
+```bash
+cloudflared tunnel login && cloudflared tunnel create glacier
+sudo cloudflared tunnel route dns glacier glacier.johncrm.com
+# /etc/cloudflared/config.yml ingress: glacier.johncrm.com → http://127.0.0.1:4997
+sudo cloudflared service install && sudo systemctl restart cloudflared
+```
+
+Then regenerate the manifest with `--base-path /glacier` and set the CRM
+`baseUrl` to the new origin.
+</details>
 
 ## Refreshing the data (a newer .bak)
 

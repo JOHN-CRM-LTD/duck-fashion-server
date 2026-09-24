@@ -138,12 +138,12 @@ sudo systemctl restart duck-fashion
 curl -s http://127.0.0.1:4997/glacier/health
 ```
 
-Then give the Pi a stable public address for it with a named Cloudflare
-tunnel (e.g. `glacier.johncrm.com` — direct Cloudflare → Pi, nothing on
-DigitalOcean), and wire the CRM with
-`johncrm/glacier-api/docs/johncrm-manifest-duckserver.json` (baseUrl = the
-tunnel origin only) and the printed key (see GLACIER.md). Until enabled,
-the glacier code sits inert: no routes, no key, no change to the stock API.
+Then open the proxy path — one nginx location forwarding
+`/stock-api/glacier/*` to the service's `/glacier/*` (see GLACIER.md) — and
+wire the CRM with `johncrm/glacier-api/docs/johncrm-manifest-duckserver.json`
+(baseUrl `https://duckserver.johncrm.com`, origin only) and the printed key.
+Until enabled, the glacier code sits inert: no routes, no key, no change to
+the stock API.
 
 ## Things to know
 
