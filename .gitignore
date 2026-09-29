@@ -26,3 +26,9 @@ data/*.sqlite-shm
 
 # Glacier snapshot database — derived, rebuilt by npm run seed:glacier
 data/glacier-icerink.sqlite
+.local-glacier/
+.local-duck/admin-connection.json
+.local-duck/remote-*.json
+*.sqlite.tmp
+.local-duck/backups/
+data/*.sqlite.sha256

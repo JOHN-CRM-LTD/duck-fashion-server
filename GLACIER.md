@@ -1,5 +1,9 @@
 # Glacier IceRink read API (`/glacier`)
 
+> The current recommended setup runs Glacier independently on port 4998, with
+> its own config and data under `/srv/glacier`. See [Remote demo operations](docs/remote-operations.md).
+> The combined-service instructions below remain for legacy installations.
+
 A small, referentially closed sample of the Glacier Skating booking database
 (from the rink's `IceRink_2026.07.30.bak` backup), served read-only from this
 same service so the John CRM Glacier workspace automations can run against a
@@ -137,10 +141,11 @@ GLACIER_EXPORT_SQL_PASSWORD=<sa password> npx tsx scripts/export-icerink-snapsho
 
 Omit the `--sample-*` flags for a full-population export (~25 MB; every
 customer context then depends on each student's package count). Commit the
-new snapshot, push, and on the Pi run
-`rm data/glacier-icerink.sqlite && sudo systemctl start duck-fashion-update`
-(the updater re-seeds, restarts and health-checks `/glacier/health`; it rolls
-back automatically if the service does not come up). Drop the restored SQL
+new snapshot and push. The updated deploy script compares the snapshot's content
+hash, rebuilds it atomically, restarts the affected service and checks health.
+No live database deletion is needed. For a same-commit repair use
+`bash deploy/pull-update.sh --repair` with the runtime config environment set.
+Drop the restored SQL
 database afterwards — it is tens of GB and only needed for the export.
 
 ## Conventions that keep parity

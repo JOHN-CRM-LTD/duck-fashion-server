@@ -22,6 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate deployment shell scripts
+        run: for script in deploy/*.sh; do bash -n "$script"; done
+
       - name: Verify customer matching, migration, bonus seeding and public photo URLs
         run: node --import tsx --test --test-concurrency=1 server/*.test.ts
 

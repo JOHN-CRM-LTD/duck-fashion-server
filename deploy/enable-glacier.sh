@@ -6,6 +6,10 @@
 # After running it: sudo systemctl restart duck-fashion
 set -euo pipefail
 cd "$(dirname "$0")/.."
+if node -e 'const fs=require("fs");const c=JSON.parse(fs.readFileSync(process.env.DUCK_CONFIG||".local-duck/live-connection.json","utf8"));process.exit(c.glacierSeparate?0:1)' 2>/dev/null; then
+  echo "Glacier is a separate service. Use: node --import tsx deploy/refresh-glacier.ts and restart glacier.service."
+  exit 1
+fi
 [ -f package.json ] || { echo "Run this from the bundle root." >&2; exit 1; }
 [ -f data/glacier-icerink.tsv.gz ] || { echo "data/glacier-icerink.tsv.gz missing — git pull first." >&2; exit 1; }
 if [ ! -f data/glacier-icerink.sqlite ]; then
@@ -15,13 +19,14 @@ fi
 mkdir -p .local-duck
 node <<'EOF'
 const fs = require("fs");
-const path = ".local-duck/live-connection.json";
+const path = process.env.DUCK_CONFIG || ".local-duck/live-connection.json";
 const config = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, "utf8")) : {};
 if (!/^[a-f0-9]{64}$/.test(String(config.apiKey ?? ""))) { console.error("live-connection.json has no valid apiKey — run deploy/create-config.sh first."); process.exit(1); }
 if (!/^[a-f0-9]{64}$/.test(String(config.glacierApiKey ?? ""))) {
   config.glacierApiKey = require("crypto").randomBytes(32).toString("hex");
-  const ordered = { mode: config.mode, port: config.port, apiKey: config.apiKey, writeApiKey: config.writeApiKey, glacierApiKey: config.glacierApiKey, dataDirectory: config.dataDirectory, url: config.url };
-  fs.writeFileSync(path, JSON.stringify(ordered, null, 2) + "\n");
+  fs.writeFileSync(path + ".tmp", JSON.stringify(config, null, 2) + "\n", { mode: 0o600, flag: "wx" });
+  fs.renameSync(path + ".tmp", path);
+  fs.chmodSync(path, 0o600);
   console.log("GLACIER key - paste this into the John CRM Glacier integration credential:");
   console.log("  " + config.glacierApiKey);
 } else {

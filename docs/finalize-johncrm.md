@@ -72,9 +72,11 @@ real addresses. Report missing authoritative details.
 
 The importer is insert-only/idempotent: different existing records raise
 `LOCATION_ALREADY_EXISTS`. Review existing IDs and values instead of deleting
-them to make the import pass. Manager fields in `shop_locations` are stored source
-fields, not a live join to managers.json: reconcile both on the Pi when assignments
-change. Future updates belong in the enterprise's source administration, not CRM.
+them to make the import pass. Manager fields in `shop_locations` are now the live
+source for both location and manager reads. `managers.json` only supplies the
+initial import/fallback. Use the dedicated operator API in
+[Remote demo operations](remote-operations.md) for subsequent assignments;
+ordinary CRM credentials cannot edit these records.
 
 Restart `duck-fashion.service` after credential setup. Verify authenticated GET
 `https://duckserver.johncrm.com/stock-api/shops?mode=locations&offset=0&limit=50`.

@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS bonus_cash_tiers(min_points INTEGER PRIMARY KEY,cash_
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const configPath = resolve(".local-duck/live-connection.json");
+  const configPath = resolve(process.env.DUCK_CONFIG ?? ".local-duck/live-connection.json");
   const config = JSON.parse(existsSync(configPath) ? readFileSync(configPath, "utf8") : "{}");
   const directory = process.argv[2] ?? config.dataDirectory;
   if (!directory) throw new Error("Pass the data directory: npm run seed:bonus -- <path> (or set dataDirectory in .local-duck/live-connection.json)");

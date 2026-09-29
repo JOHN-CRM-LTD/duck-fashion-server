@@ -11,7 +11,7 @@
  *
  * Usage: npm run seed:glacier   (run from the bundle root)
  */
-import { createReadStream, existsSync, renameSync, unlinkSync } from "node:fs";
+import { createReadStream, existsSync, renameSync, unlinkSync, readFileSync } from "node:fs";
 import { createGunzip } from "node:zlib";
 import { createInterface } from "node:readline";
 import { DatabaseSync, type StatementSync } from "node:sqlite";
@@ -132,7 +132,8 @@ export async function seedGlacierSnapshot(snapshotPath: string, outPath: string)
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const dataDirectory = resolve("data");
   const started = Date.now();
-  const result = await seedGlacierSnapshot(join(dataDirectory, "glacier-icerink.tsv.gz"), join(dataDirectory, "glacier-icerink.sqlite"));
+  const glacierConfig = process.env.GLACIER_CONFIG ? JSON.parse(readFileSync(process.env.GLACIER_CONFIG, "utf8")) : null;
+  const result = await seedGlacierSnapshot(join(dataDirectory, "glacier-icerink.tsv.gz"), glacierConfig?.databasePath ?? join(dataDirectory, "glacier-icerink.sqlite"));
   for (const [name, count] of Object.entries(result.tables)) console.log(`${name}: ${count} rows`);
   console.log(`dataAsOf ${result.dataAsOf || "(none)"} — seeded in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

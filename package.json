@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "node --import tsx server/capsule-api.ts",
+    "start:glacier": "node --import tsx server/glacier/api.ts",
+    "admin": "node deploy/admin.mjs",
     "seed": "node --import tsx server/seed-capsule.ts",
     "seed:bonus": "node --import tsx server/bonus-seed.ts",
     "seed:glacier": "node --import tsx server/glacier-seed.ts",

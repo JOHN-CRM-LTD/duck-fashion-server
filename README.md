@@ -1,5 +1,10 @@
 # Duck Fashion stock API
 
+For remote edits, safer deployment and separate Duck/Glacier Pi services, use
+[Remote demo operations](docs/remote-operations.md). This includes private
+manager/location edits, edit history and undo, Git-driven demo changes, and the
+one-time migration to `/srv/duck-fashion` and `/srv/glacier`.
+
 Fictional eight-style Duck Fashion demo collection served as a stock API for
 John CRM: product search, per-shop inventory, staff stock adjustments and
 member bonus points (balance, redeemables, Bonus-as-Cash) over HTTPS, backed

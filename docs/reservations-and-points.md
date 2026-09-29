@@ -1,8 +1,10 @@
 # Reservations and member points
 
 The demo manager directory covers PCB, PCL and SH015 at `+85296540199`.
-`GET /managers` requires the staff write credential. A private
+`GET /managers` requires the staff read or write credential. Once locations are
+imported, it reads their current manager fields. Before import, a private
 `.local-duck/managers.json` replaces the defaults; an invalid file fails closed.
+Use [Remote demo operations](remote-operations.md) for subsequent edits.
 Never place the staff credential or the private manager directory in a
 customer-readable Knowledge Base folder.
 
