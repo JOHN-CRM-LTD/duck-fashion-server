@@ -25,6 +25,9 @@ jobs:
       - name: Validate deployment shell scripts
         run: for script in deploy/*.sh; do bash -n "$script"; done
 
+      - name: Check deployment gating and rollback in isolated Git repositories
+        run: bash deploy/test-pull-update.sh
+
       - name: Verify customer matching, migration, bonus seeding and public photo URLs
         run: node --import tsx --test --test-concurrency=1 server/*.test.ts
 
