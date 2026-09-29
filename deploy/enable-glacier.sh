@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 # One-time (per machine) switch-on of the Glacier /glacier read API on the Pi:
-#   1. seeds data/glacier-icerink.sqlite from the committed snapshot (if not present)
+#   1. requires an existing private database, or an explicit private export path
 #   2. adds a glacierApiKey to .local-duck/live-connection.json (generated, kept on this machine)
 #   3. prints the key to paste into the John CRM Glacier integration credential
 # After running it: sudo systemctl restart duck-fashion
 set -euo pipefail
 cd "$(dirname "$0")/.."
 [ -f package.json ] || { echo "Run this from the bundle root." >&2; exit 1; }
-[ -f data/glacier-icerink.tsv.gz ] || { echo "data/glacier-icerink.tsv.gz missing — git pull first." >&2; exit 1; }
+[ $# -le 1 ] || { echo "Usage: bash deploy/enable-glacier.sh [/private/path/glacier.tsv.gz]" >&2; exit 1; }
 if [ ! -f data/glacier-icerink.sqlite ]; then
-  echo "Seeding data/glacier-icerink.sqlite from the snapshot (a minute or two)..."
-  npm run seed:glacier
+  [ $# -eq 1 ] && [ -f "$1" ] || { echo "Private Glacier database missing. Supply a private export path; exports do not come from Git." >&2; exit 1; }
+  echo "Seeding the private Glacier database..."
+  npm run seed:glacier -- "$1"
 fi
 mkdir -p .local-duck
 node <<'EOF'

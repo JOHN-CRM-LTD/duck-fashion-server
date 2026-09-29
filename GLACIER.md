@@ -1,154 +1,71 @@
-# Glacier IceRink read API (`/glacier`)
+# Glacier IceRink read API (legacy Pi adapter)
 
-A small, referentially closed sample of the Glacier Skating booking database
-(from the rink's `IceRink_2026.07.30.bak` backup), served read-only from this
-same service so the John CRM Glacier workspace automations can run against a
-Raspberry Pi endpoint instead of a laptop SQL Server tunnel.
+This repository contains the read-only SQLite adapter code, but **no Glacier
+customer data**. The Glacier workspace is moving to a separate private dataset
+hosted by the CRM deployment. Duck Fashion stock and loyalty remain on the Pi.
 
-**Sample contents** (regenerated deterministically by the exporter): 30
-students, 5 coaches, 543 enrolments over 419 courses, 501 seats in 359
-classes (2026, coached only by the 5), and 140 SA5 sales with their tender
-lines. Every sampled student holds a pending seat in a live class on the
-2026-07-31 benchmark day, has at most 40 active enrolments (so every
-customer context fits the 100-package bound), and the student pick goes
-round-robin across the coaches so all five appear in the exported bookings.
-Seats outside the 2026 coach-clean window are intentionally absent, so older
-packages report `ENTITLEMENT_UNVERIFIED` — the contract's honest signal,
-not an error.
+Existing installations with a private `data/glacier-icerink.sqlite` and a
+`glacierApiKey` continue serving `/glacier`. A normal code update does not replace,
+reseed, or delete that database or its credential. Keep them until the Glacier
+workspace has switched to the new service and its reads have been verified.
 
-```
-John CRM (glacier workspace automations)
-   │  Bearer glacierApiKey
-   ▼
-https://duckserver.johncrm.com/stock-api/glacier/v1/...   (the home nginx that
-   │                                                      already fronts the Pi; /stock-api/glacier/*
-   ▼                                                      → the service's /glacier/*)
-127.0.0.1:4997/glacier/v1/students · /v1/packages · /v1/lessons · /v1/tuition-payments
-               /glacier/v1/customer-context · /glacier/v1/students/{id}/automation-context
-               /glacier/health (open, unauthenticated)
-   ▼
-data/glacier-icerink.sqlite  (seeded from data/glacier-icerink.tsv.gz)
-```
+## Public repository policy
 
-duckserver.johncrm.com resolves to your home IP and its nginx runs on the
-Pi, so this path stays entirely on the Pi — nothing is stored on or routed
-through DigitalOcean. (A dedicated hostname or a named Cloudflare tunnel on
-the Pi works too; see the note at the end.)
+- Never commit customer exports, database backups, credentials, or scrubbed
+  customer subsets. Replacing phone numbers alone does not make records public.
+- Keep source exports and restore/import output outside the checkout, in private
+  storage with restricted access. Keep only synthetic fixtures in source tests.
+- `npm run check:public-data` checks tracked paths, including forcibly added
+  files; CI runs it before seeding or booting the fictional Duck demo.
+- `.gitignore` prevents common customer export and database files from being
+  added accidentally. It does not remove files from existing Git history.
 
-- **Read-only.** Booking writes (top-up, refund, booking create/cancel/settle)
-  are not part of this snapshot; they stay on the disposable SQL Server clone
-  workflow in `johncrm/glacier-api`.
-- **A snapshot, not a feed.** `dataAsOf` is 2026-07-30 (the .bak date) and every
-  response says so in `source`. Refreshing means re-exporting and redeploying
-  (below).
-- **Small and bounded.** ~65 KB compressed, 2,595 rows; the seed takes under a
-  second on a laptop and a few seconds on the Pi. The exporter takes only the
-  columns the read contract queries — no addresses, e-mail, HKID or birth
-  dates leave SQL Server.
-- **Contract-faithful.** The SQLite provider is a port of the reference
-  adapter's queries; it returned byte-identical JSON to the reference
-  `glacier-api` adapter reading SQL Server over TDS during development
-  (benchmark day, full walks of students/lessons/payments, mobile lookups,
-  package counters, both context routes).
+## Fresh installations
 
-## Files
+`deploy/create-config.sh` creates Duck read/write keys only. Glacier stays off
+unless an operator deliberately configures it with an existing private database.
+The script preserves any existing Glacier and staff-read keys when rotating the
+Duck keys. CI tests the Glacier routes with synthetic temporary data only.
 
-| File | Role |
-| --- | --- |
-| `data/glacier-icerink.tsv.gz` | The committed snapshot (gzipped TSV, one section per table) |
-| `server/glacier-seed.ts` | `npm run seed:glacier` — rebuilds `data/glacier-icerink.sqlite` from the snapshot |
-| `server/glacier/sqlite-provider.ts` | The read contract's queries against SQLite (`node:sqlite`, built into Node 22.13+) |
-| `server/glacier/router.ts` | Routes, query validation, bearer auth — semantics copied from the reference adapter |
-| `server/glacier/mapping.ts`, `provider-core.ts`, `contract.ts` | Shared with `johncrm/glacier-api` (mobile normalisation, row mappers, cursors) |
-| `deploy/enable-glacier.sh` | One-time Pi switch-on: seed + generate `glacierApiKey` + print it |
-
-The SQLite database is derived data: gitignored, rebuilt from the committed
-snapshot, and never carries live edits — unlike `duck-fashion.sqlite`, which
-holds live stock. `deploy/pull-update.sh` re-seeds it automatically when a
-`glacierApiKey` is configured and the database is missing.
-
-## Switching it on (once, on the Pi)
+For a legacy private SQLite deployment, provide a private export explicitly:
 
 ```bash
-cd ~/Documents/duck-fashion-server   # or wherever the checkout lives
-bash deploy/enable-glacier.sh        # seeds if needed, generates + prints the glacier key
+npm run seed:glacier -- /private/path/glacier.tsv.gz
+bash deploy/enable-glacier.sh
 sudo systemctl restart duck-fashion
-curl -s http://127.0.0.1:4997/glacier/health   # {"status":"ok",...}
 ```
 
-Then let the existing duckserver nginx carry it. The `/stock-api` proxy
-allowlist does not include glacier, so add one location next to the stock
-routes — find the file with `sudo grep -rl "stock-api" /etc/nginx/`, and
-inside the `server { … }` block that serves duckserver.johncrm.com add:
+Alternatively, `bash deploy/enable-glacier.sh /private/path/glacier.tsv.gz`
+seeds a missing private database before enabling it. Neither command downloads
+customer data from Git. `seed:glacier` replaces the existing Glacier SQLite
+snapshot, so run it only for an intentional refresh and keep a private backup.
 
-```nginx
-location /stock-api/glacier/ {
-    proxy_pass http://127.0.0.1:4997/glacier/;
-    proxy_set_header Authorization $http_authorization;
-    proxy_read_timeout 30s;
-}
-```
+## Existing integration contract
 
-then `sudo nginx -t && sudo systemctl reload nginx` and confirm from
-outside: `curl -s https://duckserver.johncrm.com/stock-api/glacier/health`.
+The legacy adapter provides authenticated GET routes for students, packages,
+lessons, tuition payments, customer context and student automation context.
+Booking creation, cancellation and settlement are unsupported. Responses carry
+`source.dataAsOf`, `source.timeZone` and `source.mode`; the dataset is a fixed
+snapshot, not a live feed. Do not relabel its historical records as current data.
 
-Then in John CRM, use the generated manifest
-`johncrm/glacier-api/docs/johncrm-manifest-duckserver.json` — its request
-paths carry the `/stock-api/glacier` prefix, because JohnCRM forbids a path
-inside `baseUrl`: set the integration's base URL to the origin only
-(`https://duckserver.johncrm.com`) and its `api_token` credential to the
-printed key. Renewal / payment / lesson reminder / lesson change templates
-are fully served; booking templates need the write-clone adapter and stay
-local.
+The Pi proxy may still expose `/stock-api/glacier/*`, forwarding to
+`127.0.0.1:4997/glacier/*`. Existing manifests use an origin-only base URL and
+include that prefix in operation paths. Leave this route and its configured key
+in place until the CRM workspace has switched successfully.
 
-Until `glacierApiKey` exists in `.local-duck/live-connection.json`, the
-service boots exactly as before — deploying this code with the glacier API
-disabled changes nothing for the stock endpoints.
+After cutover, remove only the Glacier key and proxy route, restart and verify
+Duck stock/customer/bonus health, then retire the private Glacier snapshot.
+Do not delete or reseed `data/duck-fashion.sqlite`, and do not replace Duck keys.
 
-<details><summary>Alternative: a dedicated hostname instead of the duckserver path</summary>
+## History cleanup and Pi updates
 
-If glacier should not share the duckserver hostname, give the Pi a stable
-address of its own — either another `server { }` block in the same nginx
-with its own certificate for e.g. `glacier.johncrm.com`, or a **named**
-Cloudflare tunnel (the quick tunnel's URL changes on every restart):
+Deleting an export in a normal commit removes it from the current tree only.
+The separate history cleanup must cover every affected branch and GitHub PR ref.
+Its force-update requires a coordinated maintenance window and reviewed approval.
 
-```bash
-cloudflared tunnel login && cloudflared tunnel create glacier
-sudo cloudflared tunnel route dns glacier glacier.johncrm.com
-# /etc/cloudflared/config.yml ingress: glacier.johncrm.com → http://127.0.0.1:4997
-sudo cloudflared service install && sudo systemctl restart cloudflared
-```
-
-Then regenerate the manifest with `--base-path /glacier` and set the CRM
-`baseUrl` to the new origin.
-</details>
-
-## Refreshing the data (a newer .bak)
-
-On a machine with Docker and the .bak:
-
-```bash
-# restore into the johncrm-duck-sql container (mounts Desktop/SE_TEST as /backup), then:
-cd johncrm/glacier-api
-GLACIER_EXPORT_SQL_PASSWORD=<sa password> npx tsx scripts/export-icerink-snapshot.ts \
-  --out ../../duck-fashion-server/data/glacier-icerink.tsv.gz \
-  --sample-students 30 --sample-coaches 5
-```
-
-Omit the `--sample-*` flags for a full-population export (~25 MB; every
-customer context then depends on each student's package count). Commit the
-new snapshot, push, and on the Pi run
-`rm data/glacier-icerink.sqlite && sudo systemctl start duck-fashion-update`
-(the updater re-seeds, restarts and health-checks `/glacier/health`; it rolls
-back automatically if the service does not come up). Drop the restored SQL
-database afterwards — it is tens of GB and only needed for the export.
-
-## Conventions that keep parity
-
-- Values are RTRIMmed at export: SQL Server ignores trailing spaces in
-  comparisons, SQLite does not (`bk_status` is `nchar(2)`).
-- Datetimes are Hong Kong wall-clock text `YYYY-MM-DDTHH:MM:SS.mmm`
-  (lexicographic order equals chronological order) hydrated into UTC-flagged
-  Dates, matching the mssql `useUTC` convention the shared mappers assume.
-- `source.mode` stays `"sql"`; the CRM contract has no `sqlite` member and the
-  snapshot is a SQL database image.
+The Pi updater uses fast-forward-only Git pulls. Before publishing rewritten
+history, stop its update timer and prepare a private backup of live files and
+local work. After the approved rewrite, realign the checkout to the reviewed
+clean commit while preserving ignored databases and keys, then restart the timer.
+Never merge or push an old checkout into the cleaned history. Do not run
+`git clean` or `npm run seed` against the live Duck installation.

@@ -60,15 +60,8 @@ if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$OLD_LOCK_HASH" ]; the
   if ! npm ci --no-audit --no-fund; then rollback; die "npm ci failed after pull."; fi
 fi
 
-# The Glacier snapshot database is derived data (rebuilt from data/glacier-icerink.tsv.gz),
-# never edited in place. Rebuild it when a glacierApiKey is configured but the database is
-# missing (first deploy of the snapshot, or a deliberately removed database), so the service
-# can boot with /glacier mounted.
-if [ -f data/glacier-icerink.tsv.gz ] && [ ! -f data/glacier-icerink.sqlite ] \
-  && node -e 'process.exit(/^[a-f0-9]{64}$/.test(JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).glacierApiKey || "") ? 0 : 1)' 2>/dev/null; then
-  log "glacier snapshot database missing — seeding from data/glacier-icerink.tsv.gz (a minute or two)."
-  npm run seed:glacier || { rollback; die "glacier seed failed."; }
-fi
+# Customer exports are never deployed from Git. An existing private Glacier
+# database and credential are left untouched while its workspace migrates.
 
 log "restarting duck-fashion.service."
 sudo -n /usr/bin/systemctl restart duck-fashion.service || { rollback; die "systemctl restart failed."; }

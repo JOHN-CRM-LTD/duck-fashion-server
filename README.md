@@ -21,7 +21,7 @@ John CRM (cloud)  ⇄  Cloudflare edge  ⇄  cloudflared tunnel (on Pi)  ⇄  12
 - [docs/private-crm.md](docs/private-crm.md) — hosting choices and the optional
   separate enterprise CRM deployment and cutover
 - [GLACIER.md](GLACIER.md) — the Glacier IceRink read API served from
-  `/glacier` (SQL Server snapshot on SQLite)
+  `/glacier` (legacy adapter; customer data is private)
 
 ## Quick start
 
@@ -31,9 +31,7 @@ npm run seed         # rebuild data/duck-fashion.sqlite from data/catalog.json
 npm start            # listens on 127.0.0.1:4997 (needs deploy/create-config.sh first)
 npm run seed:bonus   # optional — the member-bonus tables are also (re)seeded
                      # idempotently on every boot; this just runs the same seed
-npm run seed:glacier # optional — rebuild data/glacier-icerink.sqlite from the
-                     # committed IceRink snapshot; /glacier stays off until a
-                     # glacierApiKey is configured (deploy/enable-glacier.sh)
+npm run check:public-data # reject tracked customer exports and databases
 ```
 
 `data/duck-fashion.sqlite` and `.local-duck/live-connection.json` are
@@ -41,3 +39,7 @@ gitignored on purpose: the first is the live business database, the second holds
 the ordinary read, staff read and write keys. Keep the database and write key on
 the Pi; enter only the appropriate read credentials into CRM's encrypted endpoint
 settings. Keep backups private.
+
+Glacier customer exports are not distributed with this repository. New Duck
+installations do not enable Glacier. Existing private Glacier databases remain
+untouched by code updates while the CRM workspace migrates; see [GLACIER.md](GLACIER.md).

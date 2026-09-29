@@ -34,12 +34,10 @@ Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm
   deletes those four retired demo IDs and their history. This is a demo-specific
   initializer, not a migration for arbitrary enterprise data. Back up before a
   first upgrade; never run `npm run seed` against the live database.
-- `data/glacier-icerink.sqlite` — the Glacier IceRink snapshot database
-  (gitignored, **derived**): unlike the stock database it holds no live edits
-  and is rebuilt from the committed `data/glacier-icerink.tsv.gz` by
-  `npm run seed:glacier`. When a `glacierApiKey` is configured and the
-  database is missing, `pull-update.sh` re-seeds it before restarting the
-  service, so the snapshot travels as code. See [GLACIER.md](GLACIER.md).
+- `data/glacier-icerink.sqlite` - an existing private Glacier snapshot is
+  preserved, not rebuilt by code deploys. Customer exports are never committed
+  or downloaded from Git. New installs leave Glacier disabled; its unit tests
+  use synthetic temporary fixtures. See [GLACIER.md](GLACIER.md).
 - The deploy health check covers `/shops`, `/customers/lookup` and
   `/bonus/cash-scheme`, plus `/glacier/health` when a glacierApiKey is
   configured; an unhealthy service rolls the commit back.
@@ -90,3 +88,15 @@ sudo systemctl daemon-reload && sudo systemctl enable --now duck-fashion duck-fa
 
 See `PI-SETUP.md` for the full walkthrough (Node 22, Cloudflare tunnel, CRM
 wiring) and `SERVER-SETUP.md` for the API contract.
+
+## Private data and history cleanup
+
+CI runs `npm run check:public-data` to reject tracked customer exports,
+database backups and private connection files. Glacier datasets stay outside
+this public repository, including scrubbed subsets.
+
+The updater cannot fast-forward across a history rewrite. Before an approved
+cleanup force-update, pause the Pi update timer and prepare a private backup of
+live databases, configuration and local changes. Realign the checkout to the
+reviewed clean commit without deleting ignored runtime data, verify Duck health,
+then resume the timer. Never merge old history into the cleaned repository.

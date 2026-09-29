@@ -12,6 +12,7 @@
     "seed": "node --import tsx server/seed-capsule.ts",
     "seed:bonus": "node --import tsx server/bonus-seed.ts",
     "seed:glacier": "node --import tsx server/glacier-seed.ts",
+    "check:public-data": "node deploy/check-public-data.mjs",
     "test": "node --import tsx --test --test-concurrency=1 server/*.test.ts"
   },
   "dependencies": {

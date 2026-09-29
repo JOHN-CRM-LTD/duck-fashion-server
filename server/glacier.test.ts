@@ -8,7 +8,7 @@ import express from "express";
 import type { Server } from "node:http";
 import { seedGlacierSnapshot } from "./glacier-seed.js";
 import { SqliteGlacierProvider } from "./glacier/sqlite-provider.js";
-import { createGlacierRouter } from "./glacier/router.js";
+import { mountGlacier } from "./glacier/mount.js";
 
 /**
  * A miniature IceRink snapshot in the exact exporter format (tabs separate fields, \N is NULL):
@@ -86,9 +86,8 @@ before(async () => {
   assert.deepEqual(result.tables, {
     member_info: 4, lesson_type: 1, course: 2, course_student: 3, course_showup: 3, book_info: 2, book_coach: 2, trx_hdr_bk: 1, trx_payment_bk: 1,
   });
-  provider = SqliteGlacierProvider.open(join(directory, "glacier.sqlite"));
   const app = express();
-  app.use("/glacier", createGlacierRouter(provider, API_KEY));
+  provider = mountGlacier(app, { dataDirectory: directory, databaseFile: "glacier.sqlite", glacierApiKey: API_KEY })!;
   await new Promise<void>(resolve => { server = app.listen(0, "127.0.0.1", resolve); });
   base = `http://127.0.0.1:${(server.address() as { port: number }).port}/glacier`;
 });
