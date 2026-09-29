@@ -97,7 +97,7 @@ install -D -m 0644 "$temp/glacier.service" /etc/systemd/system/glacier.service
 install -D -m 0644 "$temp/update.conf" /etc/systemd/system/duck-fashion-update.service.d/50-demo-layout.conf
 install -m 0440 "$temp/sudoers" /etc/sudoers.d/duck-glacier-update
 systemctl daemon-reload
-systemctl enable --now glacier.service
+if [ -f /srv/glacier/config/connection.json ]; then systemctl enable --now glacier.service; fi
 systemctl start duck-fashion.service
 export DUCK_CONFIG=/srv/duck-fashion/config/connection.json
 export GLACIER_CONFIG=/srv/glacier/config/connection.json
@@ -107,5 +107,5 @@ for _ in $(seq 1 10); do
 done
 $success || exit 1
 echo "Duck Fashion: /srv/duck-fashion, port 4997; Glacier: /srv/glacier, port 4998."
-echo "Both healthy. Existing /glacier URLs continue through the compatibility proxy."
+echo "Configured services healthy. Existing /glacier URLs continue through the compatibility proxy when Glacier is configured."
 echo "Next: use deploy/nginx-demo-services.conf.example for direct routing and optional remote admin."

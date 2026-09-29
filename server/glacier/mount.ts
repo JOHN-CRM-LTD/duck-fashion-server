@@ -17,7 +17,7 @@ export function mountGlacier(app: Express, options: { dataDirectory: string; gla
     return null;
   }
   if (!/^[a-f0-9]{64}$/.test(key)) throw new Error("Invalid glacierApiKey in live-connection.json: 64 lowercase hex characters, from deploy/create-config.sh.");
-  if (!existsSync(database)) throw new Error(`glacierApiKey is configured but ${database} is missing — rebuild it with: npm run seed:glacier`);
+  if (!existsSync(database)) throw new Error(`glacierApiKey is configured but ${database} is missing — restore the private database or run: npm run seed:glacier -- /private/path/glacier.tsv.gz`);
   const provider = SqliteGlacierProvider.open(database);
   app.use("/glacier", createGlacierRouter(provider, key));
   console.log(`Glacier read API mounted at /glacier (snapshot database ${database})`);

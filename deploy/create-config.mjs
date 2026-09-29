@@ -5,7 +5,7 @@ const url = new URL(process.argv[2]);
 if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) throw new Error("Provide a public HTTPS base URL without credentials, query or fragment");
 const path = resolve(process.env.DUCK_CONFIG ?? ".local-duck/live-connection.json");
 const config = existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : { mode: "capsule", port: 4997, dataDirectory: resolve("data") };
-for (const field of ["apiKey", "writeApiKey", ...(!config.glacierSeparate ? ["glacierApiKey"] : [])]) {
+for (const field of ["apiKey", "writeApiKey"]) {
   if (config[field] !== undefined && (typeof config[field] !== "string" || !/^[a-f0-9]{64}$/.test(config[field]))) throw new Error(`Existing ${field} is invalid; review privately instead of replacing it`);
   config[field] ??= randomBytes(32).toString("hex");
 }

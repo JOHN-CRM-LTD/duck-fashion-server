@@ -6,6 +6,9 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { once } from "node:events";
 import { DatabaseSync } from "node:sqlite";
+import { gzipSync } from "node:zlib";
+import { SNAPSHOT } from "./testing/glacier-fixture.js";
+import { seedGlacierSnapshot } from "./glacier-seed.js";
 
 test("config URL changes preserve all credentials and private settings", () => {
   const directory = mkdtempSync(join(tmpdir(), "duck-config-test-"));
@@ -18,6 +21,23 @@ test("config URL changes preserve all credentials and private settings", () => {
     writeFileSync(path, JSON.stringify(old));
     execFileSync(process.execPath, [resolve("deploy/create-config.mjs"), "https://second.invalid/stock-api"], { env, stdio: "pipe" });
     assert.deepEqual(JSON.parse(readFileSync(path, "utf8")), { ...old, url: "https://second.invalid/stock-api" });
+  } finally { rmSync(directory, { recursive: true, force: true }); }
+});
+
+test("layout migration leaves Glacier disabled when no private Pi adapter is configured", () => {
+  const directory = mkdtempSync(join(tmpdir(), "duck-only-split-test-"));
+  const tsx = import.meta.resolve("tsx"), configPath = join(directory, "source.json"), root = join(directory, "services");
+  const run = (path: string, ...args: string[]) => execFileSync(process.execPath, ["--import", tsx, resolve(path), ...args], { env: { ...process.env, DUCK_CONFIG: configPath }, stdio: "pipe" });
+  try {
+    run("server/seed-capsule.ts", "--data", directory);
+    writeFileSync(configPath, JSON.stringify({ mode: "capsule", apiKey: "ab".repeat(32), writeApiKey: "cd".repeat(32), port: 4997, dataDirectory: directory, url: "https://duck.invalid" }));
+    run("server/import-locations.ts", "--demo");
+    run("deploy/prepare-layout.ts", configPath, root);
+    const config = JSON.parse(readFileSync(join(root, "duck-fashion/config/connection.json"), "utf8"));
+    assert.equal(config.glacierSeparate, false);
+    assert.equal(config.glacierApiKey, undefined);
+    assert.equal(existsSync(join(root, "glacier/config/connection.json")), false);
+    assert.ok(existsSync(join(root, "duck-fashion/data/duck-fashion.sqlite")));
   } finally { rmSync(directory, { recursive: true, force: true }); }
 });
 
@@ -41,6 +61,9 @@ test("split migration preserves Duck state and keys; Glacier failure does not st
   try {
     run("server/seed-capsule.ts", "--data", directory);
     writeFileSync(configPath, JSON.stringify(original)); run("server/import-locations.ts", "--demo");
+    const syntheticSnapshot = join(directory, "synthetic.tsv.gz");
+    writeFileSync(syntheticSnapshot, gzipSync(Buffer.from(SNAPSHOT)));
+    await seedGlacierSnapshot(syntheticSnapshot, join(directory, "glacier-icerink.sqlite"));
     const originalDb = new DatabaseSync(join(directory, "duck-fashion.sqlite"));
     originalDb.exec("UPDATE stock SET quantity=37,revision=11"); originalDb.close();
     run("deploy/prepare-layout.ts", configPath, root);

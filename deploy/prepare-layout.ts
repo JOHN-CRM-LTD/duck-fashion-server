@@ -6,13 +6,16 @@ import { DatabaseSync } from "node:sqlite";
 import { backupDatabase } from "./backup.js";
 import { readDuckManagers } from "../server/manager-directory.js";
 import { browseLocationDirectory } from "../server/location-directory.js";
-import { seedGlacierSnapshot } from "../server/glacier-seed.js";
 
 const sourcePath = resolve(process.argv[2] ?? ".local-duck/live-connection.json");
 const root = resolve(process.argv[3] ?? "/srv");
 const source = JSON.parse(readFileSync(sourcePath, "utf8"));
 if (source.glacierSeparate) throw new Error("Already split; inspect existing layout instead of copying it again");
-if (![source.apiKey, source.writeApiKey, source.glacierApiKey].every(key => typeof key === "string" && /^[a-f0-9]{64}$/.test(key))) throw new Error("Valid existing Duck read/write and Glacier keys are required; no credentials will be rotated");
+if (![source.apiKey, source.writeApiKey].every(key => typeof key === "string" && /^[a-f0-9]{64}$/.test(key))) throw new Error("Valid existing Duck read/write keys are required; no credentials will be rotated");
+const hasGlacier = source.glacierApiKey !== undefined;
+if (hasGlacier && (typeof source.glacierApiKey !== "string" || !/^[a-f0-9]{64}$/.test(source.glacierApiKey))) throw new Error("Existing Glacier key is invalid; review privately");
+const privateGlacierDatabase = join(source.dataDirectory, "glacier-icerink.sqlite");
+if (hasGlacier && !existsSync(privateGlacierDatabase)) throw new Error("Configured private Glacier database is missing; restore it privately before migration. No data comes from Git");
 const duckRoot = join(root, "duck-fashion"), glacierRoot = join(root, "glacier");
 if (existsSync(duckRoot) || existsSync(glacierRoot)) throw new Error("Destination already exists. Review it; migration never overwrites an existing deployment");
 const dbPath = join(source.dataDirectory, "duck-fashion.sqlite");
@@ -43,12 +46,13 @@ if (existsSync(join(source.dataDirectory, "images"))) cpSync(join(source.dataDir
 const managerPath = resolve(source.managerDirectoryPath ?? ".local-duck/managers.json");
 if (existsSync(managerPath)) cpSync(managerPath, join(duckRoot, "backups", "pre-split-managers.json"));
 writePrivate(join(duckRoot, "config", "connection.json"), {
-  ...duck, glacierSeparate: true, dataDirectory: join(duckRoot, "data"), backupDirectory: join(duckRoot, "backups"),
+  ...duck, glacierSeparate: hasGlacier, dataDirectory: join(duckRoot, "data"), backupDirectory: join(duckRoot, "backups"),
   staffReadApiKey: source.staffReadApiKey ?? randomBytes(32).toString("hex"),
   adminApiKey: source.adminApiKey ?? randomBytes(32).toString("hex"),
 });
 const glacierDb = join(glacierRoot, "data", "glacier-icerink.sqlite");
-if (existsSync(join(source.dataDirectory, "glacier-icerink.sqlite"))) backupDatabase(join(source.dataDirectory, "glacier-icerink.sqlite"), glacierDb);
-else await seedGlacierSnapshot(resolve("data/glacier-icerink.tsv.gz"), glacierDb);
-writePrivate(join(glacierRoot, "config", "connection.json"), { port: 4998, apiKey: glacierApiKey, databasePath: glacierDb });
+if (hasGlacier) {
+  backupDatabase(privateGlacierDatabase, glacierDb);
+  writePrivate(join(glacierRoot, "config", "connection.json"), { port: 4998, apiKey: glacierApiKey, databasePath: glacierDb });
+}
 console.log("Prepared separate Duck Fashion and Glacier directories. Original data/config preserved; no secrets printed.");

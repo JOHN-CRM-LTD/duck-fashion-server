@@ -27,6 +27,8 @@ jobs:
 
       - name: Check deployment gating and rollback in isolated Git repositories
         run: bash deploy/test-pull-update.sh
+      - name: Reject private databases, exports and connection files
+        run: npm run check:public-data
 
       - name: Verify customer matching, migration, bonus seeding and public photo URLs
         run: node --import tsx --test --test-concurrency=1 server/*.test.ts
@@ -36,9 +38,6 @@ jobs:
 
       - name: Seed the demo database
         run: npm run seed
-
-      - name: Seed the glacier snapshot database
-        run: npm run seed:glacier
 
       - name: Generate throwaway connection keys
         run: |

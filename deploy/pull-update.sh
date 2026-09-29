@@ -21,13 +21,12 @@ node deploy/check-ci.mjs "$NEW" || die "Waiting for successful CI on this exact 
 
 # Inspect runtime config without printing credentials.
 separate=$(node -e 'const c=JSON.parse(require("fs").readFileSync(process.env.DUCK_CONFIG,"utf8")); console.log(c.glacierSeparate ? "true" : "false")')
-glacier_db=$(node -e 'const fs=require("fs"),p=require("path"),d=JSON.parse(fs.readFileSync(process.env.DUCK_CONFIG,"utf8"));console.log(d.glacierSeparate ? JSON.parse(fs.readFileSync(process.env.GLACIER_CONFIG,"utf8")).databasePath : d.glacierApiKey ? p.join(d.dataDirectory,"glacier-icerink.sqlite") : "")')
 duck_changed=false
 glacier_changed=false
 while IFS= read -r file; do
   case "$file" in
     server/glacier/proxy.ts|server/glacier/mount.ts) duck_changed=true ;;
-    server/glacier/*|server/glacier-seed.ts|data/glacier-icerink.tsv.gz|GLACIER.md) glacier_changed=true ;;
+    server/glacier/*|server/glacier-seed.ts) glacier_changed=true ;;
     package*.json|deploy/*) duck_changed=true; glacier_changed=true ;;
     server/*|config/duck-fashion/*|data/*) duck_changed=true ;;
   esac
@@ -36,12 +35,6 @@ if $REPAIR; then duck_changed=true; glacier_changed=true; fi
 if ! $separate && $glacier_changed; then duck_changed=true; fi
 
 node --import tsx deploy/backup.ts || die "Backup failed; keeping the current release."
-backup_dir=$(mktemp -d)
-trap 'rm -rf -- "$backup_dir"' EXIT
-if [ -n "$glacier_db" ] && [ -f "$glacier_db" ]; then
-  cp -- "$glacier_db" "$backup_dir/glacier.sqlite"
-  [ ! -f "$glacier_db.sha256" ] || cp -- "$glacier_db.sha256" "$backup_dir/glacier.sha256"
-fi
 old_lock=$(sha256sum package-lock.json | cut -d' ' -f1)
 deps_changed=false
 restart_services() {
@@ -50,14 +43,9 @@ restart_services() {
   return 0
 }
 rollback() {
-  log "Restoring code and Glacier snapshot to $OLD; preserving Duck business edits."
+  log "Restoring code to $OLD; preserving private Duck and Glacier data."
   git reset --hard "$OLD" >/dev/null || return 1
   if $deps_changed; then npm ci --no-audit --no-fund || return 1; fi
-  if [ -f "$backup_dir/glacier.sqlite" ]; then
-    cp -- "$backup_dir/glacier.sqlite" "$glacier_db.rollback"
-    mv -f -- "$glacier_db.rollback" "$glacier_db"
-    if [ -f "$backup_dir/glacier.sha256" ]; then cp -- "$backup_dir/glacier.sha256" "$glacier_db.sha256"; else rm -f -- "$glacier_db.sha256"; fi
-  fi
   restart_services
 }
 failed() { rollback || log "Rollback needs operator attention."; die "$1"; }
@@ -67,7 +55,7 @@ if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$old_lock" ]; then
   deps_changed=true
   npm ci --no-audit --no-fund || failed "Dependency install failed."
 fi
-if $glacier_changed; then node --import tsx deploy/refresh-glacier.ts || failed "Glacier snapshot refresh failed."; fi
+# Private Glacier datasets are never replaced or refreshed by a code deploy.
 restart_services || failed "Service restart failed."
 for _ in $(seq 1 10); do
   if node deploy/health-check.mjs; then log "Deployed $NEW and healthy."; exit 0; fi

@@ -131,23 +131,14 @@ as the rollback copy. (If you do this later than the day the zip was made,
 first re-copy `data/duck-fashion.sqlite` from the laptop so any stock
 adjustments made in between come along.)
 
-## 6b. Turn on the Glacier IceRink read API (optional)
+## 6b. Existing Glacier installations
 
-The same service can also serve the Glacier booking snapshot to the CRM's
-glacier workspace automations — one command, see [GLACIER.md](GLACIER.md):
-
-```bash
-bash deploy/enable-glacier.sh     # seeds the snapshot DB + prints the glacier key
-sudo systemctl restart duck-fashion
-curl -s http://127.0.0.1:4997/glacier/health
-```
-
-Then open the proxy path — one nginx location forwarding
-`/stock-api/glacier/*` to the service's `/glacier/*` (see GLACIER.md) — and
-wire the CRM with `johncrm/glacier-api/docs/johncrm-manifest-duckserver.json`
-(baseUrl `https://duckserver.johncrm.com`, origin only) and the printed key.
-Until enabled, the glacier code sits inert: no routes, no key, no change to
-the stock API.
+Glacier customer datasets are private and are no longer shipped through Git.
+New Duck setups leave Glacier disabled. Existing private Glacier databases and
+keys keep working during migration; do not remove them until the CRM workspace
+has switched to the new endpoint. See [GLACIER.md](GLACIER.md) for private import
+instructions and the coordinated checkout recovery required after Git history
+cleanup. Duck stock and loyalty data must remain untouched.
 
 ## Things to know
 

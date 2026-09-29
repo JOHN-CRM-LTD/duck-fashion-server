@@ -66,4 +66,5 @@ echo 'ok: unhealthy release restores old code AND old dependencies'
 export HEALTH_STATUS=0
 bash "$temp/work/deploy/pull-update.sh" > "$temp/log" 2>&1
 [ "$(git -C "$temp/work" rev-parse HEAD)" = "$new" ]
+! grep -q '^refresh$' "$TRACE"
 echo 'ok: healthy tested release deploys successfully'

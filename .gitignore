@@ -24,7 +24,7 @@ data/*.sqlite-shm
 *.swp
 .DS_Store
 
-# Glacier snapshot database — derived, rebuilt by npm run seed:glacier
+# Private runtime/operator files
 data/glacier-icerink.sqlite
 .local-glacier/
 .local-duck/admin-connection.json
@@ -32,3 +32,18 @@ data/glacier-icerink.sqlite
 *.sqlite.tmp
 .local-duck/backups/
 data/*.sqlite.sha256
+# Customer datasets and database backups are private, including scrubbed exports.
+# Tests generate synthetic Glacier fixtures in temporary directories.
+*.bak
+*.mdf
+*.ldf
+*.dump
+*.sqlite
+*.sqlite-*
+*.sqlite.tmp
+*.db
+*.tsv
+*.tsv.gz
+*.csv
+*.csv.gz
+data/glacier-*

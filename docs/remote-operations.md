@@ -16,10 +16,10 @@ installation or of working remote access.
 - Glacier previously shared Duck's process, credentials file and data directory.
   A missing Glacier database could prevent Duck from starting. They can now run
   independently, with separate systemd sandboxes, credentials and runtime data.
-- The updater previously deployed before CI completed, could fail to reinstall
-  old dependencies on rollback, and refreshed Glacier only when its DB was missing.
-  It now checks successful CI for the exact SHA, makes a consistent Duck backup,
-  restores dependencies/snapshot on rollback and detects changed snapshot content.
+- The updater previously deployed before CI completed and could fail to reinstall
+  old dependencies on rollback. It now checks successful CI for the exact SHA,
+  makes a consistent Duck backup and restores dependencies on rollback.
+  Code deployments never change private Glacier data.
 - Changing the public URL used to rotate keys; enabling Glacier could discard
   staff credentials and custom settings. Both now preserve existing settings.
 
@@ -42,7 +42,10 @@ business databases in Git. Duck runs on 127.0.0.1:4997; Glacier runs on
 127.0.0.1:4998. Each service's sandbox hides the other application's `/srv` folder.
 They retain the current service account; the updater can administer both.
 Source changes restart the affected service; common dependency/deployment changes
-restart both. Glacier still offers read-only snapshot data, not booking writes.
+restart both when Glacier is configured. Glacier still offers read-only snapshot
+data, not booking writes. If Glacier has moved to the CRM deployment and its Pi
+key is absent, the installer leaves the local Glacier service disabled; it never
+changes CRM source settings or retrieves customer data from Git.
 
 ## One-time Pi installation
 
@@ -59,11 +62,12 @@ restart both. Glacier still offers read-only snapshot data, not booking writes.
 4. Run `sudo bash deploy/install-layout.sh` from that checkout. If the old config
    is elsewhere, pass its full path. This briefly pauses the existing timer and
    service, copies a consistent database, preserves keys and original files,
-   installs service drop-ins plus Glacier, and verifies both services. On failure
+   installs service drop-ins plus the optional existing Glacier, and verifies the
+   configured services. On failure
    it restores the old service setup and retains prepared files for inspection.
    It never overwrites an existing `/srv/duck-fashion` or `/srv/glacier` tree.
 5. Run `bash deploy/doctor.sh`. Verify both services and the existing timer are
-   enabled/active, and inspect the public Glacier and Duck endpoints. The original
+   enabled/active as applicable, and inspect the configured public endpoints. The original
    `/stock-api/glacier` URL continues through a compatibility proxy. For complete
    request-path independence, replace its nginx location using
    `deploy/nginx-demo-services.conf.example`, then `sudo nginx -t` and
@@ -155,7 +159,7 @@ bash deploy/doctor.sh
 journalctl -u duck-fashion-update.service -n 40 --no-pager
 journalctl -u duck-fashion.service -u glacier.service -n 40 --no-pager
 sudo systemctl start duck-fashion-update.service
-# Force same-commit repair/reseed checks, with the /srv config environment set:
+# Force same-commit restart/health checks, with the /srv config environment set:
 bash deploy/pull-update.sh --repair
 sudo systemctl restart glacier.service
 ```
@@ -166,7 +170,10 @@ restricted `GITHUB_TOKEN` through a private systemd EnvironmentFile; never Git.
 Do not bypass CI for an unattended deployment. The first upgrade from the legacy
 updater still needs a green PR before merging, since the old script lacks this gate.
 
-The Glacier refresh uses the configured snapshot path and compares content hashes.
-Commit a reviewed new export to `data/glacier-icerink.tsv.gz`; no live DB deletion
-is needed. Check `dataAsOf` in authenticated responses before presenting it as
-current data.
+For an intentional refresh of an existing Pi Glacier adapter, securely transfer
+an export outside the checkout, then run
+`node --import tsx deploy/refresh-glacier.ts /private/path/export.tsv.gz` with the
+runtime config environment set. It backs up the old private database and replaces
+it atomically; restart `glacier.service` (or `duck-fashion.service` for the legacy
+combined layout). Never commit customer exports, even scrubbed subsets. Check
+`dataAsOf` in authenticated responses before presenting it as current data.

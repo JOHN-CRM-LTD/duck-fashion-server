@@ -1,7 +1,6 @@
 /**
- * Rebuilds data/glacier-icerink.sqlite from the committed IceRink snapshot
- * (data/glacier-icerink.tsv.gz, produced by johncrm/glacier-api's
- * scripts/export-icerink-snapshot.ts from the SQL Server .bak restore).
+ * Rebuilds a private Glacier SQLite database from an explicitly supplied export.
+ * Customer exports, including scrubbed subsets, must never be committed.
  *
  * The snapshot is a gzipped TSV: `# table`/`# columns` section headers, then one row per
  * line with `\N` for NULL and `\\`, `\t`, `\n`, `\r` escapes. Every value was RTRIMmed at
@@ -9,7 +8,7 @@
  * are HK wall-clock `YYYY-MM-DDTHH:MM:SS.mmm` text. Only the columns the read contract
  * queries are present — no addresses, e-mail, HKID or birth dates.
  *
- * Usage: npm run seed:glacier   (run from the bundle root)
+ * Usage: npm run seed:glacier -- /private/path/glacier.tsv.gz
  */
 import { createReadStream, existsSync, renameSync, unlinkSync, readFileSync } from "node:fs";
 import { createGunzip } from "node:zlib";
@@ -131,9 +130,14 @@ export async function seedGlacierSnapshot(snapshotPath: string, outPath: string)
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const dataDirectory = resolve("data");
+  const snapshotPath = process.argv[2];
+  if (!snapshotPath || process.argv.length !== 3) {
+    console.error("Usage: npm run seed:glacier -- /private/path/glacier.tsv.gz");
+    process.exit(1);
+  }
   const started = Date.now();
   const glacierConfig = process.env.GLACIER_CONFIG ? JSON.parse(readFileSync(process.env.GLACIER_CONFIG, "utf8")) : null;
-  const result = await seedGlacierSnapshot(join(dataDirectory, "glacier-icerink.tsv.gz"), glacierConfig?.databasePath ?? join(dataDirectory, "glacier-icerink.sqlite"));
+  const result = await seedGlacierSnapshot(resolve(snapshotPath), glacierConfig?.databasePath ?? join(dataDirectory, "glacier-icerink.sqlite"));
   for (const [name, count] of Object.entries(result.tables)) console.log(`${name}: ${count} rows`);
   console.log(`dataAsOf ${result.dataAsOf || "(none)"} — seeded in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

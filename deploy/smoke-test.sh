@@ -23,7 +23,7 @@ STAFF_READ_KEY=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/liv
 GLACIER_KEY=$(node -e 'const c=JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")); process.stdout.write(/^[a-f0-9]{64}$/.test(c.glacierApiKey||"") ? c.glacierApiKey : "")' || true)
 [ -f data/duck-fashion.sqlite ] || { echo "data/duck-fashion.sqlite missing — run: npm run seed"; exit 1; }
 if [ -n "$GLACIER_KEY" ] && [ ! -f data/glacier-icerink.sqlite ]; then
-  echo "glacierApiKey configured but data/glacier-icerink.sqlite missing — run: npm run seed:glacier"; exit 1
+  echo "glacierApiKey configured but data/glacier-icerink.sqlite missing — restore the private database or run: npm run seed:glacier -- /private/path/glacier.tsv.gz"; exit 1
 fi
 
 # Never boot a second copy against the live service's port: the adjustment
