@@ -143,6 +143,11 @@ edit; use `undo` or submit a new explicit change. Code rollback preserves Duck
 business data and audit history. Restoring an entire database could discard newer
 stock/points activity, so database restore is a separate operator decision.
 
+CI validates the change schema and transaction behavior. Its disposable config
+sets `applyGitLocationChanges: false` because live revision hashes do not describe
+the fresh CI fixture database. Leave this flag absent (or true) in production;
+actual source revision checks happen on the Pi at startup.
+
 ## Troubleshoot from anywhere
 
 ```sh

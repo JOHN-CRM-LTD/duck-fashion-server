@@ -25,7 +25,7 @@ test("split migration preserves Duck state and keys; Glacier failure does not st
   const directory = mkdtempSync(join(tmpdir(), "duck-split-test-"));
   const tsx = import.meta.resolve("tsx");
   const configPath = join(directory, "source.json"), root = join(directory, "services");
-  const original = { mode: "capsule", apiKey: "ab".repeat(32), writeApiKey: "cd".repeat(32), staffReadApiKey: "ef".repeat(32), glacierApiKey: "12".repeat(32), port: 4997, dataDirectory: directory, url: "https://duck.invalid/stock-api" };
+  const original = { mode: "capsule", applyGitLocationChanges: false, apiKey: "ab".repeat(32), writeApiKey: "cd".repeat(32), staffReadApiKey: "ef".repeat(32), glacierApiKey: "12".repeat(32), port: 4997, dataDirectory: directory, url: "https://duck.invalid/stock-api" };
   const run = (path: string, ...args: string[]) => execFileSync(process.execPath, ["--import", tsx, resolve(path), ...args], { env: { ...process.env, DUCK_CONFIG: configPath }, stdio: "pipe" });
   const children: ReturnType<typeof spawn>[] = [];
   const start = async (path: string, environment: Record<string, string>, ready: string) => {

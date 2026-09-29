@@ -20,7 +20,8 @@ const expected = Buffer.from(`Bearer ${config.apiKey}`);
 const expectedWrite = typeof config.writeApiKey === "string" && /^[a-f0-9]{64}$/.test(config.writeApiKey) ? Buffer.from(`Bearer ${config.writeApiKey}`) : null;
 const expectedStaffRead = typeof config.staffReadApiKey === "string" && /^[a-f0-9]{64}$/.test(config.staffReadApiKey) ? Buffer.from(`Bearer ${config.staffReadApiKey}`) : null;
 if (config.adminApiKey !== undefined && (typeof config.adminApiKey !== "string" || !/^[a-f0-9]{64}$/.test(config.adminApiKey) || [config.apiKey, config.writeApiKey, config.staffReadApiKey, config.glacierApiKey].includes(config.adminApiKey))) throw new Error("Admin credential must be valid and distinct");
-const store = openCapsule(config.dataDirectory, config.url, resolve("config/duck-fashion/location-changes.json"));
+const store = openCapsule(config.dataDirectory, config.url,
+  config.applyGitLocationChanges === false ? undefined : resolve("config/duck-fashion/location-changes.json"));
 const app = express();
 app.disable("x-powered-by");
 let revision = "unknown";
