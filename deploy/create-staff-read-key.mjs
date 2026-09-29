@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { readFileSync, writeFileSync, renameSync, chmodSync } from "node:fs";
 import { resolve } from "node:path";
-const path = resolve(".local-duck/live-connection.json");
+const path = resolve(process.env.DUCK_CONFIG ?? ".local-duck/live-connection.json");
 const config = JSON.parse(readFileSync(path, "utf8"));
 if (config.staffReadApiKey && (!/^[a-f0-9]{64}$/.test(config.staffReadApiKey) || [config.apiKey, config.writeApiKey].includes(config.staffReadApiKey))) throw new Error("Existing staff read credential is invalid; review it without rotating other keys");
 if (!config.staffReadApiKey) {

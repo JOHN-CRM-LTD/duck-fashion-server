@@ -24,6 +24,14 @@ data/*.sqlite-shm
 *.swp
 .DS_Store
 
+# Private runtime/operator files
+data/glacier-icerink.sqlite
+.local-glacier/
+.local-duck/admin-connection.json
+.local-duck/remote-*.json
+*.sqlite.tmp
+.local-duck/backups/
+data/*.sqlite.sha256
 # Customer datasets and database backups are private, including scrubbed exports.
 # Tests generate synthetic Glacier fixtures in temporary directories.
 *.bak

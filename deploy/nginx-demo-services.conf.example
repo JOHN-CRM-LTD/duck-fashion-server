@@ -1,0 +1,18 @@
+# Add inside the EXISTING duckserver.johncrm.com TLS server block.
+# Replace the existing Glacier location; do not create a duplicate.
+# Existing stock/customer/coupon routes remain as configured.
+location ^~ /stock-api/glacier/ {
+    proxy_pass http://127.0.0.1:4998/glacier/;
+    proxy_set_header Authorization $http_authorization;
+    proxy_read_timeout 30s;
+}
+
+# Dedicated operator key, never a CRM read/write key. No CORS is enabled.
+# Optional: omit this location and use SSH/Tailscale forwarding instead.
+location ^~ /stock-api/admin/ {
+    client_max_body_size 16k;
+    proxy_pass http://127.0.0.1:4997/admin/;
+    proxy_set_header Authorization $http_authorization;
+    proxy_read_timeout 20s;
+    add_header Cache-Control "no-store" always;
+}

@@ -1,5 +1,9 @@
 # Hosting Duck Fashion on a Raspberry Pi
 
+> This is the original combined-service bootstrap. For an existing Pi, use
+> [Remote demo operations](docs/remote-operations.md) to preserve data, split Duck
+> and Glacier, and configure administration from outside home.
+
 This guide takes you from the USB stick to a Pi that serves the Duck Fashion
 stock API to John CRM 24/7. Works on any Raspberry Pi with Raspberry Pi OS
 (Bookworm, 32- or 64-bit). The service needs no SQL Server, no Docker and
@@ -89,8 +93,8 @@ Still in `~/duck-fashion-server`, with your tunnel URL from step 3:
 bash deploy/create-config.sh https://<your-tunnel-url>
 ```
 
-This generates fresh read/write keys, writes `.local-duck/live-connection.json`
-and prints both keys once. The **read key** goes into John CRM later; the
+This creates missing keys and writes `.local-duck/live-connection.json`, preserving
+existing credentials and settings. Read keys privately from that file. The **read key** goes into John CRM later; the
 **write key** stays private (it is only for staff stock adjustments).
 
 ## 5. Start the stock service
@@ -148,5 +152,6 @@ cleanup. Duck stock and loyalty data must remain untouched.
   A Pi Zero is enough; the service idles at roughly 50 MB RAM.
 - **Backups**: `sudo systemctl stop duck-fashion`, copy
   `data/duck-fashion.sqlite` (e.g. back to the USB stick), start it again.
-- Rotating keys = rerun `create-config.sh` + restart the service + update the
-  CRM credential. Never commit or share `.local-duck/live-connection.json`.
+- `create-config.sh` preserves existing keys when the URL changes. Key rotation
+  is an explicit private config edit followed by a service restart and updating
+  the affected CRM credential. Never commit `.local-duck/live-connection.json`.

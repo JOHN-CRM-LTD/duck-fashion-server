@@ -10,7 +10,7 @@
  *
  * Usage: npm run seed:glacier -- /private/path/glacier.tsv.gz
  */
-import { createReadStream, existsSync, renameSync, unlinkSync } from "node:fs";
+import { createReadStream, existsSync, renameSync, unlinkSync, readFileSync } from "node:fs";
 import { createGunzip } from "node:zlib";
 import { createInterface } from "node:readline";
 import { DatabaseSync, type StatementSync } from "node:sqlite";
@@ -136,7 +136,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     process.exit(1);
   }
   const started = Date.now();
-  const result = await seedGlacierSnapshot(resolve(snapshotPath), join(dataDirectory, "glacier-icerink.sqlite"));
+  const glacierConfig = process.env.GLACIER_CONFIG ? JSON.parse(readFileSync(process.env.GLACIER_CONFIG, "utf8")) : null;
+  const result = await seedGlacierSnapshot(resolve(snapshotPath), glacierConfig?.databasePath ?? join(dataDirectory, "glacier-icerink.sqlite"));
   for (const [name, count] of Object.entries(result.tables)) console.log(`${name}: ${count} rows`);
   console.log(`dataAsOf ${result.dataAsOf || "(none)"} — seeded in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 }

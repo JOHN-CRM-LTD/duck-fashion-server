@@ -9,10 +9,12 @@ travel in two steps:
    endpoint checks in `deploy/smoke-test.sh`. A commit that breaks boot,
    auth, search, photos or stock adjustments never passes CI.
 2. **CD (the Pi pulls)** — `duck-fashion-update.timer` on the Pi runs
-   `deploy/pull-update.sh` every minute. If `main` has moved, the script
-   fast-forwards, reinstalls dependencies when `package-lock.json` changed,
-   restarts `duck-fashion.service`, health-checks `/shops` and **rolls the
-   commit back automatically** if the service does not come up healthy.
+   `deploy/pull-update.sh` every minute. If `main` has moved, it waits for a
+   successful CI run for that exact SHA, backs up Duck, fast-forwards, reinstalls
+   changed dependencies, restarts affected services and checks health. Failure
+   restores the old code and dependencies. Private Glacier data and Duck business edits
+   remain intact. See [Remote demo operations](docs/remote-operations.md) for the
+   separate runtime layout and private manager/location administration.
 
 ```
 git push to main ──> GitHub Actions smoke test ──> main is green
@@ -21,7 +23,12 @@ Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm
                                                         └─ unhealthy? git reset back, restart, log
 ```
 
-## What a deploy never touches
+## Persistent data and deployment changes
+
+After the split, private runtime files live under `/srv/duck-fashion` and
+`/srv/glacier`. The paths below describe the legacy layout. Explicit reviewed
+entries in `config/duck-fashion/location-changes.json` update existing locations
+once, with revision checks and audit history; code rollback does not undo them.
 
 - `data/duck-fashion.sqlite` — the **live** database (gitignored). Deploys
   swap code, not stock. A fresh clone rebuilds a pristine database with
@@ -39,8 +46,8 @@ Pi timer (every 1 min) ── git fetch ── new commit? ─yes─> pull + npm
   or downloaded from Git. New installs leave Glacier disabled; its unit tests
   use synthetic temporary fixtures. See [GLACIER.md](GLACIER.md).
 - The deploy health check covers `/shops`, `/customers/lookup` and
-  `/bonus/cash-scheme`, plus `/glacier/health` when a glacierApiKey is
-  configured; an unhealthy service rolls the commit back.
+  `/bonus/cash-scheme`, staff locations/managers and admin status when configured,
+  plus Glacier health on its configured service; an unhealthy release rolls back.
 - `.local-duck/live-connection.json` — the read/write keys (gitignored),
   generated per machine by `deploy/create-config.sh`.
 
@@ -61,19 +68,21 @@ git -C /home/plushii4854/Documents/duck-fashion-server log --oneline -3
 
 The updater restarts the service with a narrowly scoped sudoers rule
 (`/etc/sudoers.d/duck-fashion-update`) that allows `plushii4854` to run
-exactly one command without a password: `systemctl restart duck-fashion.service`.
+`systemctl restart duck-fashion.service` without a password. The split installer
+adds a separate narrow rule for `systemctl restart glacier.service`.
 
 ## Making changes safely
 
-- Push to `main` only after CI is green (or open a pull request and let CI
-  check it first — the Pi deploys whatever is on `main`).
+- Use a pull request to check CI before merging. The upgraded updater also
+  waits for successful main CI for the exact commit. The first upgrade still
+  runs the legacy updater, so verify PR checks before that merge.
 - Changes that alter dependencies update `package-lock.json`; the Pi
   reinstalls automatically — no manual steps.
 - If the working tree on the Pi is dirty, the updater refuses to deploy and
   logs the reason. Keep the Pi checkout clean: make changes via GitHub.
 - Pulling code does not import location records, provision the staff read key or
   select Knowledge Base sources. Follow [finalize-johncrm.md](docs/finalize-johncrm.md)
-  once for the current Duck deployment. The timer does not wait for GitHub CI.
+  once for the current Duck deployment. The upgraded timer waits for GitHub CI.
 
 ## First setup on a new Pi (summary)
 

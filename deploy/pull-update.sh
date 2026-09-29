@@ -1,83 +1,64 @@
 #!/usr/bin/env bash
-# CI/CD pull deploy for the Duck Fashion Pi.
-#
-# Runs every minute from duck-fashion-update.timer (and can be run by
-# hand). It checks GitHub for new commits on main and, when one arrives:
-# fast-forward pulls it, reinstalls dependencies if the lockfile changed,
-# restarts the duck-fashion service, health-checks it, and rolls the commit
-# back if the service does not come up. The live SQLite database and the
-# connection keys are gitignored, so a deploy never touches live stock or
-# credentials.
+# One existing timer; exact-commit CI gate; data lives outside the Git checkout.
 set -euo pipefail
-
 cd "$(dirname "$0")/.."
-BRANCH=main
-REMOTE=origin
-NODE22=/opt/node22/bin
-[ -d "$NODE22" ] && export PATH="$NODE22:$PATH"
-
+[ ! -d /opt/node22/bin ] || export PATH="/opt/node22/bin:$PATH"
+export DUCK_CONFIG="${DUCK_CONFIG:-$PWD/.local-duck/live-connection.json}"
+export GLACIER_CONFIG="${GLACIER_CONFIG:-/srv/glacier/config/connection.json}"
 log() { echo "[duck-fashion-update] $*"; }
 die() { log "ERROR: $*"; exit 1; }
-
-# One run at a time (timer + manual run can overlap).
 exec 9>/tmp/duck-fashion-update.lock
-flock -n 9 || { log "another update is already running, exiting."; exit 0; }
-
-if ! git remote get-url "$REMOTE" >/dev/null 2>&1; then
-  log "no '$REMOTE' remote configured yet — nothing to pull from."
-  exit 0
-fi
-
-git fetch "$REMOTE" "$BRANCH" || die "git fetch failed (offline?); trying again on the next timer run."
-
+flock -n 9 || exit 0
+git fetch origin main || die "Fetch failed; retaining the running release."
 OLD=$(git rev-parse HEAD)
-NEW=$(git rev-parse "$REMOTE/$BRANCH")
-if [ "$OLD" = "$NEW" ]; then
-  log "already at $OLD — up to date."
-  exit 0
-fi
+NEW=$(git rev-parse origin/main)
+REPAIR=false
+[ "${1:-}" != "--repair" ] || REPAIR=true
+if [ "$OLD" = "$NEW" ] && ! $REPAIR; then log "Already at $OLD."; exit 0; fi
+[ -z "$(git status --porcelain)" ] || die "Checkout has local edits; preserve/reconcile them before deployment."
+git merge-base --is-ancestor "$OLD" "$NEW" || die "Cannot fast-forward; operator reconciliation required."
+node deploy/check-ci.mjs "$NEW" || die "Waiting for successful CI on this exact main commit."
 
-# Refuse to deploy over local edits made directly on the Pi.
-if [ -n "$(git status --porcelain)" ]; then
-  die "working tree is dirty; commit or stash local changes first. NOT deploying."
-fi
+# Inspect runtime config without printing credentials.
+separate=$(node -e 'const c=JSON.parse(require("fs").readFileSync(process.env.DUCK_CONFIG,"utf8")); console.log(c.glacierSeparate ? "true" : "false")')
+duck_changed=false
+glacier_changed=false
+while IFS= read -r file; do
+  case "$file" in
+    server/glacier/proxy.ts|server/glacier/mount.ts) duck_changed=true ;;
+    server/glacier/*|server/glacier-seed.ts) glacier_changed=true ;;
+    package*.json|deploy/*) duck_changed=true; glacier_changed=true ;;
+    server/*|config/duck-fashion/*|data/*) duck_changed=true ;;
+  esac
+done < <(git diff --name-only "$OLD" "$NEW")
+if $REPAIR; then duck_changed=true; glacier_changed=true; fi
+if ! $separate && $glacier_changed; then duck_changed=true; fi
 
-OLD_LOCK_HASH=$(sha256sum package-lock.json | cut -d' ' -f1)
-rollback() {
-  log "rolling back to $OLD."
-  git reset --hard "$OLD" >/dev/null
-  if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$OLD_LOCK_HASH" ]; then
-    npm ci --no-audit --no-fund >/dev/null 2>&1 || log "WARNING: dependency rollback install failed."
-  fi
-  sudo -n /usr/bin/systemctl restart duck-fashion.service || die "could not restart the service during rollback!"
+node --import tsx deploy/backup.ts || die "Backup failed; keeping the current release."
+old_lock=$(sha256sum package-lock.json | cut -d' ' -f1)
+deps_changed=false
+restart_services() {
+  if $duck_changed; then sudo -n /usr/bin/systemctl restart duck-fashion.service || return 1; fi
+  if $separate && $glacier_changed; then sudo -n /usr/bin/systemctl restart glacier.service || return 1; fi
+  return 0
 }
-
-log "deploying $(git rev-parse --short "$OLD") -> $(git rev-parse --short "$NEW")."
-git merge --ff-only "$REMOTE/$BRANCH" >/dev/null || die "cannot fast-forward to $NEW; NOT deploying."
-
-if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$OLD_LOCK_HASH" ]; then
-  log "package-lock.json changed — running npm ci."
-  if ! npm ci --no-audit --no-fund; then rollback; die "npm ci failed after pull."; fi
+rollback() {
+  log "Restoring code to $OLD; preserving private Duck and Glacier data."
+  git reset --hard "$OLD" >/dev/null || return 1
+  if $deps_changed; then npm ci --no-audit --no-fund || return 1; fi
+  restart_services
+}
+failed() { rollback || log "Rollback needs operator attention."; die "$1"; }
+log "Deploying ${OLD:0:12} -> ${NEW:0:12}."
+git merge --ff-only origin/main >/dev/null || die "Fast-forward failed."
+if [ "$(sha256sum package-lock.json | cut -d' ' -f1)" != "$old_lock" ]; then
+  deps_changed=true
+  npm ci --no-audit --no-fund || failed "Dependency install failed."
 fi
-
-# Customer exports are never deployed from Git. An existing private Glacier
-# database and credential are left untouched while its workspace migrates.
-
-log "restarting duck-fashion.service."
-sudo -n /usr/bin/systemctl restart duck-fashion.service || { rollback; die "systemctl restart failed."; }
-
-read_key=$(node -p 'JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")).apiKey') \
-  || { rollback; die "could not read the read key for the health check."; }
-glacier_key=$(node -e 'const c=JSON.parse(require("fs").readFileSync(".local-duck/live-connection.json","utf8")); process.stdout.write(/^[a-f0-9]{64}$/.test(c.glacierApiKey||"") ? c.glacierApiKey : "")' || true)
-log "health-checking http://127.0.0.1:4997/shops ..."
-for _ in $(seq 1 20); do
-  code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/shops || true)
-  customer_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" 'http://127.0.0.1:4997/customers/lookup?phone=85261234568' || true)
-  bonus_code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $read_key" http://127.0.0.1:4997/bonus/cash-scheme || true)
-  glacier_code=200
-  [ -n "$glacier_key" ] && glacier_code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4997/glacier/health || true)
-  [ "$code" = "200" ] && [ "$customer_code" = "200" ] && [ "$bonus_code" = "200" ] && [ "$glacier_code" = "200" ] && { log "deployed $(git rev-parse --short HEAD) and healthy (stock, customer lookup, bonus scheme, glacier ${glacier_key:+on})."; exit 0; }
+# Private Glacier datasets are never replaced or refreshed by a code deploy.
+restart_services || failed "Service restart failed."
+for _ in $(seq 1 10); do
+  if node deploy/health-check.mjs; then log "Deployed $NEW and healthy."; exit 0; fi
   sleep 1
 done
-rollback
-die "service did not become healthy on the new commit (last HTTP status: ${code:-none})."
+failed "Service health checks failed."

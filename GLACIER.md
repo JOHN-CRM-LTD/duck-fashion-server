@@ -1,5 +1,10 @@
 # Glacier IceRink read API (legacy Pi adapter)
 
+An existing private Pi adapter can be isolated into `/srv/glacier` and its own
+service on port 4998; see [Remote demo operations](docs/remote-operations.md).
+That optional local separation does not change the CRM workspace's selected
+source or move its dataset back from the CRM deployment.
+
 This repository contains the read-only SQLite adapter code, but **no Glacier
 customer data**. The Glacier workspace is moving to a separate private dataset
 hosted by the CRM deployment. Duck Fashion stock and loyalty remain on the Pi.
@@ -24,8 +29,8 @@ workspace has switched to the new service and its reads have been verified.
 
 `deploy/create-config.sh` creates Duck read/write keys only. Glacier stays off
 unless an operator deliberately configures it with an existing private database.
-The script preserves any existing Glacier and staff-read keys when rotating the
-Duck keys. CI tests the Glacier routes with synthetic temporary data only.
+The script preserves existing Duck, Glacier and staff-read keys when changing
+the public URL. CI tests the Glacier routes with synthetic temporary data only.
 
 For a legacy private SQLite deployment, provide a private export explicitly:
 

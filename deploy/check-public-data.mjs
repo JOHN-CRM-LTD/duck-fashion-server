@@ -9,6 +9,7 @@ const privateFiles = paths.filter(path =>
   /\.(?:bak|mdf|ldf|dump|sqlite(?:-[^/]*)?|sqlite\.tmp|db|tsv(?:\.gz)?|csv(?:\.gz)?)$/i.test(path) ||
   /(?:^|\/)\.env(?:\.[^/]*)?$/.test(path) ||
   (path.startsWith(".local-duck/") && path !== ".local-duck/live-connection.example.json") ||
+  path.startsWith(".local-glacier/") ||
   path === "deploy/private-crm.env"
 );
 

@@ -3,8 +3,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { migrateLocationDirectory, importLocationDirectory } from "./location-directory.js";
 import { readDuckManagers } from "./manager-directory.js";
+import { readDuckConfig } from "./runtime-config.js";
 
-const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
+const config = readDuckConfig();
 const dbPath = join(config.dataDirectory, "duck-fashion.sqlite");
 if (!existsSync(dbPath)) throw new Error("Seed the source database first");
 const input = process.argv[2];

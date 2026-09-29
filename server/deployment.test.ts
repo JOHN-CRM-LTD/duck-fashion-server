@@ -11,7 +11,7 @@ import { mountGlacier } from "./glacier/mount.js";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const bash = process.platform === "win32" ? "C:/Program Files/Git/bin/bash.exe" : "bash";
 
-test("fresh Duck setup needs no Glacier data and preserves a configured private Glacier on key rotation", () => {
+test("fresh Duck setup needs no Glacier data and URL setup preserves all existing credentials", () => {
   const directory = mkdtempSync(join(tmpdir(), "duck-setup-test-"));
   try {
     writeFileSync(join(directory, "package.json"), "{}\n");
@@ -29,8 +29,8 @@ test("fresh Duck setup needs no Glacier data and preserves a configured private 
     const rotated = JSON.parse(readFileSync(configPath, "utf8"));
     assert.equal(rotated.glacierApiKey, initial.glacierApiKey);
     assert.equal(rotated.staffReadApiKey, initial.staffReadApiKey);
-    assert.notEqual(rotated.apiKey, initial.apiKey);
-    assert.notEqual(rotated.writeApiKey, initial.writeApiKey);
+    assert.equal(rotated.apiKey, initial.apiKey);
+    assert.equal(rotated.writeApiKey, initial.writeApiKey);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
@@ -63,9 +63,10 @@ test("public-data guard accepts source fixtures but rejects forcibly staged priv
     add("data/customer-subset.json", "[]\n");
     add("exports/private.tsv.gz", "synthetic test only\n");
     add(".local-duck/live-connection.json", "{}\n");
+    add(".local-glacier/connection.json", "{}\n");
     const rejected = check();
     assert.equal(rejected.status, 1);
-    for (const path of ["data/customer-subset.json", "exports/private.tsv.gz", ".local-duck/live-connection.json"]) {
+    for (const path of ["data/customer-subset.json", "exports/private.tsv.gz", ".local-duck/live-connection.json", ".local-glacier/connection.json"]) {
       assert.ok(rejected.stderr.includes(path));
     }
   } finally {

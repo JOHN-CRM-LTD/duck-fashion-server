@@ -1,6 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
 import { createHash } from "node:crypto";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { capsuleTokens } from "./capsule-catalog.js";
@@ -10,10 +10,11 @@ import { seedBonus } from "./bonus-seed.js";
 import { verifiedMemberCode } from "./member-verification.js";
 import { redeemBonusCoupon, memberCoupons } from "./bonus-coupons.js";
 import { migrateLocationDirectory, browseLocationDirectory } from "./location-directory.js";
+import { applyGitLocationChanges, migrateLocationAdmin, readAdminLocation, updateAdminLocation, locationHistory } from "./location-admin.js";
 
 export const capsuleAdjustment = z.object({ sku: z.string().regex(/^DF0[1-8]-(BUR|CRM|BLK)-(S|M|L)$/), locationId: z.enum(["PCL", "PCB", "SH015"]), delta: z.number().int().min(-1000).max(1000).refine(n => n !== 0), expectedVersion: z.number().int().min(1).max(2147483646), reason: z.string().trim().min(3).max(300), requestId: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,99}$/) }).strict();
 
-export function openCapsule(directory: string, publicUrl: string) {
+export function openCapsule(directory: string, publicUrl: string, locationChangesPath?: string) {
   const baseUrl = new URL(publicUrl);
   if (!["https:", "http:"].includes(baseUrl.protocol) || baseUrl.username || baseUrl.password || baseUrl.search || baseUrl.hash) {
     throw new Error("Public API URL must be an HTTP(S) base URL without credentials, query or fragment");
@@ -26,6 +27,11 @@ export function openCapsule(directory: string, publicUrl: string) {
   db.exec("PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;");
   migrateCustomerDirectory(db);
   migrateLocationDirectory(db);
+  migrateLocationAdmin(db);
+  if (locationChangesPath && existsSync(locationChangesPath)) {
+    try { applyGitLocationChanges(db, JSON.parse(readFileSync(locationChangesPath, "utf8"))); }
+    catch (error) { db.close(); throw error; }
+  }
   // Seed the member-bonus demo tables on boot so a code-only deploy on the Pi
   // brings the loyalty endpoints up without a manual step. seedBonus is
   // idempotent and transactional: it only inserts missing demo rows and never
@@ -82,6 +88,22 @@ export function openCapsule(directory: string, publicUrl: string) {
     redeemBonusCoupon(value: unknown) { return redeemBonusCoupon(db, value); },
     memberCoupons(phone: unknown) { return memberCoupons(db, phone); },
     locations: (offset?: unknown, limit?: unknown) => browseLocationDirectory(db, offset, limit),
+    adminLocation: (shopId: string) => readAdminLocation(db, shopId),
+    updateLocation: (shopId: string, input: unknown) => updateAdminLocation(db, shopId, input),
+    locationHistory: (shopId: string) => locationHistory(db, shopId),
+    managers() {
+      // Once locations are imported, they are the sole live manager directory.
+      // Never mix a partially populated directory with stale private defaults.
+      const count = Number(db.prepare("SELECT COUNT(*) n FROM shop_locations").get()!.n);
+      if (!count) return null;
+      const managers = [];
+      for (let offset = 0; ; offset += 50) {
+        const page = browseLocationDirectory(db, offset, 50);
+        managers.push(...page.locations.map(row => ({ shopId: row.inventoryLocationId, name: row.managerName, phone: row.managerPhone })));
+        if (!page.hasMore) break;
+      }
+      return { managers };
+    },
     shops() { return { shops: db.prepare("SELECT id,name FROM shops ORDER BY id").all(), guidance: "Use the authenticated locations directory for current hours, address, manager and pickup rules." }; },
     adjust(value: unknown) {
       const data = capsuleAdjustment.parse(value);

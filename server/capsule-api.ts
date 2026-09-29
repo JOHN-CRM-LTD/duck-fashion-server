@@ -1,6 +1,6 @@
 import express from "express";
 import { timingSafeEqual } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 import { ZodError } from "zod";
 import { capsuleItems, capsulePhotoNames } from "./capsule-catalog.js";
@@ -8,17 +8,26 @@ import { openCapsule } from "./capsule-store.js";
 import { readDuckManagers } from "./manager-directory.js";
 import { couponRouter } from "./coupon-api.js";
 import { mountGlacier } from "./glacier/mount.js";
+import { readDuckConfig } from "./runtime-config.js";
+import { adminRouter } from "./admin-api.js";
+import { glacierProxy } from "./glacier/proxy.js";
 
-const config = JSON.parse(readFileSync(resolve(".local-duck/live-connection.json"), "utf8"));
+const config = readDuckConfig();
 if (config.mode !== "capsule" || !/^[a-f0-9]{64}$/.test(config.apiKey) || config.port !== 4997 || !config.dataDirectory
-  || (config.glacierApiKey != null && (typeof config.glacierApiKey !== "string" || !/^[a-f0-9]{64}$/.test(config.glacierApiKey)))) throw new Error("Invalid capsule connection configuration");
+  || (!config.glacierSeparate && config.glacierApiKey != null && (typeof config.glacierApiKey !== "string" || !/^[a-f0-9]{64}$/.test(config.glacierApiKey)))) throw new Error("Invalid capsule connection configuration");
 if (config.staffReadApiKey !== undefined && (!/^[a-f0-9]{64}$/.test(config.staffReadApiKey) || [config.apiKey, config.writeApiKey].includes(config.staffReadApiKey))) throw new Error("Staff read credential must be valid and distinct from other keys");
 const expected = Buffer.from(`Bearer ${config.apiKey}`);
 const expectedWrite = typeof config.writeApiKey === "string" && /^[a-f0-9]{64}$/.test(config.writeApiKey) ? Buffer.from(`Bearer ${config.writeApiKey}`) : null;
 const expectedStaffRead = typeof config.staffReadApiKey === "string" && /^[a-f0-9]{64}$/.test(config.staffReadApiKey) ? Buffer.from(`Bearer ${config.staffReadApiKey}`) : null;
-const store = openCapsule(config.dataDirectory, config.url);
+if (config.adminApiKey !== undefined && (typeof config.adminApiKey !== "string" || !/^[a-f0-9]{64}$/.test(config.adminApiKey) || [config.apiKey, config.writeApiKey, config.staffReadApiKey, config.glacierApiKey].includes(config.adminApiKey))) throw new Error("Admin credential must be valid and distinct");
+const store = openCapsule(config.dataDirectory, config.url,
+  config.applyGitLocationChanges === false ? undefined : resolve("config/duck-fashion/location-changes.json"));
 const app = express();
 app.disable("x-powered-by");
+let revision = "unknown";
+try { revision = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { /* Bundle without Git. */ }
+app.get("/health", (_req, res) => res.set("Cache-Control", "no-store").json({ status: "ok", service: "duck-fashion" }));
+if (config.adminApiKey) app.use("/admin", adminRouter(store, config.adminApiKey, revision));
 app.use("/coupons", couponRouter(config.writeApiKey, phone => store.memberCoupons(phone)));
 // Only the eight explicitly named product photographs are public. No directory listing,
 // database, JSON export, configuration file or staff write credential is exposed.
@@ -29,7 +38,8 @@ for (const imageFile of imageFiles) app.get(`/images/${imageFile}`, (_req, res) 
 });
 // Glacier read API (IceRink snapshot). Mounted before the stock auth middleware because it
 // carries its own separate bearer key; absent key or dataset leaves the service unchanged.
-const glacier = mountGlacier(app, { dataDirectory: config.dataDirectory, glacierApiKey: config.glacierApiKey });
+const glacier = config.glacierSeparate ? null : mountGlacier(app, { dataDirectory: config.dataDirectory, glacierApiKey: config.glacierApiKey });
+if (config.glacierSeparate) app.use("/glacier", glacierProxy);
 app.use((req, res, next) => {
   res.set({ "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" });
   const supplied = Buffer.from(req.headers.authorization ?? "");
@@ -46,7 +56,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json({ limit: "8kb", strict: true }));
 app.get("/managers", (_req, res) => {
-  try { res.json(readDuckManagers(config.managerDirectoryPath)); } catch { res.status(503).json({ error: "Manager directory is not configured or is invalid" }); }
+  try { res.json(store.managers() ?? readDuckManagers(config.managerDirectoryPath)); } catch { res.status(503).json({ error: "Manager directory is not configured or is invalid" }); }
 });
 app.get("/inventory", (req, res) => {
   const inventory = store.inventory(req.query.query as string);

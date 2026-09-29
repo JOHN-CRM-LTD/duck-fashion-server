@@ -22,11 +22,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate deployment shell scripts
+        run: for script in deploy/*.sh; do bash -n "$script"; done
+
+      - name: Check deployment gating and rollback in isolated Git repositories
+        run: bash deploy/test-pull-update.sh
       - name: Reject private databases, exports and connection files
         run: npm run check:public-data
 
       - name: Verify customer matching, migration, bonus seeding and public photo URLs
         run: node --import tsx --test --test-concurrency=1 server/*.test.ts
+
+      - name: Validate reviewed location changes without applying live revisions to fixtures
+        run: node --import tsx deploy/validate-location-changes.ts
 
       - name: Seed the demo database
         run: npm run seed
@@ -34,6 +42,7 @@ jobs:
       - name: Generate throwaway connection keys
         run: |
           bash deploy/create-config.sh https://duck-fashion-ci.invalid
+          node -e 'const fs=require("fs"),p=".local-duck/live-connection.json",c=JSON.parse(fs.readFileSync(p,"utf8"));c.applyGitLocationChanges=false;fs.writeFileSync(p,JSON.stringify(c))'
           node deploy/create-staff-read-key.mjs
           node --import tsx server/import-locations.ts --demo
 
